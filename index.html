@@ -243,6 +243,36 @@
       line-height: 1.6;
     }
 
+    /* TOOLS */
+    .tool {
+      border: 1px solid var(--border);
+      padding: 1.75rem;
+      background: var(--surface);
+    }
+
+    .tool h3 {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #fff;
+      letter-spacing: 0.05em;
+      margin-bottom: 0.25rem;
+    }
+
+    .tool .tool-sub {
+      font-size: 0.7rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 0.9rem;
+    }
+
+    .tool p {
+      font-size: 0.85rem;
+      color: var(--muted);
+      max-width: 620px;
+      margin-bottom: 1.5rem;
+    }
+
     /* PARAMS TABLE */
     .params-table {
       width: 100%;
@@ -325,6 +355,7 @@
       <li><a href="#plugin">Plugin</a></li>
       <li><a href="#features">Features</a></li>
       <li><a href="#download">Download</a></li>
+      <li><a href="#tools">Tools</a></li>
       <li><a href="#about">About</a></li>
       <li><a href="blog/index.html">Blog</a></li>
     </ul>
@@ -429,6 +460,34 @@
         </tr>
       </tbody>
     </table>
+  </section>
+
+  <hr class="divider">
+
+  <!-- TOOLS -->
+  <section class="section" id="tools">
+    <div class="section-label">Also from the workshop</div>
+    <h2>More Tools</h2>
+    <div class="tool">
+      <h3>Trig Seq</h3>
+      <div class="tool-sub">MIDI Sequencer &bull; Runs in the browser</div>
+      <p>
+        A MIDI clip sequencer modeled after a pair of DJ turntables and a mixer. The playhead stays
+        fixed and the clips scroll underneath it like records on a platter &mdash; launch clips onto
+        two decks, layer them up, and blend between the decks with the crossfader. No timeline, no
+        scene grid, no install. Point a browser at it and send MIDI to your rig.
+      </p>
+      <div class="hero-actions">
+        <a href="https://audiodestrukt.github.io/trig-seq/" class="btn btn-primary">Launch It</a>
+        <a href="https://github.com/audiodestrukt/trig-seq" class="btn btn-outline">Source Code</a>
+      </div>
+      <div class="platform-tags">
+        <span class="tag">Web MIDI</span>
+        <span class="tag">Chrome Recommended</span>
+        <span class="tag">No Install</span>
+        <span class="tag">Free &amp; Open Source</span>
+      </div>
+    </div>
   </section>
 
   <hr class="divider">
