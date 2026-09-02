@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OpenDeck DJ — AudioDestrukt</title>
+  <meta name="description" content="OpenDeck DJ — a single-deck DJ player for iPad that syncs to Pioneer CDJ/XDJ players over Pro DJ Link. Support and privacy.">
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <style>
+    :root {
+      --bg: #0d0d0d;
+      --surface: #161616;
+      --surface2: #1e1e1e;
+      --border: #2a2a2a;
+      --accent: #c8ff00;
+      --accent2: #ff3c00;
+      --text: #e8e8e8;
+      --muted: #777;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Courier New', Courier, monospace;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+    }
+
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 2rem;
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      background: rgba(13,13,13,0.95);
+      backdrop-filter: blur(8px);
+      z-index: 100;
+    }
+
+    .logo {
+      font-size: 1.3rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      color: var(--text);
+      text-decoration: none;
+    }
+    .logo span { color: var(--accent); }
+
+    nav ul { list-style: none; display: flex; gap: 2rem; }
+    nav ul li a {
+      color: var(--muted);
+      font-size: 0.85rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    nav ul li a:hover { color: var(--text); text-decoration: none; }
+
+    .container { max-width: 780px; margin: 0 auto; padding: 4rem 2rem; }
+
+    /* HERO */
+    .hero {
+      display: flex;
+      align-items: center;
+      gap: 2.5rem;
+      padding-bottom: 3rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .hero-text { flex: 1; }
+    .eyebrow {
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 1rem;
+    }
+    .hero h1 {
+      font-size: 2.6rem;
+      font-weight: 700;
+      color: #fff;
+      line-height: 1.1;
+      margin-bottom: 1rem;
+    }
+    .hero p { font-size: 1rem; color: var(--text); }
+    .platform {
+      display: inline-block;
+      margin-top: 1.5rem;
+      font-size: 0.65rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      padding: 0.3rem 0.7rem;
+      border: 1px solid var(--border);
+      color: var(--muted);
+    }
+
+    /* CSS jog-wheel motif — a nod to the deck, no third-party imagery */
+    .jog {
+      flex: 0 0 150px;
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      background:
+        radial-gradient(circle at 50% 50%, #1c1c1c 0 34%, transparent 35%),
+        conic-gradient(from 0deg, #202020, #2c2c2c, #202020, #2c2c2c, #202020);
+      border: 3px solid #050505;
+      box-shadow: inset 0 0 0 10px #111, 0 0 40px rgba(0,0,0,0.6);
+      position: relative;
+    }
+    .jog::before {
+      content: "";
+      position: absolute;
+      inset: 44%;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 18px rgba(200,255,0,0.5);
+    }
+    .jog::after {
+      content: "";
+      position: absolute;
+      left: 50%; top: 8%;
+      width: 3px; height: 24%;
+      background: var(--accent2);
+      transform-origin: bottom center;
+    }
+
+    section { padding: 3rem 0; border-bottom: 1px solid var(--border); }
+    section:last-of-type { border-bottom: none; }
+    h2 {
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 1.25rem;
+    }
+    section p { margin-bottom: 1rem; font-size: 0.92rem; }
+    section p:last-child { margin-bottom: 0; }
+    strong { color: #fff; }
+
+    ul.features { list-style: none; margin: 0.5rem 0 0; }
+    ul.features li {
+      padding: 0.5rem 0 0.5rem 1.4rem;
+      position: relative;
+      font-size: 0.9rem;
+    }
+    ul.features li::before {
+      content: "▸";
+      position: absolute; left: 0;
+      color: var(--accent);
+    }
+
+    .contact {
+      display: inline-block;
+      margin-top: 0.5rem;
+      font-size: 1.05rem;
+      padding: 0.6rem 1.1rem;
+      border: 1px solid var(--accent);
+      color: var(--accent);
+      letter-spacing: 0.04em;
+    }
+    .contact:hover { background: var(--accent); color: #000; text-decoration: none; }
+
+    .muted { color: var(--muted); font-size: 0.8rem; }
+
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      max-width: 780px;
+      margin: 0 auto;
+      font-size: 0.75rem;
+      color: var(--muted);
+    }
+    footer a { color: var(--muted); }
+    footer a:hover { color: var(--text); }
+
+    @media (max-width: 600px) {
+      nav ul { display: none; }
+      .hero { flex-direction: column-reverse; align-items: flex-start; gap: 1.5rem; }
+      .hero h1 { font-size: 2rem; }
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <a href="../index.html" class="logo">audio<span>destrukt</span></a>
+    <ul>
+      <li><a href="#about">About</a></li>
+      <li><a href="#support">Support</a></li>
+      <li><a href="#privacy">Privacy</a></li>
+    </ul>
+  </nav>
+
+  <div class="container">
+    <div class="hero">
+      <div class="hero-text">
+        <div class="eyebrow">iPad · Pro DJ Link</div>
+        <h1>OpenDeck&nbsp;DJ</h1>
+        <p>A single-deck DJ player for iPad that plays your tracks and syncs
+        to Pioneer CDJ/XDJ players over Pro DJ&nbsp;Link — turning a tablet
+        into a drop-in extra deck on the network.</p>
+        <span class="platform">iOS / iPadOS</span>
+      </div>
+      <div class="jog" aria-hidden="true"></div>
+    </div>
+
+    <section id="about">
+      <h2>What it is</h2>
+      <p>OpenDeck DJ is a faithful single-deck player modeled on a professional
+      CDJ/XDJ layout: a jog wheel with a spinning platter display, a tempo
+      fader, transport controls, waveform overview, and beat-grid analysis. It
+      speaks <strong>Pioneer Pro DJ Link</strong>, so it appears on a DJ Link
+      network alongside real players and can follow — or lead — the shared
+      tempo and beat grid.</p>
+      <ul class="features">
+        <li>Load and play a track with an XDJ-style deck interface</li>
+        <li>Automatic BPM detection and beat-grid analysis</li>
+        <li>Jog-wheel scratching, nudging, and cueing</li>
+        <li>Pro DJ Link sync with CDJ/XDJ players on your local network</li>
+        <li>Runs entirely on-device — no account, no sign-in</li>
+      </ul>
+    </section>
+
+    <section id="support">
+      <h2>Support</h2>
+      <p>Questions, bugs, or feature requests? Get in touch and we'll get back
+      to you — this is an actively developed app and feedback is welcome.</p>
+      <p><a class="contact" href="mailto:support@audiodestrukt.com">support@audiodestrukt.com</a></p>
+      <p class="muted">Typical response within a few days. When reporting a
+      problem, it helps to include your iPad model, iOS version, and what you
+      were doing when it happened.</p>
+    </section>
+
+    <section id="privacy">
+      <h2>Privacy Policy</h2>
+      <p><strong>OpenDeck DJ does not collect, store, or transmit any personal
+      data.</strong> There are no accounts, no analytics, no advertising, and
+      no third-party tracking of any kind.</p>
+      <p>The app requests <strong>local network</strong> access for one purpose
+      only: to discover and sync with Pioneer CDJ/XDJ players on your Wi-Fi or
+      wired LAN using the Pro DJ Link protocol. This communication stays on your
+      local network — nothing is sent to us or to any external server, and no
+      information about you or your music leaves your device.</p>
+      <p>Audio you load is read on-device for playback and analysis and is never
+      uploaded anywhere.</p>
+      <p>Privacy questions: <a href="mailto:privacy@audiodestrukt.com">privacy@audiodestrukt.com</a></p>
+      <p class="muted">If this policy ever changes, it will be updated on this
+      page. Last updated: September 2026.</p>
+    </section>
+  </div>
+
+  <footer>
+    <span>audio<span style="color:var(--accent)">destrukt</span></span>
+    <span><a href="../index.html">audiodestrukt.com</a> &nbsp;·&nbsp; &copy; 2026 AudioDestrukt</span>
+  </footer>
+</body>
+</html>
