@@ -87,6 +87,23 @@
       margin-bottom: 1rem;
     }
     .hero p { font-size: 1rem; color: var(--text); }
+    .store {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      margin-top: 1.5rem;
+      margin-right: 0.9rem;
+      padding: 0.65rem 1.1rem;
+      background: var(--accent);
+      color: #0d0d0d;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      border-radius: 4px;
+    }
+    .store:hover { background: #fff; color: #0d0d0d; text-decoration: none; }
+    .store svg { width: 1rem; height: 1rem; fill: currentColor; }
     .platform {
       display: inline-block;
       margin-top: 1.5rem;
@@ -207,7 +224,11 @@
         <p>A single-deck DJ player for iPad that plays your tracks and syncs
         to Pioneer CDJ/XDJ players over Pro DJ&nbsp;Link — turning a tablet
         into a drop-in extra deck on the network.</p>
-        <span class="platform">iOS / iPadOS</span>
+        <a class="store" href="https://apps.apple.com/app/id6807472453" rel="noopener">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16.365 1.43c0 1.14-.42 2.2-1.24 3.13-.99 1.1-2.18 1.74-3.47 1.63a3.6 3.6 0 0 1-.03-.44c0-1.1.48-2.27 1.33-3.22.42-.48.96-.88 1.6-1.2.65-.32 1.26-.5 1.84-.53.02.21.03.42.03.63zm3.99 16.3c-.42.97-.62 1.4-1.16 2.26-.75 1.2-1.81 2.7-3.12 2.71-1.17.01-1.47-.76-3.05-.75-1.59.01-1.92.77-3.09.76-1.31-.01-2.31-1.36-3.07-2.56C4.72 16.75 4.5 12.8 5.85 10.7c.96-1.5 2.47-2.38 3.9-2.38 1.45 0 2.36.8 3.56.8 1.16 0 1.87-.8 3.55-.8 1.27 0 2.62.69 3.58 1.89-3.15 1.73-2.64 6.23.9 7.52z"/></svg>
+          Download on the App Store
+        </a>
+        <span class="platform">iPadOS 15+</span>
       </div>
       <div class="jog" aria-hidden="true"></div>
     </div>
