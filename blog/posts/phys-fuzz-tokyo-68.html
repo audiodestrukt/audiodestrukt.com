@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Phys Fuzz 0.2: a second circuit, Tokyo '68 — AudioDestrukt</title>
+  <link rel="icon" type="image/svg+xml" href="../../favicon.svg">
+  <link rel="alternate" type="application/rss+xml" title="AudioDestrukt Blog" href="https://audiodestrukt.com/blog/feed.xml">
+  <style>
+    :root {
+      --bg: #0d0d0d;
+      --surface: #161616;
+      --surface2: #1e1e1e;
+      --border: #2a2a2a;
+      --accent: #c8ff00;
+      --accent2: #ff3c00;
+      --text: #e8e8e8;
+      --muted: #777;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Courier New', Courier, monospace;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+    }
+
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 2rem;
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      background: rgba(13,13,13,0.95);
+      backdrop-filter: blur(8px);
+      z-index: 100;
+    }
+
+    .logo {
+      font-size: 1.3rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      color: var(--text);
+      text-decoration: none;
+    }
+
+    .logo span { color: var(--accent); }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 2rem;
+    }
+
+    nav ul li a {
+      color: var(--muted);
+      font-size: 0.85rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    nav ul li a:hover { color: var(--text); text-decoration: none; }
+    nav ul li a.active { color: var(--accent); }
+
+    .container {
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 4rem 2rem;
+    }
+
+    .page-title {
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 3rem;
+    }
+
+    /* POST LIST */
+    .post-list { list-style: none; }
+
+    .post-item {
+      border-bottom: 1px solid var(--border);
+      padding: 2rem 0;
+    }
+
+    .post-item:first-child { padding-top: 0; }
+
+    .post-meta {
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      text-transform: uppercase;
+      margin-bottom: 0.5rem;
+    }
+
+    .post-title {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 0.75rem;
+      line-height: 1.2;
+    }
+
+    .post-title a { color: #fff; }
+    .post-title a:hover { color: var(--accent); text-decoration: none; }
+
+    .post-excerpt {
+      font-size: 0.85rem;
+      color: var(--text);
+      margin-bottom: 0.75rem;
+    }
+
+    .post-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+    }
+
+    .tag {
+      font-size: 0.6rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 0.15rem 0.45rem;
+      border: 1px solid var(--border);
+      color: var(--muted);
+    }
+
+    /* PAGINATION */
+    .pagination {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 3rem;
+      font-size: 0.8rem;
+    }
+
+    .pagination a {
+      border: 1px solid var(--border);
+      padding: 0.5rem 1rem;
+      color: var(--text);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-size: 0.75rem;
+    }
+
+    .pagination a:hover { border-color: var(--text); text-decoration: none; }
+    .pagination .page-info { color: var(--muted); font-size: 0.7rem; letter-spacing: 0.1em; }
+    .pagination .spacer { flex: 1; }
+
+    /* SINGLE POST */
+    .post-header { margin-bottom: 3rem; }
+
+    .post-header h1 {
+      font-size: 2rem;
+      font-weight: 700;
+      color: #fff;
+      line-height: 1.2;
+      margin-bottom: 0.75rem;
+    }
+
+    .post-body { font-size: 0.92rem; }
+
+    .post-body h1, .post-body h2, .post-body h3 {
+      color: #fff;
+      font-weight: 700;
+      margin: 2rem 0 0.75rem;
+    }
+
+    .post-body h1 { font-size: 1.4rem; }
+    .post-body h2 { font-size: 1.2rem; }
+    .post-body h3 { font-size: 1rem; }
+
+    .post-body p {
+      color: var(--text);
+      margin-bottom: 1.25rem;
+      line-height: 1.8;
+    }
+
+    .post-body a { color: var(--accent); }
+
+    .post-body strong { color: var(--text); }
+
+    .post-body pre {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      padding: 1rem;
+      overflow-x: auto;
+      margin: 1.25rem 0;
+      font-size: 0.8rem;
+      line-height: 1.6;
+    }
+
+    .post-body code {
+      font-family: 'Courier New', Courier, monospace;
+      color: var(--accent);
+    }
+
+    .post-body pre code {
+      color: var(--text);
+    }
+
+    .post-body img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+      margin: 1.5rem 0;
+      border: 1px solid var(--border);
+    }
+
+    .post-nav {
+      display: flex;
+      justify-content: space-between;
+      padding-top: 3rem;
+      margin-top: 3rem;
+      border-top: 1px solid var(--border);
+      font-size: 0.75rem;
+      gap: 1rem;
+    }
+
+    .post-nav a {
+      color: var(--muted);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .post-nav a:hover { color: var(--text); text-decoration: none; }
+
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      max-width: 780px;
+      margin: 0 auto;
+      font-size: 0.75rem;
+      color: var(--muted);
+    }
+
+    @media (max-width: 600px) {
+      nav ul { display: none; }
+      .post-header h1 { font-size: 1.5rem; }
+    }
+</style>
+</head>
+<body>
+  <nav>
+    <a href="../../index.html" class="logo">audio<span>destrukt</span></a>
+    <ul>
+      <li><a href="../../index.html#plugin">Plugin</a></li>
+      <li><a href="../../index.html#features">Features</a></li>
+      <li><a href="../../index.html#download">Download</a></li>
+      <li><a href="../../index.html#about">About</a></li>
+      <li><a href="../index.html" class="active">Blog</a></li>
+    </ul>
+  </nav>
+  <div class="container">
+    <div class="post-header">
+      <div class="post-meta"><a href="../index.html">Blog</a> &mdash; September 26, 2026</div>
+      <h1>Phys Fuzz 0.2: a second circuit, Tokyo '68</h1>
+      <div class="post-tags" style="margin-top:0.75rem"><span class="tag">phys fuzz</span><span class="tag">plugins</span><span class="tag">circuit simulation</span><span class="tag">fuzz</span><span class="tag">ngspice</span></div>
+    </div>
+    <div class="post-body">
+<h1>Phys Fuzz 0.2: a second circuit, Tokyo '68</h1>
+<p>Phys Fuzz is the fuzz plugin where the knobs are component failures. It doesn't model the sound of a pedal, it solves the circuit. Every sample, the transistors get their junction voltages solved by Newton's method at four times the sample rate, and the knobs under the board (Battery, Age, Temperature) change the parts. Starve the battery and the sag pumps with your playing. Turn up Age and the junctions leak, the caps dry out, the bias drifts cold. You can automate all of it.</p>
+<p>Until now there was one circuit in there: London '66, the two-transistor silicon fuzz everybody knows from the round box with the smile on it. 0.2.0 adds a second one, and a Circuit menu above the board to pick it.</p>
+<h2>Tokyo '68</h2>
+<p>The new circuit is a Japanese two-stage fuzz from the late sixties, the one that got sold under a dozen brand names and is famous for sounding like a wasp in a tin can. It's a different animal from the London circuit even though it's also two silicon transistors.</p>
+<p>Each stage biases itself with a resistor from collector back to base, and the second stage doesn't even get the full battery: its collector resistor hangs off a 100k in series with the supply, so the transistor idles at about one volt on the collector. That's the gate. Anything below a certain level just doesn't get through, and notes cut off with a snap instead of a fade.</p>
+<p>The Fuzz knob is not a gain control. It's a 50k pot with the first stage's collector feeding the wiper and the second stage's collector feeding one end, with the output taken from the other end. So it pans between a one-stage fuzz and a two-stage fuzz, and it changes texture more than amount. On the pedal most people just leave it up. Then there's the part that makes it sound the way it does: a passive mid scoop, a 1000 pF cap bridged by 10k and 15k into 100 nF. Lows get through the resistors, highs get through the cap, the mids fall in the hole, and the whole thing comes out about 30 dB quieter than the London circuit. The plugin makes that gain back for you, but the shape stays.</p>
+<p><img src="../../images/2026-09-26_phys-fuzz-tokyo-68_board.png" alt="Tokyo '68 on the board" loading="lazy"></p>
+<h2>Same riff, both circuits</h2>
+<p>The same synthetic riff, through London '66 and then Tokyo '68, everything else at the defaults.</p>
+<p><audio controls preload="none" src="../../audio/phys-fuzz-riff-london-66.mp3"></audio></p>
+<p><audio controls preload="none" src="../../audio/phys-fuzz-riff-tokyo-68.mp3"></audio></p>
+<h2>How it got in there</h2>
+<p>Every circuit in Phys Fuzz starts as an ngspice deck. I traced this one from a schematic, wrote the deck with every part as a parameter, and then wrote the same netlist for the realtime engine. The engine isn't a hand-written solver for this circuit. It's the general one that takes a netlist of resistors, capacitors, inductors, sources and transistors and derives the realtime solver itself. The transistor model is the same Gummel-Poon subset in both.</p>
+<p>Then you compare. Bias point first: both collectors match ngspice to its printed precision, 3.595 V and 1.021 V. Then a five second riff through both at 192 kHz, every preset, with the DC stripped: the engine's output is within about 3% RMS of ngspice on every one, and the residual is ngspice's variable step size on the edges rather than anything I can hear. The London circuit's hand-built solver is at 6 to 12% on its own deck by the same measure, so the netlist engine is actually the more faithful of the two.</p>
+<p><img src="../../images/2026-09-26_phys-fuzz-tokyo-68_ngspice.png" alt="ngspice (grey) against the realtime engine (red), a few cycles into the riff" loading="lazy"></p>
+<p>It runs about twenty times realtime at 4x oversampling with Newton converging in 1.3 iterations a sample on average, and I swept every one of its 31 components to both ends of its range without a single solver failure.</p>
+<h2>The same knobs</h2>
+<p>The point of doing it this way is that Battery, Age and Temperature don't need to know which circuit they're driving. Battery is the battery. Temperature scales the transistor model the way silicon actually drifts. Age leaks the junctions, fades the gain and drifts the bias cold. On this circuit "bias" means the 1M2 feedback resistor on the second stage, and the junction leak had to be given a gentler range, because a 30k leak across a megohm bias resistor doesn't age a stage, it kills it.</p>
+<p><img src="../../images/2026-09-26_phys-fuzz-tokyo-68_barn-find.png" alt="Barn Find on Tokyo '68: scorched transistors, leak paths drawn in" loading="lazy"></p>
+<p>The presets work on both circuits. Barn Find on Tokyo '68 is worth a listen: the second stage is barely alive to begin with, and the leaky junctions push it further.</p>
+<h2>Switching without the click</h2>
+<p>Changing circuits mid-song works. The new circuit gets a warm start, its DC operating point re-solved, so there's no thump. The first version clicked anyway, for exactly eleven samples, and it took a while to see why. The two circuits put out very different levels, three volts versus a hundred millivolts, and each has its own output scale. I was applying that scale after the downsampling filter, so at the moment of the switch the filter's memory was still full of the old circuit's volts, now multiplied by the new circuit's thirty-times-bigger scale. Moving the multiply inside the oversampled loop fixed it. Both directions are clean now, so you can automate the Circuit parameter like anything else.</p>
+<h2>Names</h2>
+<p>The menu says London '66 and Tokyo '68 rather than the pedal names, which belong to other people. The circuits are what they are. The names say where and when they came from.</p>
+<h2>Get it</h2>
+<p>Phys Fuzz 0.2.0 is built for macOS (VST3 and AU, signed and notarized), Windows (VST3) and Linux (VST3): <a href="https://github.com/audiodestrukt/circuit-decimator/releases">releases</a>.</p>
+    </div>
+    <div class="post-nav">
+      <div></div>
+      <div><a href="strings-and-things.html">Strings and things &rarr;</a></div>
+    </div>
+  </div>
+  <footer>
+    <span>audio<span style="color:var(--accent)">destrukt</span></span>
+    <span>&copy; 2025 AudioDestrukt</span>
+  </footer>
+</body>
+</html>

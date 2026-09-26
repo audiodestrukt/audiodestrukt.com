@@ -5,9 +5,15 @@
     <link>https://audiodestrukt.com</link>
     <description>A poke in the ear with a sharp stick.</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 11 Mar 2026 07:48:14 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 26 Sep 2026 16:53:03 +0000</lastBuildDate>
     <atom:link href="https://audiodestrukt.com/blog/feed.xml" rel="self" type="application/rss+xml"/>
     <item>
+      <title>Phys Fuzz 0.2: a second circuit, Tokyo '68</title>
+      <link>https://audiodestrukt.com/blog/posts/phys-fuzz-tokyo-68.html</link>
+      <guid isPermaLink="true">https://audiodestrukt.com/blog/posts/phys-fuzz-tokyo-68.html</guid>
+      <pubDate>Sat, 26 Sep 2026 10:00:00 +0000</pubDate>
+      <description>Phys Fuzz 0.2: a second circuit, Tokyo '68 Phys Fuzz is the fuzz plugin where the knobs are component failures. It doesn't model the sound of a pedal, it solves the circuit. Every sample, the transistors get their junction voltages solved by Newton's method at four times the sample rate, and the knobs under the board (Battery, Age, Temperature) change…</description>
+    </item>    <item>
       <title>Strings and things</title>
       <link>https://audiodestrukt.com/blog/posts/strings-and-things.html</link>
       <guid isPermaLink="true">https://audiodestrukt.com/blog/posts/strings-and-things.html</guid>
@@ -124,12 +130,6 @@ The School for Poetic Computation – a place for learning and unlearning. So gr
       <guid isPermaLink="true">https://audiodestrukt.com/blog/posts/octatrack-re-learnings.html</guid>
       <pubDate>Thu, 21 Nov 2024 18:17:36 +0000</pubDate>
       <description>Octatrack re-learnings I’m digging back into using my Octatrack and I’m finding that I have to re-learn a bunch of things about how it works. Saying that it’s a quirky machine is an understatement. There are some guides like Merlin’s OT manual that go into the philosophy of the machine, but I’m writing things here with my own live use…</description>
-    </item>    <item>
-      <title>Live PA with just two boxes</title>
-      <link>https://audiodestrukt.com/blog/posts/live-pa-with-just-two-boxes.html</link>
-      <guid isPermaLink="true">https://audiodestrukt.com/blog/posts/live-pa-with-just-two-boxes.html</guid>
-      <pubDate>Thu, 21 Nov 2024 16:12:51 +0000</pubDate>
-      <description>Live PA with just two boxes I’m calling DAWless Live PA from now on. That’s what it used to be called and I was on livepa.org way back. It’s funny how things progressed. It’s great actually, it’s no longer a fringe thing and honestly everyone’s game really improved. Back then it was people with a bunch of keyboards on a…</description>
     </item>
   </channel>
 </rss>
