@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Arduino Pedal Fighter project — AudioDestrukt</title>
-  <link rel="icon" type="image/svg+xml" href="../../favicon.svg">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
   <link rel="alternate" type="application/rss+xml" title="AudioDestrukt Blog" href="https://audiodestrukt.com/blog/feed.xml">
   <style>
     :root {
@@ -255,18 +255,18 @@
 </head>
 <body>
   <nav>
-    <a href="../../index.html" class="logo">audio<span>destrukt</span></a>
+    <a href="/index.html" class="logo">audio<span>destrukt</span></a>
     <ul>
-      <li><a href="../../index.html#plugin">Plugin</a></li>
-      <li><a href="../../index.html#features">Features</a></li>
-      <li><a href="../../index.html#download">Download</a></li>
-      <li><a href="../../index.html#about">About</a></li>
-      <li><a href="../index.html" class="active">Blog</a></li>
+      <li><a href="/index.html#plugin">Plugin</a></li>
+      <li><a href="/index.html#features">Features</a></li>
+      <li><a href="/index.html#download">Download</a></li>
+      <li><a href="/index.html#about">About</a></li>
+      <li><a href="/blog/index.html" class="active">Blog</a></li>
     </ul>
   </nav>
   <div class="container">
     <div class="post-header">
-      <div class="post-meta"><a href="../index.html">Blog</a> &mdash; January 20, 2012</div>
+      <div class="post-meta"><a href="/blog/index.html">Blog</a> &mdash; January 20, 2012</div>
       <h1>Arduino Pedal Fighter project</h1>
       <div class="post-tags" style="margin-top:0.75rem"><span class="tag">Arduino</span><span class="tag">Pedal Fighter</span></div>
     </div>
@@ -289,23 +289,23 @@
 <h2>Construction</h2>
 <p>I built the enclosure as cheaply as possible. Total cost of the materials was under 5USD if you don’t count the screws. I bought a 100 count box of wood screws that set me back 3.50USD but I only used 6 screws. My thinking on the enclosure is that I’m going to cut it up and experiment with different button placements before I do the final design. Using cheap materials such as particle board lets me drill holes easily and throw away entire iterations on the design without worrying too much about it.</p>
 <p>The basic design is a flat panel supported on the front and back by wooden strips. The furring strip that I bought was 3/4″ x 1″ or so, so I decided to lay the wood down on the front and stand it up on the back to create a slightly angled panel. </p>
-<p><img src="../../images/2012-01-20_arduino-pedalfighter-project_ferring-bottom.jpg" alt="" loading="lazy"></p>
+<p><img src="/images/2012-01-20_arduino-pedalfighter-project_ferring-bottom.jpg" alt="" loading="lazy"></p>
 <p>I drilled out the panel using a 5/8″ wood boring bit. These are much cheaper than metal bits and other types of tungsten carbide goodness. A 5/8″ bit at Home Depot was a 17USD investment if I remember correctly. When I fabricate this in metal, I’m going to go broke buying drill bits! More seriously, drilling MDF is very quick, but it pays to go slowly since the material will chip and tear on the backside when the bit punches through. Drilling against a bit of scrap wood helps too.</p>
-<p><img src="../../images/2012-01-20_arduino-pedalfighter-project_messy-hole.jpg" alt="" loading="lazy"></p>
+<p><img src="/images/2012-01-20_arduino-pedalfighter-project_messy-hole.jpg" alt="" loading="lazy"></p>
 <p>Some of my holes ended up kind of messy because I got impatient after drilling a few of the holes. </p>
 <p>I decided on a layout that should provide ample room for a normal adult-sized shoe to fit between the buttons. However the way that the top row is positioned, the foot will not fit fully between the lower row, so the user will have to use his toe. I’m still not sure about the spacing, but I’m pretty sure that I want to use an offset top row to mimic the layout of a chromatic piano keyboard. I only bought 6 buttons, but the final version should have a full octave of buttons. Or perhaps an octave plus one. The only problem with an extra button is that ganging more than one unit together is more awkward that way. Maybe that is a problem for later on.</p>
 <p>Once I drilled the holes, I fit the push buttons into the holes and soldered up a wiring harness. The following picture shows what I ended up with:</p>
-<p><img src="../../images/2012-01-20_arduino-pedalfighter-project_wiring-header.jpg" alt="" loading="lazy"></p>
+<p><img src="/images/2012-01-20_arduino-pedalfighter-project_wiring-header.jpg" alt="" loading="lazy"></p>
 <p>Note that I could only find a dual row header. I should have used a single row header. Also of note – soldering to the header is very quick and easy. Don’t keep the soldering iron on the header for longer than a split second, otherwise the header pin will melt the plastic and it will get loose or fall out of the plastic carrier. This happened to me, and I’m going to have to redo the header work because of it.</p>
 <p>A few things about this prototyping method. I made the mistake of doing the wiring using a ground bus – connecting the individual buttons to one another rather than using a star wiring configuration. In a finished design it makes sense to wire things this way to save wire and effort. However, it occurred to me that I can’t actually pull a button out of its hole because of the way I did the wiring. I’m going to have to desolder the button in order to do this. Better to put each button on its own header I guess.</p>
 <p>The pedalboard so far looks like this:</p>
-<p><img src="../../images/2012-01-20_arduino-pedalfighter-project_topside.jpg" alt="" loading="lazy"></p>
+<p><img src="/images/2012-01-20_arduino-pedalfighter-project_topside.jpg" alt="" loading="lazy"></p>
 <h2>Post-build notes</h2>
 <p>I haven’t really finished this. It is a prototype of a larger work in progress. However I can say that there are a few things I learned about developing enclosures using thin MDF. The MDF is really easy to cut and work with. It is a little bit fragile to drill, but with a little care it is fine, you just have to go slowly. However, it is not as rigid as plywood or metal. When I use normal foot force on this pedalboard it flexes noticeably. I think that this could be prevented by putting a bottom on the pedal or by putting sides/braces underneath the top panel. The current design is good enough for me to validate the design however, and that was the point of this exercise.</p>
     </div>
     <div class="post-nav">
-      <div><a href="pedalfighter-pure-data-patch.html">&larr; Pedal Fighter Pure Data patch</a></div>
-      <div><a href="tube-circuit-experiments.html">Tube circuit experiments &rarr;</a></div>
+      <div><a href="/blog/posts/pedalfighter-pure-data-patch.html">&larr; Pedal Fighter Pure Data patch</a></div>
+      <div><a href="/blog/posts/tube-circuit-experiments.html">Tube circuit experiments &rarr;</a></div>
     </div>
   </div>
   <footer>

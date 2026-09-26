@@ -75,7 +75,7 @@ def inline_md(text):
     def extract_img(m):
         alt, src = m.group(1), m.group(2)
         if src.startswith('images/'):
-            src = '../../images/' + src[len('images/'):]
+            src = '/images/' + src[len('images/'):]   # absolute: /blog is served without a trailing slash
         tag = f'<img src="{src}" alt="{alt}" loading="lazy">'
         key = f'\x00IMG{len(placeholders)}\x00'
         placeholders[key] = tag
@@ -418,17 +418,17 @@ CSS = """
 """
 
 
+# All links are absolute: the host serves /blog and /blog/ alike without a
+# redirect, so relative links from /blog resolved one level too high (/posts/...).
 def nav_html(active='blog', depth=''):
-    up = '../' * (depth.count('/') + 1)
-    blog = '../' * depth.count('/')
     return f"""  <nav>
-    <a href="{up}index.html" class="logo">audio<span>destrukt</span></a>
+    <a href="/index.html" class="logo">audio<span>destrukt</span></a>
     <ul>
-      <li><a href="{up}index.html#plugin">Plugin</a></li>
-      <li><a href="{up}index.html#features">Features</a></li>
-      <li><a href="{up}index.html#download">Download</a></li>
-      <li><a href="{up}index.html#about">About</a></li>
-      <li><a href="{blog}index.html" class="{'active' if active == 'blog' else ''}">Blog</a></li>
+      <li><a href="/index.html#plugin">Plugin</a></li>
+      <li><a href="/index.html#features">Features</a></li>
+      <li><a href="/index.html#download">Download</a></li>
+      <li><a href="/index.html#about">About</a></li>
+      <li><a href="/blog/index.html" class="{'active' if active == 'blog' else ''}">Blog</a></li>
     </ul>
   </nav>"""
 
@@ -447,7 +447,7 @@ def page_shell(title, body, depth=''):
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>{title} — AudioDestrukt</title>
-  <link rel="icon" type="image/svg+xml" href="{'../' * (depth.count('/') + 1)}favicon.svg">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
   <link rel="alternate" type="application/rss+xml" title="AudioDestrukt Blog" href="{SITE_URL}/blog/feed.xml">
   <style>{CSS}</style>
 </head>
@@ -474,7 +474,7 @@ def build_index_page(posts, page_num, total_pages):
         tag_block = f'<div class="post-tags">{tags_html}</div>' if tags_html else ''
         items.append(f"""    <li class="post-item">
       <div class="post-meta">{p['date_str']}</div>
-      <div class="post-title"><a href="posts/{p['slug']}.html">{p['title']}</a></div>
+      <div class="post-title"><a href="/blog/posts/{p['slug']}.html">{p['title']}</a></div>
       <div class="post-excerpt">{p['excerpt']}</div>
       {tag_block}
     </li>""")
@@ -482,9 +482,9 @@ def build_index_page(posts, page_num, total_pages):
     prev_link = ''
     next_link = ''
     if page_num > 1:
-        prev_link = f'<a href="{page_href(page_num - 1)}">&larr; Newer</a>'
+        prev_link = f'<a href="/blog/{page_href(page_num - 1)}">&larr; Newer</a>'
     if page_num < total_pages:
-        next_link = f'<a href="{page_href(page_num + 1)}">Older &rarr;</a>'
+        next_link = f'<a href="/blog/{page_href(page_num + 1)}">Older &rarr;</a>'
 
     pagination = f"""    <div class="pagination">
       {prev_link}
@@ -509,9 +509,9 @@ def build_post_page(post, prev_post, next_post):
     prev_link = ''
     next_link = ''
     if prev_post:
-        prev_link = f'<a href="{prev_post["slug"]}.html">&larr; {prev_post["title"]}</a>'
+        prev_link = f'<a href="/blog/posts/{prev_post["slug"]}.html">&larr; {prev_post["title"]}</a>'
     if next_post:
-        next_link = f'<a href="{next_post["slug"]}.html">{next_post["title"]} &rarr;</a>'
+        next_link = f'<a href="/blog/posts/{next_post["slug"]}.html">{next_post["title"]} &rarr;</a>'
 
     post_nav = f"""    <div class="post-nav">
       <div>{prev_link}</div>
@@ -523,7 +523,7 @@ def build_post_page(post, prev_post, next_post):
 
     body = f"""  <div class="container">
     <div class="post-header">
-      <div class="post-meta"><a href="../index.html">Blog</a> &mdash; {post['date_str']}</div>
+      <div class="post-meta"><a href="/blog/index.html">Blog</a> &mdash; {post['date_str']}</div>
       <h1>{post['title']}</h1>
       {tag_block}
     </div>

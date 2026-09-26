@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Hacking the McMillen SoftStep — AudioDestrukt</title>
-  <link rel="icon" type="image/svg+xml" href="../../favicon.svg">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
   <link rel="alternate" type="application/rss+xml" title="AudioDestrukt Blog" href="https://audiodestrukt.com/blog/feed.xml">
   <style>
     :root {
@@ -255,18 +255,18 @@
 </head>
 <body>
   <nav>
-    <a href="../../index.html" class="logo">audio<span>destrukt</span></a>
+    <a href="/index.html" class="logo">audio<span>destrukt</span></a>
     <ul>
-      <li><a href="../../index.html#plugin">Plugin</a></li>
-      <li><a href="../../index.html#features">Features</a></li>
-      <li><a href="../../index.html#download">Download</a></li>
-      <li><a href="../../index.html#about">About</a></li>
-      <li><a href="../index.html" class="active">Blog</a></li>
+      <li><a href="/index.html#plugin">Plugin</a></li>
+      <li><a href="/index.html#features">Features</a></li>
+      <li><a href="/index.html#download">Download</a></li>
+      <li><a href="/index.html#about">About</a></li>
+      <li><a href="/blog/index.html" class="active">Blog</a></li>
     </ul>
   </nav>
   <div class="container">
     <div class="post-header">
-      <div class="post-meta"><a href="../index.html">Blog</a> &mdash; February 15, 2013</div>
+      <div class="post-meta"><a href="/blog/index.html">Blog</a> &mdash; February 15, 2013</div>
       <h1>Hacking the McMillen SoftStep</h1>
       
     </div>
@@ -279,11 +279,11 @@
 <p>The raw data stream consists of 4-byte records. Each byte represents a corner of the pad. There are sensors on each corner of the pads. the first byte is the upper left corner of the pad. The numbers continue clockwise around the pad.</p>
 <p>I noticed when I first got the pedal that the centers of the pads aren’t very sensitive. This makes a lot of sense now that I’m digging into how this pedal works. When actuating the pads by foot, the center region is rarely actuated directly anyway. When actuating the pads using a finger on the center of a pad, nothing but the firmest press will be registered. However, pressing on one of the corners will result in an immediate response.</p>
 <p>The demo patch has some interesting subpatchers that do things like key lockout and x-y navigation smoothing. The pedal firmware itself can do this as well, so possibly Max was used to prototype some of these features?</p>
-<p><img src="../../images/2013-02-15_hacking-the-mcmillen-softstep_softstep-maxmsp.png" alt="softstep-maxmsp" loading="lazy"></p>
+<p><img src="/images/2013-02-15_hacking-the-mcmillen-softstep_softstep-maxmsp.png" alt="softstep-maxmsp" loading="lazy"></p>
     </div>
     <div class="post-nav">
-      <div><a href="using-the-adafruit-atmega32u4-breakout-board.html">&larr; Using the Adafruit Atmega32u4 breakout board</a></div>
-      <div><a href="network-audio-with-netjack-part-ii.html">Network audio with NetJack part II &rarr;</a></div>
+      <div><a href="/blog/posts/using-the-adafruit-atmega32u4-breakout-board.html">&larr; Using the Adafruit Atmega32u4 breakout board</a></div>
+      <div><a href="/blog/posts/network-audio-with-netjack-part-ii.html">Network audio with NetJack part II &rarr;</a></div>
     </div>
   </div>
   <footer>

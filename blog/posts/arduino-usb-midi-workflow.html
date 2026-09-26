@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Arduino USB MIDI workflow — AudioDestrukt</title>
-  <link rel="icon" type="image/svg+xml" href="../../favicon.svg">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
   <link rel="alternate" type="application/rss+xml" title="AudioDestrukt Blog" href="https://audiodestrukt.com/blog/feed.xml">
   <style>
     :root {
@@ -255,18 +255,18 @@
 </head>
 <body>
   <nav>
-    <a href="../../index.html" class="logo">audio<span>destrukt</span></a>
+    <a href="/index.html" class="logo">audio<span>destrukt</span></a>
     <ul>
-      <li><a href="../../index.html#plugin">Plugin</a></li>
-      <li><a href="../../index.html#features">Features</a></li>
-      <li><a href="../../index.html#download">Download</a></li>
-      <li><a href="../../index.html#about">About</a></li>
-      <li><a href="../index.html" class="active">Blog</a></li>
+      <li><a href="/index.html#plugin">Plugin</a></li>
+      <li><a href="/index.html#features">Features</a></li>
+      <li><a href="/index.html#download">Download</a></li>
+      <li><a href="/index.html#about">About</a></li>
+      <li><a href="/blog/index.html" class="active">Blog</a></li>
     </ul>
   </nav>
   <div class="container">
     <div class="post-header">
-      <div class="post-meta"><a href="../index.html">Blog</a> &mdash; May 3, 2012</div>
+      <div class="post-meta"><a href="/blog/index.html">Blog</a> &mdash; May 3, 2012</div>
       <h1>Arduino USB MIDI workflow</h1>
       <div class="post-tags" style="margin-top:0.75rem"><span class="tag">Arduino</span><span class="tag">MIDI</span></div>
     </div>
@@ -282,19 +282,19 @@
 Atmel AVR ATmega48 is found.</code></pre>
 <p>However, as I learned later, this command reports that the device is found regardless of whether it is even connected.</p>
 <p>I soldered the current-limiting resistors into the headshell. Note that this picture shows 1k resistors, but in the end I dropped these down to 470 ohm resistors to try to get enough current from my parallel port in order to get things working (this didn’t work either, my port is apparently too weak).</p>
-<p><img src="../../images/2012-05-03_arduino-usb-midi-workflow_dsub-shell.jpg" alt="" loading="lazy"></p>
+<p><img src="/images/2012-05-03_arduino-usb-midi-workflow_dsub-shell.jpg" alt="" loading="lazy"></p>
 <p>I decided to use an insulation displacement connector for the Arduino side of things. Here you can see different views of that assembly:</p>
-<p><img src="../../images/2012-05-03_arduino-usb-midi-workflow_idc-top.jpg" alt="" loading="lazy"></p>
-<p><img src="../../images/2012-05-03_arduino-usb-midi-workflow_idc-bottom.jpg" alt="" loading="lazy"></p>
+<p><img src="/images/2012-05-03_arduino-usb-midi-workflow_idc-top.jpg" alt="" loading="lazy"></p>
+<p><img src="/images/2012-05-03_arduino-usb-midi-workflow_idc-bottom.jpg" alt="" loading="lazy"></p>
 <p>In the end I ended up using a series of inverters as buffers to drive the IO lines between the Arduino and the parallel port. I had a similar set of issues when building my homebrew Arduino circuit. I had 5k resistors there and I was having intermittent issues with the programmer. With the 470 ohm resistors things were working every once in a while, and when they did work I got a different device ID every time. This made me think that I was just not able to sink enough juice to get things working with the AVR device in-circuit on the Arduino board. When the chip was sitting on the breadboard without much else it worked fine. So, I used 2 74ls04 hex inverter ICs for the purpose of sourcing some more power since my parallel port didn’t seem to be up to the task. I used 2 inverters back-to-back in order to form non-inverting buffers. I had a few 74ls07 chips around too, but these are open-collector devices meaning I would have to use a bunch of pull up resistors and I was too lazy to wire that up, so I decided on the hex inverter solution. Since the logic levels were the same (should be 5v, but I didn’t measure my parallel port, and my power supply is actually running at closer to 6v) I didn’t worry too much about not using open-collector devices with pull ups.</p>
-<p><img src="../../images/2012-05-03_arduino-usb-midi-workflow_buffers.jpg" alt="" loading="lazy"></p>
+<p><img src="/images/2012-05-03_arduino-usb-midi-workflow_buffers.jpg" alt="" loading="lazy"></p>
 <p>I inserted the buffer circuit inline by cutting my cable in two rather than try to make this a nice finished cable. However, this allows me to make code updates without too much hassle now. I do need to remove the header from the Arduino in order to run the uploaded code (would be nice to have a way to electrically disconnect things. I feel like I should be able to bring reset high to get this to work without disconnecting the cable).</p>
-<p><img src="../../images/2012-05-03_arduino-usb-midi-workflow_buffers-inline.jpg" alt="" loading="lazy"></p>
+<p><img src="/images/2012-05-03_arduino-usb-midi-workflow_buffers-inline.jpg" alt="" loading="lazy"></p>
 <p>In the midst of this, I thought briefly about abandoning the MIDI firmware so I could just program the Arduino using the USB connection. I might use a serial interface here like the Monome did so that I can implement better bidirectional data support. I want to eventually put LEDs on the pedals of the Kickplate project and in order to do that I need to send data back to the pedals. I thought about using sysex or maybe just sending a MIDI status message with the proper ID for the pedal in question. That design discussion is for another post though.</p>
     </div>
     <div class="post-nav">
-      <div><a href="pedalfighter-button-selection.html">&larr; Pedalfighter button selection</a></div>
-      <div><a href="sending-osc-from-pd-to-touchosc.html">Sending OSC from PD to TouchOSC &rarr;</a></div>
+      <div><a href="/blog/posts/pedalfighter-button-selection.html">&larr; Pedalfighter button selection</a></div>
+      <div><a href="/blog/posts/sending-osc-from-pd-to-touchosc.html">Sending OSC from PD to TouchOSC &rarr;</a></div>
     </div>
   </div>
   <footer>

@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Kick Plate load cell MIDI controller — AudioDestrukt</title>
-  <link rel="icon" type="image/svg+xml" href="../../favicon.svg">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
   <link rel="alternate" type="application/rss+xml" title="AudioDestrukt Blog" href="https://audiodestrukt.com/blog/feed.xml">
   <style>
     :root {
@@ -255,18 +255,18 @@
 </head>
 <body>
   <nav>
-    <a href="../../index.html" class="logo">audio<span>destrukt</span></a>
+    <a href="/index.html" class="logo">audio<span>destrukt</span></a>
     <ul>
-      <li><a href="../../index.html#plugin">Plugin</a></li>
-      <li><a href="../../index.html#features">Features</a></li>
-      <li><a href="../../index.html#download">Download</a></li>
-      <li><a href="../../index.html#about">About</a></li>
-      <li><a href="../index.html" class="active">Blog</a></li>
+      <li><a href="/index.html#plugin">Plugin</a></li>
+      <li><a href="/index.html#features">Features</a></li>
+      <li><a href="/index.html#download">Download</a></li>
+      <li><a href="/index.html#about">About</a></li>
+      <li><a href="/blog/index.html" class="active">Blog</a></li>
     </ul>
   </nav>
   <div class="container">
     <div class="post-header">
-      <div class="post-meta"><a href="../index.html">Blog</a> &mdash; April 26, 2012</div>
+      <div class="post-meta"><a href="/blog/index.html">Blog</a> &mdash; April 26, 2012</div>
       <h1>Kick Plate load cell MIDI controller</h1>
       <div class="post-tags" style="margin-top:0.75rem"><span class="tag">Kick Plate</span></div>
     </div>
@@ -277,24 +277,24 @@
 <p>The theory of operation is that the conductive foam will be sandwiched between two steel plates. The plates will be squeezed together by foot pressure and the resistance provided between the two plates via the conductive foam should vary in some inverse proportionality to the displacement of the top plate, and hence the amount of foot pressure.</p>
 <p>Now let’s build one and see about how well it performs. What I’m showing here is a prototype, held together with rubber bands, but the final version should be pretty similar, albeit epoxied together instead.</p>
 <p>I cut some bits of foam weather stripping material and applied it to the edges of a steel junction box cover. I also put some big rubber feet on the bottom of this bottom plate.</p>
-<p><img src="../../images/2012-04-26_load-cell-midi-controller_applying-foam.jpg" alt="" loading="lazy"></p>
+<p><img src="/images/2012-04-26_load-cell-midi-controller_applying-foam.jpg" alt="" loading="lazy"></p>
 <p>After the weather stripping was applied I put the conductive foam piece in the center. I didn’t glue it so that I could experiment with different foam configurations. I’m planning on tacking the corners using epoxy for the final build.</p>
-<p><img src="../../images/2012-04-26_load-cell-midi-controller_foam-applied.jpg" alt="" loading="lazy"></p>
+<p><img src="/images/2012-04-26_load-cell-midi-controller_foam-applied.jpg" alt="" loading="lazy"></p>
 <p>I put the top plate on and connected wires to the top and bottom plates. For the final build I’ll use adhesive to bond the foam to both plates. For now I’ve used rubber bands to hold the top plate in place.</p>
-<p><img src="../../images/2012-04-26_load-cell-midi-controller_top.jpg" alt="" loading="lazy"></p>
+<p><img src="/images/2012-04-26_load-cell-midi-controller_top.jpg" alt="" loading="lazy"></p>
 <p>Now to find out how well it works. My test setup consists of a postal scale and a digital multimeter. I have the load cell connected in a resistive voltage divider network along with a 10K resistor. Loading the cell pulls the output up toward a 5V supply. Here is what the test setup looks like:</p>
-<p><img src="../../images/2012-04-26_load-cell-midi-controller_test-setup.jpg" alt="" loading="lazy"></p>
+<p><img src="/images/2012-04-26_load-cell-midi-controller_test-setup.jpg" alt="" loading="lazy"></p>
 <p>I took a few measurements to see what the response curve looked like. The values jump around a bit even with very constant pressures, so these readings are kind of rough averages of what I was seeing on the DMM. The load numbers are pretty accurate, since I was taking those readings from the postal scale. Here is the graph:</p>
-<p><img src="../../images/2012-04-26_load-cell-midi-controller_chart.png" alt="" loading="lazy"></p>
+<p><img src="/images/2012-04-26_load-cell-midi-controller_chart.png" alt="" loading="lazy"></p>
 <p>So we can see that once we get up to about 5 pounds, the response is remarkably linear. This is pretty awesome actually because we can set up a trigger threshold in software for a trigger mode that I have in mind for this. A relatively light push on the pedal will trigger an event, but a harder push past that can send continuous control messages.</p>
 <p>Here are some more views of the prototype:</p>
-<p><img src="../../images/2012-04-26_load-cell-midi-controller_edge.jpg" alt="" loading="lazy"></p>
-<p><img src="../../images/2012-04-26_load-cell-midi-controller_bottom.jpg" alt="" loading="lazy"></p>
+<p><img src="/images/2012-04-26_load-cell-midi-controller_edge.jpg" alt="" loading="lazy"></p>
+<p><img src="/images/2012-04-26_load-cell-midi-controller_bottom.jpg" alt="" loading="lazy"></p>
 <p>More to come later when I interface this to an Arduino ADC and get it sending Midi data.</p>
     </div>
     <div class="post-nav">
-      <div><a href="midi-foot-pedal-build-notes.html">&larr; Kick Plate MIDI foot pedal build notes</a></div>
-      <div><a href="alesis-dual-zone-snare-trigger-teardown.html">Alesis dual zone snare trigger teardown &rarr;</a></div>
+      <div><a href="/blog/posts/midi-foot-pedal-build-notes.html">&larr; Kick Plate MIDI foot pedal build notes</a></div>
+      <div><a href="/blog/posts/alesis-dual-zone-snare-trigger-teardown.html">Alesis dual zone snare trigger teardown &rarr;</a></div>
     </div>
   </div>
   <footer>

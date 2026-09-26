@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Guitar design — AudioDestrukt</title>
-  <link rel="icon" type="image/svg+xml" href="../../favicon.svg">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
   <link rel="alternate" type="application/rss+xml" title="AudioDestrukt Blog" href="https://audiodestrukt.com/blog/feed.xml">
   <style>
     :root {
@@ -255,18 +255,18 @@
 </head>
 <body>
   <nav>
-    <a href="../../index.html" class="logo">audio<span>destrukt</span></a>
+    <a href="/index.html" class="logo">audio<span>destrukt</span></a>
     <ul>
-      <li><a href="../../index.html#plugin">Plugin</a></li>
-      <li><a href="../../index.html#features">Features</a></li>
-      <li><a href="../../index.html#download">Download</a></li>
-      <li><a href="../../index.html#about">About</a></li>
-      <li><a href="../index.html" class="active">Blog</a></li>
+      <li><a href="/index.html#plugin">Plugin</a></li>
+      <li><a href="/index.html#features">Features</a></li>
+      <li><a href="/index.html#download">Download</a></li>
+      <li><a href="/index.html#about">About</a></li>
+      <li><a href="/blog/index.html" class="active">Blog</a></li>
     </ul>
   </nav>
   <div class="container">
     <div class="post-header">
-      <div class="post-meta"><a href="../index.html">Blog</a> &mdash; January 23, 2023</div>
+      <div class="post-meta"><a href="/blog/index.html">Blog</a> &mdash; January 23, 2023</div>
       <h1>Guitar design</h1>
       
     </div>
@@ -280,19 +280,19 @@
 <p>Most necks come un-drilled, so getting the neck angle set in straight is harder than it sounds. I’m not sure what the solution to this is yet. So far I have been able to get the neck pocket very tight so I was able to kind of set the neck in with a rubber mallet and tap it around with the strings in place to get it just right. Once it’s set I drilled holes and screwed the back plate on.</p>
 <p>Another snafu was the jack plate. This happened due to the way I routed the edge of my guitar body. I need an accurate way of locating this hole still.</p>
 <p>This post turned out to be just a random string of thoughts on what I have gone through so far rather than any sort of cohesive thing, I apologize if you are still reading here. A ton of ad-hoc thoughts and processes have come about as a result of my building a prototype and I’m still trying to come up with a repeatable way of building the guitar efficiently in a way that I will be able to manufacture a run of say 10 instruments myself without taking a year to do it.</p>
-<p><img src="../../images/2023-01-23_guitar-design_image.png" alt="" loading="lazy"></p>
+<p><img src="/images/2023-01-23_guitar-design_image.png" alt="" loading="lazy"></p>
 <p>This is what the template looks like when applied to a random Strat outline that I downloaded. It’s parametric so I can specify where each component goes on the center line, but I’m still looking into how to automatically figure out where the neck pocket and bridge position need to go based on the scale length and the neck. One template I found marked the position of the 21st fret so maybe that’s common in the luthier world. Ideally I’d like to take a random outline, establish a centerline and be able to play with positioning in a way that will always produce a playable instrument. I need to figure out a critical measurement for a given neck that I might buy so that the scale length works out. I was a little perplexed the first time I bought a neck and it didn’t have any holes drilled in it. So it’s a design decision how deep in to set the neck really and even where to drill it.</p>
 <p>One other thing that I found unexpectedly difficult was drilling the bridge pin holes. They have to be dead-on for the bridge to fit down over the pins and they have to be exactly the right distance away from the nut for the intonation to be correct. Well, the latter isn’t totally true, since the bridges can generally be adjusted and each string requires some fine adjustment anyway. The former was hard and I screwed it up twice trying to do it even with a drill press. I ended up filling the holes in with dowels and trying again. Even with a press, I needed brad-point drill bits to get the center correct and they had to be marked perfectly with a punch first. Also the bridges I was using didn’t have any data so I was measuring everything with a caliper.</p>
 <p>So, I really want to avoid drilling these holes entirely and I’m hoping that I can route them along with everything else since they are generally a larger diameter than my routing bits.</p>
 <p>The last thing is the neck pocket. If I want to use a single routing template I have to make some kind of removable piece for the outer route vs the pocket. And the drill holes. If I use two templates then I need indexing holes or something to line the templates up with. I really want to be able to do this stuff with a single template. Also want to transfer the drill holes to the neck somehow from the template. Probably through transfer punches in the guide holes.</p>
 <p>Creating drawings in Inkscape requires changing the units in the “drawing” menu and rescaling the image. It took me a while to get this right but it seems repeatable for getting svg files that can be used in OpenScad with correct dimensions.</p>
-<p><img src="../../images/2023-01-23_guitar-design_image-1.png" alt="" loading="lazy"></p>
+<p><img src="/images/2023-01-23_guitar-design_image-1.png" alt="" loading="lazy"></p>
 <p>The critical detail here is the “resize to content” and the scale factor. For my system the scale factor was 0.26 approximately. It seems to be automatically calculated by Inkscape and seems to work. The default unit seems to be the pixel.</p>
 <p>BTW I’m publishing this code as a project called grout <a href="https://github.com/dnewcome/grout"><a href="https://github.com/dnewcome/grout">https://github.com/dnewcome/grout</a></a></p>
     </div>
     <div class="post-nav">
-      <div><a href="drum-hardware-digging.html">&larr; Drum hardware digging</a></div>
-      <div><a href="learning-music-theory.html">Learning music theory &rarr;</a></div>
+      <div><a href="/blog/posts/drum-hardware-digging.html">&larr; Drum hardware digging</a></div>
+      <div><a href="/blog/posts/learning-music-theory.html">Learning music theory &rarr;</a></div>
     </div>
   </div>
   <footer>

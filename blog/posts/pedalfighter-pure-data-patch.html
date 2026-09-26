@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Pedal Fighter Pure Data patch — AudioDestrukt</title>
-  <link rel="icon" type="image/svg+xml" href="../../favicon.svg">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
   <link rel="alternate" type="application/rss+xml" title="AudioDestrukt Blog" href="https://audiodestrukt.com/blog/feed.xml">
   <style>
     :root {
@@ -255,18 +255,18 @@
 </head>
 <body>
   <nav>
-    <a href="../../index.html" class="logo">audio<span>destrukt</span></a>
+    <a href="/index.html" class="logo">audio<span>destrukt</span></a>
     <ul>
-      <li><a href="../../index.html#plugin">Plugin</a></li>
-      <li><a href="../../index.html#features">Features</a></li>
-      <li><a href="../../index.html#download">Download</a></li>
-      <li><a href="../../index.html#about">About</a></li>
-      <li><a href="../index.html" class="active">Blog</a></li>
+      <li><a href="/index.html#plugin">Plugin</a></li>
+      <li><a href="/index.html#features">Features</a></li>
+      <li><a href="/index.html#download">Download</a></li>
+      <li><a href="/index.html#about">About</a></li>
+      <li><a href="/blog/index.html" class="active">Blog</a></li>
     </ul>
   </nav>
   <div class="container">
     <div class="post-header">
-      <div class="post-meta"><a href="../index.html">Blog</a> &mdash; January 22, 2012</div>
+      <div class="post-meta"><a href="/blog/index.html">Blog</a> &mdash; January 22, 2012</div>
       <h1>Pedal Fighter Pure Data patch</h1>
       <div class="post-tags" style="margin-top:0.75rem"><span class="tag">Pedal Fighter</span><span class="tag">Pure Data</span></div>
     </div>
@@ -281,12 +281,12 @@
 <p>In order to send the appropriate MIDI message, we have to split the data depending on whether we are seeing a 0 or a 1 value. We do this using the moses object in PD. Sending a note off is done by sending a zero velocity to noteout.</p>
 <p>In addition to splitting the data for note on/note off, I have split the data for the pin number as well. The reason for this is that I was getting spurious data from the unconnected digital pins on the Arduino. I’m sure that there is a way to deal with this in the firmware, and in the final version of the Pedalfighter I’ll do it there, but for now this is a good way to keep phantom notes at bay.</p>
 <p>The basic patch looks like the following:</p>
-<p><img src="../../images/2012-01-22_pedalfighter-pure-data-patch_pedalfighter.png" alt="" loading="lazy"></p>
+<p><img src="/images/2012-01-22_pedalfighter-pure-data-patch_pedalfighter.png" alt="" loading="lazy"></p>
 <p>For the final version of the project this should be more generic, like not assuming which TTY the Arduino is on, but you get the idea.</p>
     </div>
     <div class="post-nav">
-      <div><a href="tube-amp-design.html">&larr; Tube amp design</a></div>
-      <div><a href="arduino-pedalfighter-project.html">Arduino Pedal Fighter project &rarr;</a></div>
+      <div><a href="/blog/posts/tube-amp-design.html">&larr; Tube amp design</a></div>
+      <div><a href="/blog/posts/arduino-pedalfighter-project.html">Arduino Pedal Fighter project &rarr;</a></div>
     </div>
   </div>
   <footer>

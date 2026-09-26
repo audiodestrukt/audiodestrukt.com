@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>The state of USB audio on Windows — AudioDestrukt</title>
-  <link rel="icon" type="image/svg+xml" href="../../favicon.svg">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
   <link rel="alternate" type="application/rss+xml" title="AudioDestrukt Blog" href="https://audiodestrukt.com/blog/feed.xml">
   <style>
     :root {
@@ -255,18 +255,18 @@
 </head>
 <body>
   <nav>
-    <a href="../../index.html" class="logo">audio<span>destrukt</span></a>
+    <a href="/index.html" class="logo">audio<span>destrukt</span></a>
     <ul>
-      <li><a href="../../index.html#plugin">Plugin</a></li>
-      <li><a href="../../index.html#features">Features</a></li>
-      <li><a href="../../index.html#download">Download</a></li>
-      <li><a href="../../index.html#about">About</a></li>
-      <li><a href="../index.html" class="active">Blog</a></li>
+      <li><a href="/index.html#plugin">Plugin</a></li>
+      <li><a href="/index.html#features">Features</a></li>
+      <li><a href="/index.html#download">Download</a></li>
+      <li><a href="/index.html#about">About</a></li>
+      <li><a href="/blog/index.html" class="active">Blog</a></li>
     </ul>
   </nav>
   <div class="container">
     <div class="post-header">
-      <div class="post-meta"><a href="../index.html">Blog</a> &mdash; December 13, 2012</div>
+      <div class="post-meta"><a href="/blog/index.html">Blog</a> &mdash; December 13, 2012</div>
       <h1>The state of USB audio on Windows</h1>
       
     </div>
@@ -283,17 +283,17 @@
 <p>I tried the AudioBox on a Mac running OSX 10.7.5 also and had no issues at all getting 64 sample latency on Reaper for Mac. Performance was just immaculate. I didn’t have to install any drivers at all either. So Mac wins hands down, followed by Windows 8, which didn’t show any performance spikes, but did have higher DPC latency overall.</p>
 <p>I used the <a href="http://www.thesycon.de/deu/latency_check.shtml">DPC latency checker</a> as well as <a href="http://www.resplendence.com/latencymon">LatencyMon</a> to find offending drivers that are doing a lot of interrupts. The top offenders on my system were network interfaces, especially Bluetooth. The second thing that I changed was to make sure that the CPU was always set to run at 100% in the Windows power management console under control panel.</p>
 <p>Apart from these two things, most of the other tweaks that I found on the Web had little or no discernible effect. Again, my procedures here are decidedly unscientific so it’s possible that some of these other things have synergistic or other statistically significant effects that I didn’t notice. However they weren’t drastic enough for me to observe a big difference.</p>
-<p><img src="../../images/2012-12-13_the-state-of-usb-audio-on-windows_dpc-win7.png" alt="dpc-win7" loading="lazy"></p>
-<p><img src="../../images/2012-12-13_the-state-of-usb-audio-on-windows_dpc-win8.png" alt="dpc-win8" loading="lazy"></p>
-<p><img src="../../images/2012-12-13_the-state-of-usb-audio-on-windows_lat-win7png.png" alt="lat-win7png" loading="lazy"></p>
-<p><img src="../../images/2012-12-13_the-state-of-usb-audio-on-windows_perf-win7.png" alt="perf-win7" loading="lazy"></p>
-<p><img src="../../images/2012-12-13_the-state-of-usb-audio-on-windows_dpc-drivers-win8.png" alt="Windows 8 - drivers DPC" loading="lazy"></p>
+<p><img src="/images/2012-12-13_the-state-of-usb-audio-on-windows_dpc-win7.png" alt="dpc-win7" loading="lazy"></p>
+<p><img src="/images/2012-12-13_the-state-of-usb-audio-on-windows_dpc-win8.png" alt="dpc-win8" loading="lazy"></p>
+<p><img src="/images/2012-12-13_the-state-of-usb-audio-on-windows_lat-win7png.png" alt="lat-win7png" loading="lazy"></p>
+<p><img src="/images/2012-12-13_the-state-of-usb-audio-on-windows_perf-win7.png" alt="perf-win7" loading="lazy"></p>
+<p><img src="/images/2012-12-13_the-state-of-usb-audio-on-windows_dpc-drivers-win8.png" alt="Windows 8 - drivers DPC" loading="lazy"></p>
 <p>Footnotes:</p>
 <p><a href="http://www.gearslutz.com/board/low-end-theory/749142-focusrite-scarlett-2i2-vs-presonus-audiobox.html"><a href="http://www.gearslutz.com/board/low-end-theory/749142-focusrite-scarlett-2i2-vs-presonus-audiobox.html">http://www.gearslutz.com/board/low-end-theory/749142-focusrite-scarlett-2i2-vs-presonus-audiobox.html</a></a></p>
     </div>
     <div class="post-nav">
-      <div><a href="getting-64-sample-audio-latency-on-windows-8.html">&larr; Getting 64-sample audio latency on Windows 8</a></div>
-      <div><a href="running-pure-data-patches-full-screen.html">Running Pure Data patches full screen &rarr;</a></div>
+      <div><a href="/blog/posts/getting-64-sample-audio-latency-on-windows-8.html">&larr; Getting 64-sample audio latency on Windows 8</a></div>
+      <div><a href="/blog/posts/running-pure-data-patches-full-screen.html">Running Pure Data patches full screen &rarr;</a></div>
     </div>
   </div>
   <footer>

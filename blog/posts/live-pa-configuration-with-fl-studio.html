@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Live PA configuration with FL studio — AudioDestrukt</title>
-  <link rel="icon" type="image/svg+xml" href="../../favicon.svg">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
   <link rel="alternate" type="application/rss+xml" title="AudioDestrukt Blog" href="https://audiodestrukt.com/blog/feed.xml">
   <style>
     :root {
@@ -255,18 +255,18 @@
 </head>
 <body>
   <nav>
-    <a href="../../index.html" class="logo">audio<span>destrukt</span></a>
+    <a href="/index.html" class="logo">audio<span>destrukt</span></a>
     <ul>
-      <li><a href="../../index.html#plugin">Plugin</a></li>
-      <li><a href="../../index.html#features">Features</a></li>
-      <li><a href="../../index.html#download">Download</a></li>
-      <li><a href="../../index.html#about">About</a></li>
-      <li><a href="../index.html" class="active">Blog</a></li>
+      <li><a href="/index.html#plugin">Plugin</a></li>
+      <li><a href="/index.html#features">Features</a></li>
+      <li><a href="/index.html#download">Download</a></li>
+      <li><a href="/index.html#about">About</a></li>
+      <li><a href="/blog/index.html" class="active">Blog</a></li>
     </ul>
   </nav>
   <div class="container">
     <div class="post-header">
-      <div class="post-meta"><a href="../index.html">Blog</a> &mdash; April 29, 2012</div>
+      <div class="post-meta"><a href="/blog/index.html">Blog</a> &mdash; April 29, 2012</div>
       <h1>Live PA configuration with FL studio</h1>
       <div class="post-tags" style="margin-top:0.75rem"><span class="tag">Live PA</span></div>
     </div>
@@ -282,12 +282,12 @@
 <p>One other thing that I wanted to be able to do was to do loop record. There are two things that keep me from realizing this in FL Studio currently. First is that there is no destructive quantize. That is I can’t quantize my playing on the way into the sequencer. That means I have to be really really precise in order to get something that is going to be able to be looped for a few minutes without being cringe-inducing. The second thing is that the replace mode is a little off when you are playing live. The way it works is that you have to be actively playing notes in order for the old stuff to be overwritten. You can’t “record” silence over top of existing material. Also, when you are playing if you want to drop out and have the rest of the loop play out you have silence until the loop repeats. I understand that in order to make this work the way I want it would mean that you’d have to use a punch-out pedal or some way of telling FL that you are finished playing. Lastly there is a little bit of awkwardness at the beginning of the loop when it repeats. If you are playing (holding) a note, it will be cut, and the beginning of the existing material will sound for a fraction of a second. This makes the loop sound awkward when you are actively playing material during the time that it loops around.</p>
 <p>I understand that FL isn’t really designed for this, but maybe I’ll be able to find something or write something that works the way I want it to.</p>
 <p>I’ve found that when recording it’s best to just do it all on one pattern per playlist track. See my screenshot for details:</p>
-<p><img src="../../images/2012-04-29_live-pa-configuration-with-fl-studio_fl-live-playlist.png" alt="" loading="lazy"></p>
+<p><img src="/images/2012-04-29_live-pa-configuration-with-fl-studio_fl-live-playlist.png" alt="" loading="lazy"></p>
 <p>The last thing I’d need to make this work would be a way of switching between tracks with the pedal. I think I should be able to program the FCB to do a series of messages that would switch FL to a new generator and change patterns to a different pattern. Not sure how well this will work yet, I’ll keep you posted.</p>
     </div>
     <div class="post-nav">
-      <div><a href="fl-studio-live-mode-and-foot-controllers.html">&larr; FL Studio live mode and foot controllers</a></div>
-      <div><a href="fcb1010-programming-hints.html">FCB1010 programming hints &rarr;</a></div>
+      <div><a href="/blog/posts/fl-studio-live-mode-and-foot-controllers.html">&larr; FL Studio live mode and foot controllers</a></div>
+      <div><a href="/blog/posts/fcb1010-programming-hints.html">FCB1010 programming hints &rarr;</a></div>
     </div>
   </div>
   <footer>

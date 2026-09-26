@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Metaprogramming in PD — AudioDestrukt</title>
-  <link rel="icon" type="image/svg+xml" href="../../favicon.svg">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
   <link rel="alternate" type="application/rss+xml" title="AudioDestrukt Blog" href="https://audiodestrukt.com/blog/feed.xml">
   <style>
     :root {
@@ -255,18 +255,18 @@
 </head>
 <body>
   <nav>
-    <a href="../../index.html" class="logo">audio<span>destrukt</span></a>
+    <a href="/index.html" class="logo">audio<span>destrukt</span></a>
     <ul>
-      <li><a href="../../index.html#plugin">Plugin</a></li>
-      <li><a href="../../index.html#features">Features</a></li>
-      <li><a href="../../index.html#download">Download</a></li>
-      <li><a href="../../index.html#about">About</a></li>
-      <li><a href="../index.html" class="active">Blog</a></li>
+      <li><a href="/index.html#plugin">Plugin</a></li>
+      <li><a href="/index.html#features">Features</a></li>
+      <li><a href="/index.html#download">Download</a></li>
+      <li><a href="/index.html#about">About</a></li>
+      <li><a href="/blog/index.html" class="active">Blog</a></li>
     </ul>
   </nav>
   <div class="container">
     <div class="post-header">
-      <div class="post-meta"><a href="../index.html">Blog</a> &mdash; May 20, 2013</div>
+      <div class="post-meta"><a href="/blog/index.html">Blog</a> &mdash; May 20, 2013</div>
       <h1>Metaprogramming in PD</h1>
       
     </div>
@@ -276,14 +276,14 @@
 <p>In PD we have ways of sending object creation messages to a subpatch. These messages are mostly undocumented features of PD, so we are kind of in the fringes here, but then, PD is mostly fringes for better or worse!</p>
 <p>The message that is most useful to us in this situation is the “obj” message. Check <a href="http://puredata.info/docs/tutorials/TipsAndTricks">this page</a> out for a big list of internal PD messages</p>
 <p>In my case, there are many times where I want to create a big grid of some objects (say a Monome patch or something). This is easily done using a typical modulus and integer division solution for creating a coordinate matrix from a number series, then using these coordinates in a object creation message that targets our output subpatch. </p>
-<p><img src="../../images/2013-05-20_metaprogramming-in-pd_pd-metaprogramming.png" alt="pd-metaprogramming" loading="lazy"></p>
+<p><img src="/images/2013-05-20_metaprogramming-in-pd_pd-metaprogramming.png" alt="pd-metaprogramming" loading="lazy"></p>
 <p>The above code generates the following output:</p>
-<p><img src="../../images/2013-05-20_metaprogramming-in-pd_grid-pd.png" alt="grid-pd" loading="lazy"></p>
+<p><img src="/images/2013-05-20_metaprogramming-in-pd_grid-pd.png" alt="grid-pd" loading="lazy"></p>
 <p>This can be used as-is or copied somewhere else. It might be nice to create some metaprogramming tools outside of the current project just to use for things like this. I’m still exploring whether this can be used to target the current patch (rather than a subpatch) and whether primitive objects like bangs or toggles can be created this way. If anyone figures either of those things, let me know!</p>
     </div>
     <div class="post-nav">
-      <div><a href="string-gauge-experimentation.html">&larr; String gauge experimentation</a></div>
-      <div><a href="using-the-wii-remote-with-pure-data.html">Using the Wii Remote with Pure Data &rarr;</a></div>
+      <div><a href="/blog/posts/string-gauge-experimentation.html">&larr; String gauge experimentation</a></div>
+      <div><a href="/blog/posts/using-the-wii-remote-with-pure-data.html">Using the Wii Remote with Pure Data &rarr;</a></div>
     </div>
   </div>
   <footer>

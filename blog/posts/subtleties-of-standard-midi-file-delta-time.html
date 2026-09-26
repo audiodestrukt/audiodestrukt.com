@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Subtleties of standard MIDI file delta time — AudioDestrukt</title>
-  <link rel="icon" type="image/svg+xml" href="../../favicon.svg">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
   <link rel="alternate" type="application/rss+xml" title="AudioDestrukt Blog" href="https://audiodestrukt.com/blog/feed.xml">
   <style>
     :root {
@@ -255,18 +255,18 @@
 </head>
 <body>
   <nav>
-    <a href="../../index.html" class="logo">audio<span>destrukt</span></a>
+    <a href="/index.html" class="logo">audio<span>destrukt</span></a>
     <ul>
-      <li><a href="../../index.html#plugin">Plugin</a></li>
-      <li><a href="../../index.html#features">Features</a></li>
-      <li><a href="../../index.html#download">Download</a></li>
-      <li><a href="../../index.html#about">About</a></li>
-      <li><a href="../index.html" class="active">Blog</a></li>
+      <li><a href="/index.html#plugin">Plugin</a></li>
+      <li><a href="/index.html#features">Features</a></li>
+      <li><a href="/index.html#download">Download</a></li>
+      <li><a href="/index.html#about">About</a></li>
+      <li><a href="/blog/index.html" class="active">Blog</a></li>
     </ul>
   </nav>
   <div class="container">
     <div class="post-header">
-      <div class="post-meta"><a href="../index.html">Blog</a> &mdash; June 10, 2014</div>
+      <div class="post-meta"><a href="/blog/index.html">Blog</a> &mdash; June 10, 2014</div>
       <h1>Subtleties of standard MIDI file delta time</h1>
       
     </div>
@@ -274,9 +274,9 @@
 <h1>Subtleties of standard MIDI file delta time</h1>
 <p>I have been playing around with generating MIDI files using Node.js recently. I’m using a minimal MIDI file writer called <a href="https://github.com/sabberworm/node-midimal">node-midimal</a>. Everything was working fine until I tried to output a drum beat that had a hihat and a snare/kick playing on the same beat.</p>
 <p>I was writing out the notes both with a delta time of 0, which should have played them on the same beat. However, when I opened the resulting file up in Logic Audio, I saw something like this:</p>
-<p><img src="../../images/2014-06-10_subtleties-of-standard-midi-file-delta-time_screen-shot-2014-06-10-at-8-09-15-pm.png" alt="Screen Shot 2014-06-10 at 8.09.15 PM" loading="lazy"></p>
+<p><img src="/images/2014-06-10_subtleties-of-standard-midi-file-delta-time_screen-shot-2014-06-10-at-8-09-15-pm.png" alt="Screen Shot 2014-06-10 at 8.09.15 PM" loading="lazy"></p>
 <p>I changed the second note to play correctly in Logic and saved the file out as another MIDI file. </p>
-<p><img src="../../images/2014-06-10_subtleties-of-standard-midi-file-delta-time_screen-shot-2014-06-10-at-8-59-38-pm.png" alt="Screen Shot 2014-06-10 at 8.59.38 PM" loading="lazy"></p>
+<p><img src="/images/2014-06-10_subtleties-of-standard-midi-file-delta-time_screen-shot-2014-06-10-at-8-59-38-pm.png" alt="Screen Shot 2014-06-10 at 8.59.38 PM" loading="lazy"></p>
 <p>Then I grabbed a little MIDI file dumper tool called <a href="http://interglacial.com/pub/dr_midi.html">Daktari MIDI</a>, which is sort of like a disassembler for MIDI files, and dumped out both files.</p>
 <p>The first is the output of my mysteriously incorrect program:</p>
 <pre><code>000000t: Control change :: Channel 0. Controller 7. Value: 127
@@ -299,8 +299,8 @@
 <p>This is blindingly obvious now, but caused me some consternation late last night.</p>
     </div>
     <div class="post-nav">
-      <div><a href="accurate-timing-in-the-browser.html">&larr; Accurate timing in the browser</a></div>
-      <div><a href="rapid-prototyping-pc-boards.html">Rapid prototyping PC boards &rarr;</a></div>
+      <div><a href="/blog/posts/accurate-timing-in-the-browser.html">&larr; Accurate timing in the browser</a></div>
+      <div><a href="/blog/posts/rapid-prototyping-pc-boards.html">Rapid prototyping PC boards &rarr;</a></div>
     </div>
   </div>
   <footer>

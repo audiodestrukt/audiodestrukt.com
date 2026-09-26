@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Pedal Fighter first play test — AudioDestrukt</title>
-  <link rel="icon" type="image/svg+xml" href="../../favicon.svg">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
   <link rel="alternate" type="application/rss+xml" title="AudioDestrukt Blog" href="https://audiodestrukt.com/blog/feed.xml">
   <style>
     :root {
@@ -255,18 +255,18 @@
 </head>
 <body>
   <nav>
-    <a href="../../index.html" class="logo">audio<span>destrukt</span></a>
+    <a href="/index.html" class="logo">audio<span>destrukt</span></a>
     <ul>
-      <li><a href="../../index.html#plugin">Plugin</a></li>
-      <li><a href="../../index.html#features">Features</a></li>
-      <li><a href="../../index.html#download">Download</a></li>
-      <li><a href="../../index.html#about">About</a></li>
-      <li><a href="../index.html" class="active">Blog</a></li>
+      <li><a href="/index.html#plugin">Plugin</a></li>
+      <li><a href="/index.html#features">Features</a></li>
+      <li><a href="/index.html#download">Download</a></li>
+      <li><a href="/index.html#about">About</a></li>
+      <li><a href="/blog/index.html" class="active">Blog</a></li>
     </ul>
   </nav>
   <div class="container">
     <div class="post-header">
-      <div class="post-meta"><a href="../index.html">Blog</a> &mdash; May 22, 2012</div>
+      <div class="post-meta"><a href="/blog/index.html">Blog</a> &mdash; May 22, 2012</div>
       <h1>Pedal Fighter first play test</h1>
       <div class="post-tags" style="margin-top:0.75rem"><span class="tag">Arduino</span><span class="tag">Linux</span><span class="tag">Pedal Fighter</span><span class="tag">Pure Data</span></div>
     </div>
@@ -303,15 +303,15 @@ SimpleDigitalFirmata:56: error: at this point in file</code></pre>
 <p>Everything we do with respect to Midi here in Linux depends on a running Jack server, so let’s run qjackctl and start the server. I use pasuspender to keep pulse audio from getting in the way:</p>
 <pre><code>$ pasuspender qjackctl</code></pre>
 <p>Here is the test PD patch I’m using to convert the Firmata serial data to Midi. Note that the Pduino.pd file from the Pduino distribution will be necessary for this to work, and under Linux we have to add /usr/lib/pd-extended/extra/flatspace to the PD search path. This is done using file->path once PD is running.</p>
-<p><img src="../../images/2012-05-22_pedal-fighter-first-play-test_pd-firmata-test.png" alt="" loading="lazy"></p>
+<p><img src="/images/2012-05-22_pedal-fighter-first-play-test_pd-firmata-test.png" alt="" loading="lazy"></p>
 <p>Another thing to be aware of is that the Arduino might come up as a different serial device on your machine. In the patch shown above you can see the serial port given to the connect message is 3. Mine tends to be /dev/ttyACM3 (hence, port number 3), but if the USB connection is reconnected frequently it can change. Best to be safe and use dmesg to figure out what the Aruino was detected as.</p>
 <p>Once PD is running, select ALSA Midi as the output system in PD. This should cause PDs Midi output to appeaer in the Jack connection manager:</p>
-<p><img src="../../images/2012-05-22_pedal-fighter-first-play-test_jack-connections.png" alt="" loading="lazy"></p>
+<p><img src="/images/2012-05-22_pedal-fighter-first-play-test_jack-connections.png" alt="" loading="lazy"></p>
 <p>I used the Specimen sampler to produce the sounds in my test, which you can see in the connections window in the above screenshot. I got pretty good latency results. I’m not sure what the numbers are actually, but I suspect that the MIDI path has very little contribution compared to anything in the audio path.</p>
     </div>
     <div class="post-nav">
-      <div><a href="developing-dssi-plugins.html">&larr; Developing DSSI plugins</a></div>
-      <div><a href="pedal-fighter-arduino-mounting.html">Pedal Fighter Arduino mounting &rarr;</a></div>
+      <div><a href="/blog/posts/developing-dssi-plugins.html">&larr; Developing DSSI plugins</a></div>
+      <div><a href="/blog/posts/pedal-fighter-arduino-mounting.html">Pedal Fighter Arduino mounting &rarr;</a></div>
     </div>
   </div>
   <footer>

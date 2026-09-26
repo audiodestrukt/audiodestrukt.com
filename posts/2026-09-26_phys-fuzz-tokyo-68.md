@@ -24,9 +24,9 @@ The Fuzz knob is not a gain control. It's a 50k pot with the first stage's colle
 
 The same synthetic riff, through London '66 and then Tokyo '68, everything else at the defaults.
 
-<audio controls preload="none" src="../../audio/phys-fuzz-riff-london-66.mp3"></audio>
+<audio controls preload="none" src="/audio/phys-fuzz-riff-london-66.mp3"></audio>
 
-<audio controls preload="none" src="../../audio/phys-fuzz-riff-tokyo-68.mp3"></audio>
+<audio controls preload="none" src="/audio/phys-fuzz-riff-tokyo-68.mp3"></audio>
 
 ## How it got in there
 

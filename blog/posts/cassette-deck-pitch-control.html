@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Cassette deck pitch control — AudioDestrukt</title>
-  <link rel="icon" type="image/svg+xml" href="../../favicon.svg">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
   <link rel="alternate" type="application/rss+xml" title="AudioDestrukt Blog" href="https://audiodestrukt.com/blog/feed.xml">
   <style>
     :root {
@@ -255,18 +255,18 @@
 </head>
 <body>
   <nav>
-    <a href="../../index.html" class="logo">audio<span>destrukt</span></a>
+    <a href="/index.html" class="logo">audio<span>destrukt</span></a>
     <ul>
-      <li><a href="../../index.html#plugin">Plugin</a></li>
-      <li><a href="../../index.html#features">Features</a></li>
-      <li><a href="../../index.html#download">Download</a></li>
-      <li><a href="../../index.html#about">About</a></li>
-      <li><a href="../index.html" class="active">Blog</a></li>
+      <li><a href="/index.html#plugin">Plugin</a></li>
+      <li><a href="/index.html#features">Features</a></li>
+      <li><a href="/index.html#download">Download</a></li>
+      <li><a href="/index.html#about">About</a></li>
+      <li><a href="/blog/index.html" class="active">Blog</a></li>
     </ul>
   </nav>
   <div class="container">
     <div class="post-header">
-      <div class="post-meta"><a href="../index.html">Blog</a> &mdash; March 15, 2020</div>
+      <div class="post-meta"><a href="/blog/index.html">Blog</a> &mdash; March 15, 2020</div>
       <h1>Cassette deck pitch control</h1>
       
     </div>
@@ -276,14 +276,14 @@
 <p>Most pots I have are in the 10k-500k range so I didn’t have anything close to 500 ohms. I decided it was probably a voltage divider anyway so the actual value shouldn’t matter too much.</p>
 <p>I wired up the 10k pot and observed that the range increased quite a bit from basically a dead stop all the way up to 160 rpm (measured at the take-up reel). I measured another unmodified unit and the max rpm was 90. I’m not sure why this was so maybe the circuit isn’t really a voltage divider.</p>
 <p>Application notes for the 6650 seem to use a 1k pot rather than 500 ohms.</p>
-<p><img src="../../images/2020-03-15_cassette-deck-pitch-control_an6650_umgeb1.png" alt="an6650_umgeb1" loading="lazy"></p>
+<p><img src="/images/2020-03-15_cassette-deck-pitch-control_an6650_umgeb1.png" alt="an6650_umgeb1" loading="lazy"></p>
 <p>C58 is 20uF, C22 is 100uF and C6 is 220uF. I can’t read out the other SMD caps.</p>
 <p>In any case it’s kinda cool to have such a huge range but I’m worried it will be hard to control. I’m using a linear pot, and it’s not clear whether the original 500 ohm trimmer was linear or log taper. I will try a log taper pot and see if that gets me better control since the first half of the linear taper is basically useless and runs the motor at full speed.</p>
 <p>I might also look into some multi-turn potentiometers as well.</p>
     </div>
     <div class="post-nav">
-      <div><a href="synth-golf.html">&larr; Synth golf</a></div>
-      <div><a href="universal-power-for-synth-gear.html">Universal power for synth gear &rarr;</a></div>
+      <div><a href="/blog/posts/synth-golf.html">&larr; Synth golf</a></div>
+      <div><a href="/blog/posts/universal-power-for-synth-gear.html">Universal power for synth gear &rarr;</a></div>
     </div>
   </div>
   <footer>

@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Network audio using netjack &#8211; part 1 — AudioDestrukt</title>
-  <link rel="icon" type="image/svg+xml" href="../../favicon.svg">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
   <link rel="alternate" type="application/rss+xml" title="AudioDestrukt Blog" href="https://audiodestrukt.com/blog/feed.xml">
   <style>
     :root {
@@ -255,18 +255,18 @@
 </head>
 <body>
   <nav>
-    <a href="../../index.html" class="logo">audio<span>destrukt</span></a>
+    <a href="/index.html" class="logo">audio<span>destrukt</span></a>
     <ul>
-      <li><a href="../../index.html#plugin">Plugin</a></li>
-      <li><a href="../../index.html#features">Features</a></li>
-      <li><a href="../../index.html#download">Download</a></li>
-      <li><a href="../../index.html#about">About</a></li>
-      <li><a href="../index.html" class="active">Blog</a></li>
+      <li><a href="/index.html#plugin">Plugin</a></li>
+      <li><a href="/index.html#features">Features</a></li>
+      <li><a href="/index.html#download">Download</a></li>
+      <li><a href="/index.html#about">About</a></li>
+      <li><a href="/blog/index.html" class="active">Blog</a></li>
     </ul>
   </nav>
   <div class="container">
     <div class="post-header">
-      <div class="post-meta"><a href="../index.html">Blog</a> &mdash; January 21, 2013</div>
+      <div class="post-meta"><a href="/blog/index.html">Blog</a> &mdash; January 21, 2013</div>
       <h1>Network audio using netjack &#8211; part 1</h1>
       
     </div>
@@ -281,10 +281,10 @@
 <p>I’m using <a href="http://www.reaper.fm/">Reaper</a> as my DAW on both ends. One thing that wasn’t so clear to me from reading the documentation was just how Jack was supposed to communicate with my sound card in Windows. There aren’t any ASIO options in the Jack setup. It turns out that there is something called JackRouter that lets ASIO-capable hosts see the Jack server. JackRouter is not a separate program or client that is run. It starts along with the Jackd executable process. This was a little confusing to me, as I was looking around for an executable called jack<em>router.exe in the same vein as the jack</em>netsource.exe and others.</p>
 <p>Another confusing part was that 64 bit versions of Reaper don’t seem to see the JackRouter in its ASIO setup. Once I reverted back to 32 bit Reaper I was able to see JackRouter in my list of ASIO drivers alongside ASIO4ALL. I noticed that the jackd.exe process was a 64 bit process and that there were 2 different versions of JackRouter.dll, and that reaper had the 32bit version open.</p>
 <p>You can see in the following screenshot from Process Explorer that it is the reaper.exe process that loads JackRouter.dll, and not Jackd.exe. I’m not sure which dll gets registered as an ASIO driver in Windows, or even how this lookup process works at all.</p>
-<p><img src="../../images/2013-01-21_network-audio-using-netjack-part-1_procexp-reaper.png" alt="procexp-reaper" loading="lazy"></p>
+<p><img src="/images/2013-01-21_network-audio-using-netjack-part-1_procexp-reaper.png" alt="procexp-reaper" loading="lazy"></p>
 <p>This might be a clue as to why 64 bit Reaper doesn’t pick up JackRouter.dll though.</p>
 <p>In Reaper, if I have ASIO set as the audio system and JackRouter selected as the ASIO driver, I can play audio from reaper to my built-in sound device. It looks like Jack automatically routes the audio from Reaper to the hardware output device. Note that if Reaper isn’t actually playing, its output don’t show up in the connections window! This was another point of confusion in this configuration.</p>
-<p><img src="../../images/2013-01-21_network-audio-using-netjack-part-1_reaper-connections2.png" alt="reaper-connections2" loading="lazy"></p>
+<p><img src="/images/2013-01-21_network-audio-using-netjack-part-1_reaper-connections2.png" alt="reaper-connections2" loading="lazy"></p>
 <p>At this point I’m pretty happy to be hearing sound, but I’m wondering what the latency is like when running this way, and I’m not sure what portaudio is using under the hood for audio output. I’m thinking it’s not using ASIO, but rather WDM.</p>
 <p>The next step then is to run the Jack server using some particular settings to try to force ASIO. There are some hints about this <a href="http://jackaudio.org/jack<em>on</em>windows">here on the Jack site</a>. Running the server like the following will start up ASIO4ALL when starting Jack:</p>
 <pre><code>C:\Program Files\Jack\jackd.exe" -R -S -d portaudio -d "ASIO::ASIO4ALL v2"</code></pre>
@@ -338,15 +338,15 @@ InitTime : multimedia timer resolution set to 1 milliseconds</code></pre>
 <p>Now, on the Mac side of things – I was able to get Jack installed using the Snow Leopard installer package. I’m using OSX 10.8 (Mountain Lion). </p>
 <p>I was able to select the coreaudio driver in the setup page of qjackctl and start the Jack server from there. In Reaper, the JackRouter device shows up in the list of audio devices. JackRouter also shows up as an audio device directly in the OSX Audio and Midi setup application.</p>
 <p>Setting the buffer size can be done in the Jack server setup by chaging the value of “frames/period”. Note that this buffer size isn’t affected by the “request block size” setting in the Reaper host.</p>
-<p><img src="../../images/2013-01-21_network-audio-using-netjack-part-1_jack-setup.png" alt="jack-setup" loading="lazy"></p>
+<p><img src="/images/2013-01-21_network-audio-using-netjack-part-1_jack-setup.png" alt="jack-setup" loading="lazy"></p>
 <p>The following screenshot shows JackRouter listed as an audio device in Mac audio and MIDI preferences:</p>
-<p><img src="../../images/2013-01-21_network-audio-using-netjack-part-1_audio-midi-setup.png" alt="audio-midi-setup" loading="lazy"></p>
+<p><img src="/images/2013-01-21_network-audio-using-netjack-part-1_audio-midi-setup.png" alt="audio-midi-setup" loading="lazy"></p>
 <p>At this point I have low-latency audio running through Jack locally on each host (Mac and PC) using their respective audio systems (CoreAudio and ASIO) with the ability to set the buffer size, and thus the latency.</p>
 <p>Part 2 will focus on actually getting audio out over the network using the network portion of Jack (NetJack).</p>
     </div>
     <div class="post-nav">
-      <div><a href="state-of-open-source-vinyl-control.html">&larr; State of open-source vinyl control</a></div>
-      <div><a href="installing-pure-data-on-ubuntu.html">Installing Pure Data on Ubuntu &rarr;</a></div>
+      <div><a href="/blog/posts/state-of-open-source-vinyl-control.html">&larr; State of open-source vinyl control</a></div>
+      <div><a href="/blog/posts/installing-pure-data-on-ubuntu.html">Installing Pure Data on Ubuntu &rarr;</a></div>
     </div>
   </div>
   <footer>

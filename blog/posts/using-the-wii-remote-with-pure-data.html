@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Using the Wii Remote with Pure Data — AudioDestrukt</title>
-  <link rel="icon" type="image/svg+xml" href="../../favicon.svg">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
   <link rel="alternate" type="application/rss+xml" title="AudioDestrukt Blog" href="https://audiodestrukt.com/blog/feed.xml">
   <style>
     :root {
@@ -255,18 +255,18 @@
 </head>
 <body>
   <nav>
-    <a href="../../index.html" class="logo">audio<span>destrukt</span></a>
+    <a href="/index.html" class="logo">audio<span>destrukt</span></a>
     <ul>
-      <li><a href="../../index.html#plugin">Plugin</a></li>
-      <li><a href="../../index.html#features">Features</a></li>
-      <li><a href="../../index.html#download">Download</a></li>
-      <li><a href="../../index.html#about">About</a></li>
-      <li><a href="../index.html" class="active">Blog</a></li>
+      <li><a href="/index.html#plugin">Plugin</a></li>
+      <li><a href="/index.html#features">Features</a></li>
+      <li><a href="/index.html#download">Download</a></li>
+      <li><a href="/index.html#about">About</a></li>
+      <li><a href="/blog/index.html" class="active">Blog</a></li>
     </ul>
   </nav>
   <div class="container">
     <div class="post-header">
-      <div class="post-meta"><a href="../index.html">Blog</a> &mdash; April 4, 2013</div>
+      <div class="post-meta"><a href="/blog/index.html">Blog</a> &mdash; April 4, 2013</div>
       <h1>Using the Wii Remote with Pure Data</h1>
       
     </div>
@@ -311,7 +311,7 @@ SOURCES += $(SOURCES_iphoneos)</code></pre>
 <p>I was still on my last Windows excursion so I used GlovePIE for the remainder of my experiments. GlovePIE is compiled against a version of DirectX from 2006 (v9.x) so I had to go download a legacy compatibility version from <a href="http://www.microsoft.com/en-us/download/details.aspx?id=35">Microsoft</a>.</p>
 <p>GlovePIE is essentially a scripting langauge for IO that happens to support both MIDI output and Wii Remote input. The tool is pretty deep (and weird in my opinion) but there is a lot of information and documentation out there about how it works fortuately.</p>
 <p>GlovePIE has a GUI for generating snippets of configuration code:</p>
-<p><img src="../../images/2013-04-04_using-the-wii-remote-with-pure-data_glovepie-gui.png" alt="glovepie-gui" loading="lazy"></p>
+<p><img src="/images/2013-04-04_using-the-wii-remote-with-pure-data_glovepie-gui.png" alt="glovepie-gui" loading="lazy"></p>
 <p>The GUI dropdown had some value, as it showed how my <a href="http://www.tobias-erichsen.de/software/loopmidi.html">LoopMIDI</a> ports were enumerated in GlovePIE and responded to my button presses on the Wiimote to let me know it was actually paired correctly. However, I was not able to get it to generate completely correct code for what I wanted it to do. Fortunately between the generated code, the documentation and some blog posts I was able to understand enough of the language to get things working.</p>
 <p>Specifically for setting up MIDI I found <a href="http://megatroid.com/2010/10/wiimote-to-midi-tutorial-using-glovepie/">this post</a> to be useful.</p>
 <p>For info on the different glovepie gyro and accelerometer options the <a href="http://glovepie.org/w/index.php?title=Preliminary<em>Documentation</em>v0.45#Vista<em>.28and</em>Windows_7.29">GlovePIE documentation</a> is great. There are differences between raw and processed accelerometer data values that are important to know, as well as how to map these values to useful data that we can use in PD. GlovePIE supports unit conversions and some other things that are explained in the documentation.</p>
@@ -322,7 +322,7 @@ SOURCES += $(SOURCES_iphoneos)</code></pre>
 midi2.control95 = maprange(wiimote1.smoothpitch, -90 degrees, 90 degrees, 0, 1)
 midi2.control96 = maprange(wiimote1.smoothroll, -90 degrees, 90 degrees, 0, 1)</code></pre>
 <p>And on the other end my PD patch looks like this:</p>
-<p><img src="../../images/2013-04-04_using-the-wii-remote-with-pure-data_pd-patch.png" alt="pd-patch" loading="lazy"></p>
+<p><img src="/images/2013-04-04_using-the-wii-remote-with-pure-data_pd-patch.png" alt="pd-patch" loading="lazy"></p>
 <p>This shows me pitch and roll of the controller (roughly the 2D tilt of the controller when oriented horizontally). There seems to be a roughly half-second delay when measuring the accelerometer. I haven’t tried controlling any audio signals yet, so it may be a little faster than I think it is. I don’t know a lot about Bluetooth latency or accelerometer speed, and from past experience MIDI in PD on Windows can be slow, so I’m not sure what contributes the most to latency in this system.</p>
 <p>After all this I never did try OSCulator, although when the need arises and I need to get this working on the Mac it will be the first thing I try.</p>
 <h3>A few things to note</h3>
@@ -330,8 +330,8 @@ midi2.control96 = maprange(wiimote1.smoothroll, -90 degrees, 90 degrees, 0, 1)</
 <p>At first when I ran my PD patch I used CC 10 and some of the the lower MIDI CCs. In GlovePIE these are all 14 bit MIDI messages, so the PD [ctlin] was giving me just the least significant portion of the value, which confusingly looked a lot like noise so I thought either my Wiimote was bad or that this motion sensing stuff just kind of sucked. Luckily I was mistaken. Although it still feels like a lot of work compared to my Chronos, which just used the PD [comport] serial object to communicate.</p>
     </div>
     <div class="post-nav">
-      <div><a href="metaprogramming-in-pd.html">&larr; Metaprogramming in PD</a></div>
-      <div><a href="first-look-at-the-microchip-23s17-spi-port-expander.html">First look at the Microchip 23S17 SPI port expander &rarr;</a></div>
+      <div><a href="/blog/posts/metaprogramming-in-pd.html">&larr; Metaprogramming in PD</a></div>
+      <div><a href="/blog/posts/first-look-at-the-microchip-23s17-spi-port-expander.html">First look at the Microchip 23S17 SPI port expander &rarr;</a></div>
     </div>
   </div>
   <footer>

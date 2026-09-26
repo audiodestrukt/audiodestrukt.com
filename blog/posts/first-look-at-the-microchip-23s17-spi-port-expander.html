@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>First look at the Microchip 23S17 SPI port expander — AudioDestrukt</title>
-  <link rel="icon" type="image/svg+xml" href="../../favicon.svg">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
   <link rel="alternate" type="application/rss+xml" title="AudioDestrukt Blog" href="https://audiodestrukt.com/blog/feed.xml">
   <style>
     :root {
@@ -255,24 +255,24 @@
 </head>
 <body>
   <nav>
-    <a href="../../index.html" class="logo">audio<span>destrukt</span></a>
+    <a href="/index.html" class="logo">audio<span>destrukt</span></a>
     <ul>
-      <li><a href="../../index.html#plugin">Plugin</a></li>
-      <li><a href="../../index.html#features">Features</a></li>
-      <li><a href="../../index.html#download">Download</a></li>
-      <li><a href="../../index.html#about">About</a></li>
-      <li><a href="../index.html" class="active">Blog</a></li>
+      <li><a href="/index.html#plugin">Plugin</a></li>
+      <li><a href="/index.html#features">Features</a></li>
+      <li><a href="/index.html#download">Download</a></li>
+      <li><a href="/index.html#about">About</a></li>
+      <li><a href="/blog/index.html" class="active">Blog</a></li>
     </ul>
   </nav>
   <div class="container">
     <div class="post-header">
-      <div class="post-meta"><a href="../index.html">Blog</a> &mdash; March 2, 2013</div>
+      <div class="post-meta"><a href="/blog/index.html">Blog</a> &mdash; March 2, 2013</div>
       <h1>First look at the Microchip 23S17 SPI port expander</h1>
       
     </div>
     <div class="post-body">
 <h1>First look at the Microchip 23S17 SPI port expander</h1>
-<p><img src="../../images/2013-03-02_first-look-at-the-microchip-23s17-spi-port-expander_buspirate-spi.jpg" alt="" loading="lazy"> I’m looking at some ways to expand my input options on my Arduino projects. I was looking around at some ICs and I noticed that Microchip had some 16 bit port expander chips that worked with SPI and I2C so I ordered some samples.</p>
+<p><img src="/images/2013-03-02_first-look-at-the-microchip-23s17-spi-port-expander_buspirate-spi.jpg" alt="" loading="lazy"> I’m looking at some ways to expand my input options on my Arduino projects. I was looking around at some ICs and I noticed that Microchip had some 16 bit port expander chips that worked with SPI and I2C so I ordered some samples.</p>
 <p>The part that I settled on was the 23S17, which communicates using SPI. The related part that does I2C is the 23017. It may be debatable which is better, but SPI can run much faster. In my case it probably wouldn’t matter though. There is also a 23×18 part with open-drain outputs, which would allow interfacing with circuits with different voltage levels.</p>
 <p>In any case, I wanted to use my Bus Pirate to play around with my samples. The Bus Pirate can be configured to twiddle around with just about any device that speaks I2C or SPI (among other things), but that flexibility comes at the cost of some simplicity in setting things up. If you know what you are doing it actually is pretty simple, but I had to figure out a few things before I had things working.</p>
 <p>The short version of this post is, power the device using the 3.3v supply on the Bus Pirate and use a bypass capacitor on the power connections of the 23S17.</p>
@@ -285,8 +285,8 @@
 <p>So hopefully this saves someone a few hours of head-scratching.</p>
     </div>
     <div class="post-nav">
-      <div><a href="using-the-wii-remote-with-pure-data.html">&larr; Using the Wii Remote with Pure Data</a></div>
-      <div><a href="using-the-adafruit-atmega32u4-breakout-board.html">Using the Adafruit Atmega32u4 breakout board &rarr;</a></div>
+      <div><a href="/blog/posts/using-the-wii-remote-with-pure-data.html">&larr; Using the Wii Remote with Pure Data</a></div>
+      <div><a href="/blog/posts/using-the-adafruit-atmega32u4-breakout-board.html">Using the Adafruit Atmega32u4 breakout board &rarr;</a></div>
     </div>
   </div>
   <footer>
