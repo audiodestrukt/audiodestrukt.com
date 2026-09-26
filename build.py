@@ -440,6 +440,10 @@ def footer_html():
   </footer>"""
 
 
+# Cloudflare Web Analytics beacon (cookie-free); also in index.html
+ANALYTICS = '''<!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "f393b960e25f42828910e441d26fa18c"}'></script><!-- End Cloudflare Web Analytics -->'''
+
+
 def page_shell(title, body, depth=''):
     return f"""<!DOCTYPE html>
 <html lang="en">
@@ -455,6 +459,7 @@ def page_shell(title, body, depth=''):
 {nav_html(depth=depth)}
 {body}
 {footer_html()}
+{ANALYTICS}
 </body>
 </html>"""
 
