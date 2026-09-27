@@ -5,9 +5,15 @@
     <link>https://audiodestrukt.com</link>
     <description>A poke in the ear with a sharp stick.</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 26 Sep 2026 17:52:29 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 27 Sep 2026 02:19:54 +0000</lastBuildDate>
     <atom:link href="https://audiodestrukt.com/blog/feed.xml" rel="self" type="application/rss+xml"/>
     <item>
+      <title>A guitar cab you build instead of pick</title>
+      <link>https://audiodestrukt.com/blog/posts/speaker-cab.html</link>
+      <guid isPermaLink="true">https://audiodestrukt.com/blog/posts/speaker-cab.html</guid>
+      <pubDate>Sat, 26 Sep 2026 19:30:00 +0000</pubDate>
+      <description>A guitar cab you build instead of pick Cab simulation mostly means impulse responses. Someone mics a real speaker in a real box, captures it, and you flip through a folder of them until one sounds right. That works, but you can't reach inside one. You can't ask what happens if the cone paper were a bit stiffer, or the…</description>
+    </item>    <item>
       <title>Phys Fuzz 0.2: a second circuit, Tokyo '68</title>
       <link>https://audiodestrukt.com/blog/posts/phys-fuzz-tokyo-68.html</link>
       <guid isPermaLink="true">https://audiodestrukt.com/blog/posts/phys-fuzz-tokyo-68.html</guid>
@@ -124,12 +130,6 @@ The School for Poetic Computation – a place for learning and unlearning. So gr
       <guid isPermaLink="true">https://audiodestrukt.com/blog/posts/audio-file-format-conversion.html</guid>
       <pubDate>Thu, 21 Nov 2024 19:04:46 +0000</pubDate>
       <description>Audio file format conversion I’m digging through some AKAI format sample CDs that I have in my collection. I converted some things in the past but I’m getting back into the process now. I don’t think I ever wrote anything down before so it feels like I’m starting over now. The CDs are image files of varying formats. Some are…</description>
-    </item>    <item>
-      <title>Octatrack re-learnings</title>
-      <link>https://audiodestrukt.com/blog/posts/octatrack-re-learnings.html</link>
-      <guid isPermaLink="true">https://audiodestrukt.com/blog/posts/octatrack-re-learnings.html</guid>
-      <pubDate>Thu, 21 Nov 2024 18:17:36 +0000</pubDate>
-      <description>Octatrack re-learnings I’m digging back into using my Octatrack and I’m finding that I have to re-learn a bunch of things about how it works. Saying that it’s a quirky machine is an understatement. There are some guides like Merlin’s OT manual that go into the philosophy of the machine, but I’m writing things here with my own live use…</description>
     </item>
   </channel>
 </rss>
