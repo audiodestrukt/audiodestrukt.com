@@ -273,6 +273,61 @@
       margin-bottom: 1.5rem;
     }
 
+    /* PHYSICAL MODELS */
+    .section-intro {
+      font-size: 0.85rem;
+      color: var(--muted);
+      max-width: 640px;
+      margin: -1.5rem 0 2.5rem;
+    }
+
+    .plugin-card {
+      border: 1px solid var(--border);
+      background: var(--surface);
+      margin-bottom: 2rem;
+    }
+
+    .plugin-card img {
+      width: 100%;
+      display: block;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .plugin-card .plugin-body {
+      padding: 1.75rem;
+    }
+
+    .plugin-card h3 {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: #fff;
+      letter-spacing: 0.05em;
+      margin-bottom: 0.25rem;
+    }
+
+    .plugin-card .tool-sub {
+      font-size: 0.7rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 0.9rem;
+    }
+
+    .plugin-card p {
+      font-size: 0.85rem;
+      color: var(--muted);
+      max-width: 680px;
+      margin-bottom: 1rem;
+    }
+
+    .plugin-card .knobs {
+      font-size: 0.75rem;
+      color: var(--text);
+      margin-bottom: 1.5rem;
+    }
+
+    .plugin-card .knobs span { color: var(--muted); }
+
     /* PARAMS TABLE */
     .params-table {
       width: 100%;
@@ -355,6 +410,7 @@
       <li><a href="#plugin">Plugin</a></li>
       <li><a href="#features">Features</a></li>
       <li><a href="#download">Download</a></li>
+      <li><a href="#models">Physical Models</a></li>
       <li><a href="#tools">Tools</a></li>
       <li><a href="#about">About</a></li>
       <li><a href="blog/index.html">Blog</a></li>
@@ -464,6 +520,105 @@
 
   <hr class="divider">
 
+  <!-- PHYSICAL MODELS -->
+  <section class="section" id="models">
+    <div class="section-label">Circuit Decimator</div>
+    <h2>Physical Models</h2>
+    <p class="section-intro">
+      Effects that simulate the real thing part by part (transistors, tubes, transformer steel, speaker paper)
+      instead of copying its sound. Each one is checked against a circuit simulator or published measurements.
+      The knobs are physical: battery charge, core size, cone stiffness.
+    </p>
+
+    <div class="plugin-card">
+      <img src="images/plugin_phys-fuzz.png" alt="Phys Fuzz plugin: the live fuzz schematic with Battery, Age and Temperature knobs" loading="lazy">
+      <div class="plugin-body">
+        <h3>Phys Fuzz</h3>
+        <div class="tool-sub">Two-transistor fuzz &bull; Circuit-level model</div>
+        <p>
+          A vintage two-transistor fuzz, solved as the actual circuit at 4x oversampling: every transistor, cap and resistor, including the battery. Two circuits to pick from: <strong>London &rsquo;66</strong> and <strong>Tokyo &rsquo;68</strong>.
+        </p>
+        <p>
+          Instead of tone knobs you get the things that really change an old fuzz: a battery running down (the voltage sags and its internal resistance climbs), parts ageing (leaky transistors, dried-out caps) and the temperature of the room. The schematic on screen shows the current flowing through the circuit as you play.
+        </p>
+        <div class="knobs"><span>Knobs:</span> Fuzz, Volume, Battery, Age, Temperature, Output</div>
+        <div class="hero-actions">
+          <a href="https://github.com/audiodestrukt/circuit-decimator/releases/tag/phys-fuzz-v0.2.0" class="btn btn-primary">Download</a>
+          <a href="/blog/posts/phys-fuzz-tokyo-68.html" class="btn btn-outline">Read the Post</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="plugin-card">
+      <img src="images/plugin_iron.png" alt="Iron plugin: a 12AU7 into a single-ended output transformer with its live B-H loop" loading="lazy">
+      <div class="plugin-body">
+        <h3>Iron</h3>
+        <div class="tool-sub">Tube + output transformer &bull; Saturation</div>
+        <p>
+          A tube stage driving a single-ended, gapped output transformer. The transformer&rsquo;s steel core is modelled magnetically, with hysteresis and saturation, and the display plots its B-H loop as you play.
+        </p>
+        <p>
+          The knobs are the iron itself: how hard it&rsquo;s driven, the air gap, the size of the core, and the grade of the steel, from premium to scrap. Low end thickens and smears as the core saturates; highs stay put.
+        </p>
+        <div class="knobs"><span>Knobs:</span> Drive, Gap, Core, Steel, Output, Mix</div>
+        <div class="hero-actions">
+          <a href="https://github.com/audiodestrukt/circuit-decimator/releases/tag/iron-v0.1.0" class="btn btn-primary">Download</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="plugin-card">
+      <img src="images/plugin_opto.png" alt="Opto plugin: VU meter, the optical cell and a gain reduction history" loading="lazy">
+      <div class="plugin-body">
+        <h3>Opto</h3>
+        <div class="tool-sub">Optical leveling amplifier &bull; Whole-unit model</div>
+        <p>
+          A classic tube optical leveler, modelled as the whole unit: the tube amplifier, the transformers, the sidechain, and the electroluminescent panel shining on a photocell. The cell&rsquo;s slow, program-dependent release is where the smooth leveling comes from.
+        </p>
+        <p>
+          Two knobs, like the original front panel. Peak Reduction sets how hard the cell is lit; Gain makes the level back up.
+        </p>
+        <div class="knobs"><span>Knobs:</span> Peak Reduction, Gain, Mix</div>
+        <div class="hero-actions">
+          <a href="https://github.com/audiodestrukt/circuit-decimator/releases/tag/opto-v0.1.0" class="btn btn-primary">Download</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="plugin-card">
+      <img src="images/plugin_cone.png" alt="Cone plugin: a live cross-section of the speaker, cabinet and mic, with the response at the mic" loading="lazy">
+      <div class="plugin-body">
+        <h3>Cone</h3>
+        <div class="tool-sub">Guitar speaker + cabinet &bull; Physically modelled</div>
+        <p>
+          A guitar speaker in a cabinet, built from physics instead of loaded from an impulse response. The paper cone bends and breaks up; the box and back opening shape the low end; a close mic hears the part of the cone it points at.
+        </p>
+        <p>
+          Change the cone&rsquo;s paper, weight and depth, the size of the speaker, the box, and where the mic sits. The cross-section on screen is drawn to scale from the knobs and shows the cone moving.
+        </p>
+        <div class="knobs"><span>Knobs:</span> Size, Paper Stiffness, Paper Weight, Cone Depth, Dust Cap, Paper Damping, Box Volume, Back Opening, Mic Position / Distance / Angle, Mic type, Level, Mix</div>
+        <div class="hero-actions">
+          <a href="https://github.com/audiodestrukt/circuit-decimator/releases/tag/cone-v0.1.0" class="btn btn-primary">Download</a>
+          <a href="/blog/posts/speaker-cab.html" class="btn btn-outline">Read the Post</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="platform-tags">
+      <span class="tag">VST3</span>
+      <span class="tag">AU (macOS)</span>
+      <span class="tag">Windows</span>
+      <span class="tag">macOS</span>
+      <span class="tag">Linux</span>
+      <span class="tag">Free Download</span>
+    </div>
+    <div class="hero-actions" style="margin-top:1.5rem">
+      <a href="https://github.com/audiodestrukt/circuit-decimator" class="btn btn-outline">Source Code</a>
+    </div>
+  </section>
+
+  <hr class="divider">
+
   <!-- TOOLS -->
   <section class="section" id="tools">
     <div class="section-label">Also from the workshop</div>
@@ -515,7 +670,7 @@
       "A poke in the ear with a sharp stick."
     </p>
     <p>
-      More plugins coming. Subscribe to the <a href="https://audiodestrukt.com/blog/feed.xml">RSS feed</a> or watch the <a href="https://github.com/dnewcome">GitHub</a> for updates.
+      More plugins coming, including an amp to drive Cone. Subscribe to the <a href="https://audiodestrukt.com/blog/feed.xml">RSS feed</a> or watch the <a href="https://github.com/dnewcome">GitHub</a> for updates.
     </p>
   </section>
 
