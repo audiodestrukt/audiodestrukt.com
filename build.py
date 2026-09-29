@@ -57,9 +57,30 @@ def md_to_html(text):
             i += 1
             continue
 
+        # Lists: consecutive "- item" / "* item" or "1. item" lines; a line that
+        # continues the previous item is indented
+        lm = re.match(r'^(\s*)([-*]|\d+\.)\s+(.*)', line)
+        if lm:
+            ordered = lm.group(2)[0].isdigit()
+            items = []
+            while i < len(lines):
+                m2 = re.match(r'^(\s*)([-*]|\d+\.)\s+(.*)', lines[i])
+                if m2 and m2.group(2)[0].isdigit() == ordered:
+                    items.append(m2.group(3))
+                    i += 1
+                elif items and lines[i].startswith((' ', '\t')) and lines[i].strip():
+                    items[-1] += ' ' + lines[i].strip()
+                    i += 1
+                else:
+                    break
+            tag = 'ol' if ordered else 'ul'
+            html_blocks.append(f'<{tag}>' + ''.join(f'<li>{inline_md(it)}</li>' for it in items) + f'</{tag}>')
+            continue
+
         # Collect paragraph lines
         para_lines = []
-        while i < len(lines) and lines[i].strip() != '' and not re.match(r'^#{1,6}\s', lines[i]) and not lines[i].startswith('```'):
+        while i < len(lines) and lines[i].strip() != '' and not re.match(r'^#{1,6}\s', lines[i]) and not lines[i].startswith('```') \
+                and not re.match(r'^\s*([-*]|\d+\.)\s+', lines[i]):
             para_lines.append(lines[i])
             i += 1
         if para_lines:
@@ -370,6 +391,13 @@ CSS = """
     .post-body pre code {
       color: var(--text);
     }
+
+    .post-body ul, .post-body ol {
+      margin: 0 0 1.25rem 1.5rem;
+      line-height: 1.8;
+    }
+
+    .post-body li { margin-bottom: 0.4rem; }
 
     .post-body img {
       max-width: 100%;

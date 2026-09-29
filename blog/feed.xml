@@ -5,9 +5,15 @@
     <link>https://audiodestrukt.com</link>
     <description>A poke in the ear with a sharp stick.</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 27 Sep 2026 02:19:54 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 29 Sep 2026 22:21:11 +0000</lastBuildDate>
     <atom:link href="https://audiodestrukt.com/blog/feed.xml" rel="self" type="application/rss+xml"/>
     <item>
+      <title>A bench that says where the model is wrong</title>
+      <link>https://audiodestrukt.com/blog/posts/ir-harness.html</link>
+      <guid isPermaLink="true">https://audiodestrukt.com/blog/posts/ir-harness.html</guid>
+      <pubDate>Tue, 29 Sep 2026 16:00:00 +0000</pubDate>
+      <description>A bench that says where the model is wrong Every circuit in Circuit Decimator has been checked the same way: the realtime solver against ngspice running the same netlist. That proves the solver integrates the equations. It says nothing about whether the equations describe the pedal on the shelf. Nothing in that project has ever been compared to a measured…</description>
+    </item>    <item>
       <title>A guitar cab you build instead of pick</title>
       <link>https://audiodestrukt.com/blog/posts/speaker-cab.html</link>
       <guid isPermaLink="true">https://audiodestrukt.com/blog/posts/speaker-cab.html</guid>
@@ -124,12 +130,6 @@ The School for Poetic Computation – a place for learning and unlearning. So gr
       <guid isPermaLink="true">https://audiodestrukt.com/blog/posts/octatrack-as-an-arpeggiator.html</guid>
       <pubDate>Thu, 21 Nov 2024 19:12:52 +0000</pubDate>
       <description>Octatrack as an arpeggiator I was digging through Octatrack settings and realized that the “plays free” feature is pretty useful as an arpeggiator. I never used this feature much and thought it was more for people who did ambient music to just fire off something that plays for like a half hour. There are some things that make it pretty…</description>
-    </item>    <item>
-      <title>Audio file format conversion</title>
-      <link>https://audiodestrukt.com/blog/posts/audio-file-format-conversion.html</link>
-      <guid isPermaLink="true">https://audiodestrukt.com/blog/posts/audio-file-format-conversion.html</guid>
-      <pubDate>Thu, 21 Nov 2024 19:04:46 +0000</pubDate>
-      <description>Audio file format conversion I’m digging through some AKAI format sample CDs that I have in my collection. I converted some things in the past but I’m getting back into the process now. I don’t think I ever wrote anything down before so it feels like I’m starting over now. The CDs are image files of varying formats. Some are…</description>
     </item>
   </channel>
 </rss>

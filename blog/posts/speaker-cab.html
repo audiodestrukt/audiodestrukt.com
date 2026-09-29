@@ -207,6 +207,13 @@
       color: var(--text);
     }
 
+    .post-body ul, .post-body ol {
+      margin: 0 0 1.25rem 1.5rem;
+      line-height: 1.8;
+    }
+
+    .post-body li { margin-bottom: 0.4rem; }
+
     .post-body img {
       max-width: 100%;
       height: auto;
@@ -277,7 +284,7 @@
 <p><img src="/images/2026-09-26_speaker-cab_bench.png" alt="Circuit Bench with the speaker cab: the cross-section, the response at the mic, and every physical knob" loading="lazy"></p>
 <h2>Physics in, impulse response out</h2>
 <p>Most of a speaker is linear. Only the motor misbehaves: the voice coil leaving the magnetic gap, the suspension stiffening, the coil heating up. So the model is split in two.</p>
-<p>- <strong>The driver and the box run as a circuit.</strong> It's the same netlist engine that runs the fuzz and tube circuits, solved every sample. Loudspeaker people have written drivers as circuits forever. Mass becomes a capacitor, the suspension's springiness an inductor, the air in the box another inductor. The trick that made it drop straight into my engine is that the magnet and coil (the Bl product) and the cone area both turn into ideal transformers, which the engine already had. It lands exactly on the closed-box resonance and Q the textbook formulas predict, and on ngspice running the same circuit. - <strong>Everything after the cone runs as an impulse response,</strong> rebuilt whenever you move a knob. That covers how the paper flexes, how the sound gets to the mic, and what the mic does with it. Nothing in there is a captured recording. The IR is computed from the geometry.</p>
+<ul><li><strong>The driver and the box run as a circuit.</strong> It's the same netlist engine that runs the fuzz and tube circuits, solved every sample. Loudspeaker people have written drivers as circuits forever. Mass becomes a capacitor, the suspension's springiness an inductor, the air in the box another inductor. The trick that made it drop straight into my engine is that the magnet and coil (the Bl product) and the cone area both turn into ideal transformers, which the engine already had. It lands exactly on the closed-box resonance and Q the textbook formulas predict, and on ngspice running the same circuit.</li><li><strong>Everything after the cone runs as an impulse response,</strong> rebuilt whenever you move a knob. That covers how the paper flexes, how the sound gets to the mic, and what the mic does with it. Nothing in there is a captured recording. The IR is computed from the geometry.</li></ul>
 <p>The IR half is where it gets interesting.</p>
 <p><strong>The cone</strong> is a finite-element model of a paper shell. It's about a hundred rings from the voice coil out to the surround, each with stretching and bending stiffness, the dust cap glued on partway out and the surround holding the edge. At low frequencies the whole cone moves with the voice coil like a piston. Above about a kilohertz it stops: bending waves ripple out across the paper, the outer cone lags and flops, and the treble comes mostly from the middle. That's breakup, and it's the voice of a guitar speaker. I checked the model against the exact solution for a flat plate driven at its hub, for both bending and stretching, and it matches to a few hundredths of a dB.</p>
 <p><strong>The mic</strong> is in the near field, an inch from a twelve-inch radiator. Every patch of the cone is a different distance away, so sound from each patch arrives at a slightly different time, and above breakup different parts are moving in opposite directions. The model sums every patch's contribution with its real delay, the Rayleigh integral. Then it averages that over the mic's diaphragm and mixes pressure and pressure-gradient pickup for the pattern. Proximity effect falls out of the geometry on its own. That's why moving the mic from the dust cap to the edge of the cone changes the sound the way it does in a real room, instead of being a tone knob someone labelled "mic position."</p>
@@ -297,14 +304,15 @@
 <p><img src="/images/2026-09-26_speaker-cab_calibration.png" alt="The published curves (red) against the model: response on the left, impedance on the right" loading="lazy"></p>
 <p>The part I like most is on the right. The datasheet's impedance curve has little bumps from 1.5 to 3.5 kHz, where the cone's breakup kicks back on the voice coil. The model has them in the same places. I never fitted to those. They come out of the cone model.</p>
 <h2>Realtime</h2>
-<p>The circuit runs every sample. The IR runs through a partitioned convolver, adding a third of a millisecond of latency. When you turn a knob, a background thread rebuilds only the part that changed: - about 80 ms for a mic move; - 45 ms for the cone; - 3 ms for the driver.</p>
+<p>The circuit runs every sample. The IR runs through a partitioned convolver, adding a third of a millisecond of latency. When you turn a knob, a background thread rebuilds only the part that changed:</p>
+<ul><li>about 80 ms for a mic move;</li><li>45 ms for the cone;</li><li>3 ms for the driver.</li></ul>
 <p>The new IR crossfades in. In the Bench it all uses about one and a half percent of a CPU core.</p>
 <h2>Next</h2>
-<p>- <strong>The driver's own misbehaviour:</strong> the coil leaving the gap on big low notes, and the coil heating up and compressing. - <strong>The box as a box:</strong> standing waves between the panels, and an open back where the rear wave wraps around. - <strong>Damage, which is why I built it this way:</strong> holes in the cone, a partly burnt voice coil, a torn surround. Each one is a physical change to a model that already knows what the cone is, rather than a new recording. - <strong>Real cab IRs:</strong> tuning the model against IRs with known mic positions, which will say how right the mic placement is, not just the on-axis response.</p>
+<ul><li><strong>The driver's own misbehaviour:</strong> the coil leaving the gap on big low notes, and the coil heating up and compressing.</li><li><strong>The box as a box:</strong> standing waves between the panels, and an open back where the rear wave wraps around.</li><li><strong>Damage, which is why I built it this way:</strong> holes in the cone, a partly burnt voice coil, a torn surround. Each one is a physical change to a model that already knows what the cone is, rather than a new recording.</li><li><strong>Real cab IRs:</strong> tuning the model against IRs with known mic positions, which will say how right the mic placement is, not just the on-axis response.</li></ul>
 <p>After that it probably becomes a plugin.</p>
     </div>
     <div class="post-nav">
-      <div></div>
+      <div><a href="/blog/posts/ir-harness.html">&larr; A bench that says where the model is wrong</a></div>
       <div><a href="/blog/posts/phys-fuzz-tokyo-68.html">Phys Fuzz 0.2: a second circuit, Tokyo '68 &rarr;</a></div>
     </div>
   </div>

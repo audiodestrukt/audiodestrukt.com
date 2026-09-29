@@ -207,6 +207,13 @@
       color: var(--text);
     }
 
+    .post-body ul, .post-body ol {
+      margin: 0 0 1.25rem 1.5rem;
+      line-height: 1.8;
+    }
+
+    .post-body li { margin-bottom: 0.4rem; }
+
     .post-body img {
       max-width: 100%;
       height: auto;
@@ -268,6 +275,12 @@
     <div class="page-title">Blog</div>
     <ul class="post-list">
     <li class="post-item">
+      <div class="post-meta">February 2, 2012</div>
+      <div class="post-title"><a href="/blog/posts/maxim-amp-board-running-through-thd-hot-plate.html">Maxim MAX9768 amp board running through THD hot plate</a></div>
+      <div class="post-excerpt">Maxim MAX9768 amp board running through THD hot plate
+</div>
+      
+    </li>    <li class="post-item">
       <div class="post-meta">January 25, 2012</div>
       <div class="post-title"><a href="/blog/posts/tube-amp-design.html">Tube amp design</a></div>
       <div class="post-excerpt">Tube amp design I’ve been playing around with some different vacuum tube amplifier circuits on the bench recently. However, it’s hard to play around with anything but a starved-plate design given that I don’t have a high voltage power supply on the bench. It’s also hard to provide a proper load for the output tubes since that typically requires a…</div>
@@ -311,11 +324,6 @@
       <div class="post-meta">December 4, 2011</div>
       <div class="post-title"><a href="/blog/posts/midi-over-websockets-with-socket-io.html">MIDI over Websockets with Socket.IO</a></div>
       <div class="post-excerpt">MIDI over Websockets with Socket.IO In my last post I outlined how I used curl to send MIDI data over HTTP to a web app. The problem with this design is that HTTP has a lot of connection overhead that contributes to latency problems. To address the latency issues, I set up the Node Web application to use Websockets for…</div>
-      
-    </li>    <li class="post-item">
-      <div class="post-meta">December 4, 2011</div>
-      <div class="post-title"><a href="/blog/posts/midi-over-http-with-using-alsa-and-curl.html">MIDI over HTTP with using ALSA and Curl</a></div>
-      <div class="post-excerpt">MIDI over HTTP with using ALSA and Curl A few weeks ago, I created a small Node app called Dub Siren to demonstrate playing audio under Node using SDL. My plan was to expand the idea into a more fully-featured (musicalinstrument">sampler). One of the things that I wanted to check out was the audio latency) between the time a request…</div>
       
     </li>
     </ul>

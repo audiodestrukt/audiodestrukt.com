@@ -207,6 +207,13 @@
       color: var(--text);
     }
 
+    .post-body ul, .post-body ol {
+      margin: 0 0 1.25rem 1.5rem;
+      line-height: 1.8;
+    }
+
+    .post-body li { margin-bottom: 0.4rem; }
+
     .post-body img {
       max-width: 100%;
       height: auto;
@@ -274,18 +281,18 @@
 <h1>Local network audio</h1>
 <p>I have been looking around at setting up a JamLAN (I think I just made that up) that could be used to implement a software-based <a href="http://www.jamhub.com/">JamHub</a>. I figured that there would be plenty of ways to get this working on a local network (as opposed to over the Internet), but I was kind of disappointed. </p>
 <h3>The basic requirements are:</h3>
-<p>- Platform independence (Win/Mac/Linux)</p>
-<p>- Relatively low latency (10-20ms)</p>
-<p>- Handle full-mesh between 4 stations (volume of each peer adjustable separately)</p>
+<ul><li>Platform independence (Win/Mac/Linux)</li></ul>
+<ul><li>Relatively low latency (10-20ms)</li></ul>
+<ul><li>Handle full-mesh between 4 stations (volume of each peer adjustable separately)</li></ul>
 <h3>Things that would be nice:</h3>
-<p>- Ability to dynamically reconfigure who is connected. For example a singer leaving one jam and entering another.</p>
-<p>- Ability for one performer to perform with two separate groups simultaneously. For example, a singer riffing on two different songs or a drummer leading two different blues jams at the same time. This could be pretty wild.</p>
+<ul><li>Ability to dynamically reconfigure who is connected. For example a singer leaving one jam and entering another.</li></ul>
+<ul><li>Ability for one performer to perform with two separate groups simultaneously. For example, a singer riffing on two different songs or a drummer leading two different blues jams at the same time. This could be pretty wild.</li></ul>
 <h3>Possible solutions:</h3>
 <p>So there are four different approaches that I thought of:</p>
-<p>- NAS (Network Audio Server)</p>
-<p>- PulseAudio</p>
-<p>- Jack</p>
-<p>- PD (using netsend~ and netreceive~)</p>
+<ul><li>NAS (Network Audio Server)</li></ul>
+<ul><li>PulseAudio</li></ul>
+<ul><li>Jack</li></ul>
+<ul><li>PD (using netsend~ and netreceive~)</li></ul>
 <p>So far I have struck out on all counts. </p>
 <p>NAS doesn’t seem to support anything besides point-to point audio, and I’m not able to figure out how to get more than one connection working. It seems to be mostly designed for X11-style remote connection of a single audio device much like an X server takes over a display device. </p>
 <p>PulseAudio seems like it could have worked but RTP doesn’t work in the Windows build that I had, which would have been necessary to get a connection fanout of > 1 I think. PulseAudio supports virtual connections called tunnels, but it wasn’t clear if that would allow multicasting of the streams. </p>

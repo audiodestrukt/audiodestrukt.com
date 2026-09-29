@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>A bench that says where the model is wrong — AudioDestrukt</title>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="alternate" type="application/rss+xml" title="AudioDestrukt Blog" href="https://audiodestrukt.com/blog/feed.xml">
+  <style>
+    :root {
+      --bg: #0d0d0d;
+      --surface: #161616;
+      --surface2: #1e1e1e;
+      --border: #2a2a2a;
+      --accent: #c8ff00;
+      --accent2: #ff3c00;
+      --text: #e8e8e8;
+      --muted: #777;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Courier New', Courier, monospace;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+    }
+
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 2rem;
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      background: rgba(13,13,13,0.95);
+      backdrop-filter: blur(8px);
+      z-index: 100;
+    }
+
+    .logo {
+      font-size: 1.3rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      color: var(--text);
+      text-decoration: none;
+    }
+
+    .logo span { color: var(--accent); }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 2rem;
+    }
+
+    nav ul li a {
+      color: var(--muted);
+      font-size: 0.85rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    nav ul li a:hover { color: var(--text); text-decoration: none; }
+    nav ul li a.active { color: var(--accent); }
+
+    .container {
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 4rem 2rem;
+    }
+
+    .page-title {
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 3rem;
+    }
+
+    /* POST LIST */
+    .post-list { list-style: none; }
+
+    .post-item {
+      border-bottom: 1px solid var(--border);
+      padding: 2rem 0;
+    }
+
+    .post-item:first-child { padding-top: 0; }
+
+    .post-meta {
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      text-transform: uppercase;
+      margin-bottom: 0.5rem;
+    }
+
+    .post-title {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 0.75rem;
+      line-height: 1.2;
+    }
+
+    .post-title a { color: #fff; }
+    .post-title a:hover { color: var(--accent); text-decoration: none; }
+
+    .post-excerpt {
+      font-size: 0.85rem;
+      color: var(--text);
+      margin-bottom: 0.75rem;
+    }
+
+    .post-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+    }
+
+    .tag {
+      font-size: 0.6rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 0.15rem 0.45rem;
+      border: 1px solid var(--border);
+      color: var(--muted);
+    }
+
+    /* PAGINATION */
+    .pagination {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 3rem;
+      font-size: 0.8rem;
+    }
+
+    .pagination a {
+      border: 1px solid var(--border);
+      padding: 0.5rem 1rem;
+      color: var(--text);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-size: 0.75rem;
+    }
+
+    .pagination a:hover { border-color: var(--text); text-decoration: none; }
+    .pagination .page-info { color: var(--muted); font-size: 0.7rem; letter-spacing: 0.1em; }
+    .pagination .spacer { flex: 1; }
+
+    /* SINGLE POST */
+    .post-header { margin-bottom: 3rem; }
+
+    .post-header h1 {
+      font-size: 2rem;
+      font-weight: 700;
+      color: #fff;
+      line-height: 1.2;
+      margin-bottom: 0.75rem;
+    }
+
+    .post-body { font-size: 0.92rem; }
+
+    .post-body h1, .post-body h2, .post-body h3 {
+      color: #fff;
+      font-weight: 700;
+      margin: 2rem 0 0.75rem;
+    }
+
+    .post-body h1 { font-size: 1.4rem; }
+    .post-body h2 { font-size: 1.2rem; }
+    .post-body h3 { font-size: 1rem; }
+
+    .post-body p {
+      color: var(--text);
+      margin-bottom: 1.25rem;
+      line-height: 1.8;
+    }
+
+    .post-body a { color: var(--accent); }
+
+    .post-body strong { color: var(--text); }
+
+    .post-body pre {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      padding: 1rem;
+      overflow-x: auto;
+      margin: 1.25rem 0;
+      font-size: 0.8rem;
+      line-height: 1.6;
+    }
+
+    .post-body code {
+      font-family: 'Courier New', Courier, monospace;
+      color: var(--accent);
+    }
+
+    .post-body pre code {
+      color: var(--text);
+    }
+
+    .post-body ul, .post-body ol {
+      margin: 0 0 1.25rem 1.5rem;
+      line-height: 1.8;
+    }
+
+    .post-body li { margin-bottom: 0.4rem; }
+
+    .post-body img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+      margin: 1.5rem 0;
+      border: 1px solid var(--border);
+    }
+
+    .post-nav {
+      display: flex;
+      justify-content: space-between;
+      padding-top: 3rem;
+      margin-top: 3rem;
+      border-top: 1px solid var(--border);
+      font-size: 0.75rem;
+      gap: 1rem;
+    }
+
+    .post-nav a {
+      color: var(--muted);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .post-nav a:hover { color: var(--text); text-decoration: none; }
+
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      max-width: 780px;
+      margin: 0 auto;
+      font-size: 0.75rem;
+      color: var(--muted);
+    }
+
+    @media (max-width: 600px) {
+      nav ul { display: none; }
+      .post-header h1 { font-size: 1.5rem; }
+    }
+</style>
+</head>
+<body>
+  <nav>
+    <a href="/index.html" class="logo">audio<span>destrukt</span></a>
+    <ul>
+      <li><a href="/index.html#plugin">Plugin</a></li>
+      <li><a href="/index.html#features">Features</a></li>
+      <li><a href="/index.html#download">Download</a></li>
+      <li><a href="/index.html#about">About</a></li>
+      <li><a href="/blog/index.html" class="active">Blog</a></li>
+    </ul>
+  </nav>
+  <div class="container">
+    <div class="post-header">
+      <div class="post-meta"><a href="/blog/index.html">Blog</a> &mdash; September 29, 2026</div>
+      <h1>A bench that says where the model is wrong</h1>
+      <div class="post-tags" style="margin-top:0.75rem"><span class="tag">measurement</span><span class="tag">physical modeling</span><span class="tag">circuit decimator</span><span class="tag">impulse responses</span><span class="tag">nonlinear</span></div>
+    </div>
+    <div class="post-body">
+<h1>A bench that says where the model is wrong</h1>
+<p>Every circuit in Circuit Decimator has been checked the same way: the realtime solver against ngspice running the same netlist. That proves the solver integrates the equations. It says nothing about whether the equations describe the pedal on the shelf. Nothing in that project has ever been compared to a measured signal, and the thing I actually want to model next is a vintage Marshall, which is not a circuit I can be casual about.</p>
+<p>So I built a measurement harness where a simulation and a real box are the same kind of thing. One stimulus goes in, a response comes back, it gets aligned and measured, and any two responses are compared on the same axes. The device can be <code>ff_render</code> from Circuit Decimator, a VST, or an audio interface with a pedal cabled between its output and input. Nothing downstream knows which. It's on GitHub as <a href="https://github.com/audiodestrukt/ir-harness">ir-harness</a>.</p>
+<h2>One signal, cut into pieces</h2>
+<p>The stimulus is a single long signal made of named segments, and the segment table travels with it. A device gets the whole thing and returns the whole thing. The response is aligned once, by finding the peak of the deconvolved sweep, which is a sharper landmark than any cross-correlation and survives heavy distortion. Then every measurement cuts the response at the same offsets as the stimulus. That's the whole trick. A sim run and a hardware run are cut in the same places, so their numbers are directly comparable.</p>
+<p>What's in it, at 192 kHz:</p>
+<ul><li><strong>An exponential sine sweep</strong>, 20 Hz to 20 kHz, in Novak's synchronized form. Deconvolving the response gives the linear impulse response and, from the same pass, an impulse response for each harmonic order. The synchronized form keeps their phases coherent, which matters later.</li><li><strong>Stepped tones</strong>, five frequencies at six levels from -40 to 0 dBFS. THD, each harmonic, output level and DC offset versus drive.</li><li><strong>A sustained tone for knob ramps.</strong> Inert by itself. A run attaches a parameter ramp to it.</li><li><strong>Tone bursts</strong>: a loud burst followed immediately by a quiet probe at the same frequency. The burst's envelope shows sag setting in; the probe's shows recovery.</li><li><strong>A DI clip.</strong> The thing you'd actually listen to.</li></ul>
+<p>Silence around everything for noise floor and settling.</p>
+<p><img src="/images/2026-09-29_ir-harness_baseline-sweep.png" alt="The baseline Fuzz Face at -12 dBFS: linear IR, magnitude, and the harmonic distortion of each order across the band, all from one sweep" loading="lazy"></p>
+<h2>What it found in the sim on day one</h2>
+<p>Before any hardware, running the Fuzz Face through it turned up two things.</p>
+<p>The realtime DK solver against the reference MNA solver nulls to -92 dB on the DI clip. Whatever is wrong with the model, it isn't the realtime solver.</p>
+<p>The DK solver also emits single-sample spikes at hard clipping edges. Sixteen of them in one 0 dBFS tone at 192 kHz. At 48 kHz without oversampling they reach 27 volts on a 9 volt circuit. Newton hits its iteration cap on the fast edge. The ngspice check never saw this because ngspice takes variable steps. A harness that counts isolated outliers catches it automatically, and it'll matter the moment a real pedal is on the other side, because those spikes would land in the residual and look like a modeling error.</p>
+<p>Then the first comparison, baseline against a battery starved to 4.5 V:</p>
+<p><img src="/images/2026-09-29_ir-harness_starve-sweep.png" alt="Baseline versus starved: level-matched magnitude, the difference, and H2 and H3 for both" loading="lazy"></p>
+<p>The starved circuit loses 40 dB by 20 kHz and its second harmonic climbs from -35 dB to -2 dB. It's nearly an octave fuzz. In the DI clip you can watch its bias point drift with the envelope:</p>
+<p><img src="/images/2026-09-29_ir-harness_starve-clip.png" alt="The DI clip, both responses and their residual, and the band-by-band level difference" loading="lazy"></p>
+<h2>Does a sweep capture the nonlinearity?</h2>
+<p>Partly, and the honest answer took a detour that ended up shaping the whole tool.</p>
+<p>The harmonic impulse responses from a synchronized sweep can be turned directly into a model: parallel branches of x, x², x³ and so on, each through its own filter. It's exact for anything that's a memoryless nonlinearity sitting between linear filters, at the sweep's drive level. So I made every run fit that model to its own sweep, push the entire stimulus through it, and subtract the prediction from what the device actually did.</p>
+<p>The residual is the interesting object. Instead of one number, the harness localizes it: by frequency band, by input level in 10 ms windows, by what the signal was doing in the previous 300 ms (at a fixed current level, that axis is memory: sag, bias recovery, anything stateful), and per stepped tone. A <code>focus</code> line after every run says which of those is the hot spot and what to measure next.</p>
+<p><img src="/images/2026-09-29_ir-harness_residual.png" alt="Where the sweep-derived model fails on the baseline fuzz: by band, by level, by history, and per tone" loading="lazy"></p>
+<p>That turned the feature list into answers to a question. Sweeps at several levels, because the residual grows with level:</p>
+<p><img src="/images/2026-09-29_ir-harness_levels.png" alt="Four sweep levels. The fundamental drops 12 dB for every 12 dB of extra drive: fully compressed from -36 dBFS up" loading="lazy"></p>
+<p>Bursts, because a sweep is blind to memory. This one measured the fuzz's gating directly: after a 0 dBFS burst, a -30 dBFS probe starts 45 dB down and recovers in 40 ms, and the 110 Hz burst itself settles 0.34 dB as the bias moves.</p>
+<p><img src="/images/2026-09-29_ir-harness_bursts.png" alt="Burst envelope (sag) and probe envelope (recovery)" loading="lazy"></p>
+<p>Knob ramps, because a model of one setting isn't a model of the pedal. I added breakpoint automation to <code>ff_render</code>, so a parameter is re-applied every 32 samples while the circuit keeps its state, the same thing a knob turn does in the plugin. The fuzz pot swept from 0.05 to 1 across four seconds of a 220 Hz tone gives THD, H2, H3 and level against knob position in one pass. For hardware the same schedule can run stepwise, pausing for a hand on the knob.</p>
+<p><img src="/images/2026-09-29_ir-harness_knob-ramp.png" alt="The fuzz knob ramped 0.05 to 1: THD, H2 and H3, and level versus knob position" loading="lazy"></p>
+<p>And grids: every combination of a few knob values, each a full run, mapped onto the knob plane.</p>
+<p><img src="/images/2026-09-29_ir-harness_grid.png" alt="Fuzz by battery voltage, nine cells: H3, H2, gain, treble loss, the model's residual on the clip, and sag" loading="lazy"></p>
+<h2>What the residual said</h2>
+<p>On the baseline Fuzz Face, the sweep-derived model explains only 2.7 dB of the DI clip. With all four sweep levels, 4.2 dB. Every tone above -16 dBFS is unexplained. Raising the model's order from 3 to 9 changes nothing, and 13 makes it worse.</p>
+<p>That isn't the measurement. The harmonic impulse responses are clean out past the 20th order. It's the model class. A hard clipper's output is close to a square wave, and a square wave keeps 96 percent of its energy in harmonics up to the 9th, so a 9th-order polynomial cannot null it below about -14 dB no matter how well it's fitted. The level-indexed model reaches -16 dB where a sweep exists, which is that ceiling. Beyond order 9 the inversion's condition number grows like (2/A)^(N-1) and noise takes over.</p>
+<p>The grid shows the same thing from the other side. At low fuzz on a fresh battery the circuit is nearly clean (H3 at -84 dB) and the polynomial model nulls the clip to -12.6 dB. At full fuzz on 4.5 V it's an octave fuzz with 13 dB of treble loss and 0.7 dB of sag, and the model explains nothing. The residual draws the boundary of where a polynomial is the right idea.</p>
+<p>So the next model has to have a saturating shape rather than more terms. The multi-level sweeps already measure what that needs: the fundamental's gain versus level and the harmonic ratios versus level. That's the first item on the list, and now there's a number that says whether it worked.</p>
+<h2>Hardware</h2>
+<p>There's nothing on the bench yet. The interface tops out at 192 kHz, which is why that's the default, and the scope and analyzer I have aren't USB, so instrument control is a slot in the design and not a feature. The order of business is the interface looped back on itself, to measure the floor everything else sits on. Then a real fuzz against the sim, where I expect the model to be wrong somewhere specific and the residual to say where. Then a reamp box and a reactive load, and the Marshall at line level, one setting and then the whole panel with the grid prompting me to turn knobs.</p>
+<p>Everything above ran on the simulation. All of it runs on the box unchanged.</p>
+    </div>
+    <div class="post-nav">
+      <div></div>
+      <div><a href="/blog/posts/speaker-cab.html">A guitar cab you build instead of pick &rarr;</a></div>
+    </div>
+  </div>
+  <footer>
+    <span>audio<span style="color:var(--accent)">destrukt</span></span>
+    <span>&copy; 2025 AudioDestrukt</span>
+  </footer>
+<!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "f393b960e25f42828910e441d26fa18c"}'></script><!-- End Cloudflare Web Analytics -->
+</body>
+</html>
