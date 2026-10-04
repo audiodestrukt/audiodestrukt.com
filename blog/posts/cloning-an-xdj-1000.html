@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>I cloned an XDJ-1000 and it runs on a Raspberry Pi — AudioDestrukt</title>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="alternate" type="application/rss+xml" title="AudioDestrukt Blog" href="https://audiodestrukt.com/blog/feed.xml">
+  <style>
+    :root {
+      --bg: #0d0d0d;
+      --surface: #161616;
+      --surface2: #1e1e1e;
+      --border: #2a2a2a;
+      --accent: #c8ff00;
+      --accent2: #ff3c00;
+      --text: #e8e8e8;
+      --muted: #777;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Courier New', Courier, monospace;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+    }
+
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 2rem;
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      background: rgba(13,13,13,0.95);
+      backdrop-filter: blur(8px);
+      z-index: 100;
+    }
+
+    .logo {
+      font-size: 1.3rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      color: var(--text);
+      text-decoration: none;
+    }
+
+    .logo span { color: var(--accent); }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 2rem;
+    }
+
+    nav ul li a {
+      color: var(--muted);
+      font-size: 0.85rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    nav ul li a:hover { color: var(--text); text-decoration: none; }
+    nav ul li a.active { color: var(--accent); }
+
+    .container {
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 4rem 2rem;
+    }
+
+    .page-title {
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 3rem;
+    }
+
+    /* POST LIST */
+    .post-list { list-style: none; }
+
+    .post-item {
+      border-bottom: 1px solid var(--border);
+      padding: 2rem 0;
+    }
+
+    .post-item:first-child { padding-top: 0; }
+
+    .post-meta {
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      text-transform: uppercase;
+      margin-bottom: 0.5rem;
+    }
+
+    .post-title {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 0.75rem;
+      line-height: 1.2;
+    }
+
+    .post-title a { color: #fff; }
+    .post-title a:hover { color: var(--accent); text-decoration: none; }
+
+    .post-excerpt {
+      font-size: 0.85rem;
+      color: var(--text);
+      margin-bottom: 0.75rem;
+    }
+
+    .post-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+    }
+
+    .tag {
+      font-size: 0.6rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 0.15rem 0.45rem;
+      border: 1px solid var(--border);
+      color: var(--muted);
+    }
+
+    /* PAGINATION */
+    .pagination {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 3rem;
+      font-size: 0.8rem;
+    }
+
+    .pagination a {
+      border: 1px solid var(--border);
+      padding: 0.5rem 1rem;
+      color: var(--text);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-size: 0.75rem;
+    }
+
+    .pagination a:hover { border-color: var(--text); text-decoration: none; }
+    .pagination .page-info { color: var(--muted); font-size: 0.7rem; letter-spacing: 0.1em; }
+    .pagination .spacer { flex: 1; }
+
+    /* SINGLE POST */
+    .post-header { margin-bottom: 3rem; }
+
+    .post-header h1 {
+      font-size: 2rem;
+      font-weight: 700;
+      color: #fff;
+      line-height: 1.2;
+      margin-bottom: 0.75rem;
+    }
+
+    .post-body { font-size: 0.92rem; }
+
+    .post-body h1, .post-body h2, .post-body h3 {
+      color: #fff;
+      font-weight: 700;
+      margin: 2rem 0 0.75rem;
+    }
+
+    .post-body h1 { font-size: 1.4rem; }
+    .post-body h2 { font-size: 1.2rem; }
+    .post-body h3 { font-size: 1rem; }
+
+    .post-body p {
+      color: var(--text);
+      margin-bottom: 1.25rem;
+      line-height: 1.8;
+    }
+
+    .post-body a { color: var(--accent); }
+
+    .post-body strong { color: var(--text); }
+
+    .post-body pre {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      padding: 1rem;
+      overflow-x: auto;
+      margin: 1.25rem 0;
+      font-size: 0.8rem;
+      line-height: 1.6;
+    }
+
+    .post-body code {
+      font-family: 'Courier New', Courier, monospace;
+      color: var(--accent);
+    }
+
+    .post-body pre code {
+      color: var(--text);
+    }
+
+    .post-body ul, .post-body ol {
+      margin: 0 0 1.25rem 1.5rem;
+      line-height: 1.8;
+    }
+
+    .post-body li { margin-bottom: 0.4rem; }
+
+    .post-body img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+      margin: 1.5rem 0;
+      border: 1px solid var(--border);
+    }
+
+    .post-nav {
+      display: flex;
+      justify-content: space-between;
+      padding-top: 3rem;
+      margin-top: 3rem;
+      border-top: 1px solid var(--border);
+      font-size: 0.75rem;
+      gap: 1rem;
+    }
+
+    .post-nav a {
+      color: var(--muted);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .post-nav a:hover { color: var(--text); text-decoration: none; }
+
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      max-width: 780px;
+      margin: 0 auto;
+      font-size: 0.75rem;
+      color: var(--muted);
+    }
+
+    @media (max-width: 600px) {
+      nav ul { display: none; }
+      .post-header h1 { font-size: 1.5rem; }
+    }
+</style>
+</head>
+<body>
+  <nav>
+    <a href="/index.html" class="logo">audio<span>destrukt</span></a>
+    <ul>
+      <li><a href="/index.html#plugin">Plugin</a></li>
+      <li><a href="/index.html#features">Features</a></li>
+      <li><a href="/index.html#download">Download</a></li>
+      <li><a href="/index.html#about">About</a></li>
+      <li><a href="/blog/index.html" class="active">Blog</a></li>
+    </ul>
+  </nav>
+  <div class="container">
+    <div class="post-header">
+      <div class="post-meta"><a href="/blog/index.html">Blog</a> &mdash; October 4, 2026</div>
+      <h1>I cloned an XDJ-1000 and it runs on a Raspberry Pi</h1>
+      <div class="post-tags" style="margin-top:0.75rem"><span class="tag">opendeck</span><span class="tag">dj</span><span class="tag">pro dj link</span><span class="tag">rust</span><span class="tag">ios</span><span class="tag">raspberry pi</span><span class="tag">reverse engineering</span></div>
+    </div>
+    <div class="post-body">
+<h1>I cloned an XDJ-1000 and it runs on a Raspberry Pi</h1>
+<p>I built a DJ deck that looks and behaves like an XDJ-1000MK2 and joins a Pro DJ Link network as one more player. Put it on the same network as real decks and it takes a player number and follows the master tempo, or it takes master itself and the real deck follows it. It runs on a Raspberry Pi 5 on a bit over half of one core. The same code is on the App Store as OpenDeck DJ for iPad and iPhone, and has been since the middle of September. The source is on GitHub as <a href="https://github.com/audiodestrukt/freedj-3000">freedj-3000</a>. Somehow I never wrote a word about any of it here.</p>
+<p><img src="/images/2026-10-04_cloning-an-xdj-1000_ipad.png" alt="OpenDeck DJ on an iPad" loading="lazy"></p>
+<h2>Why clone a deck</h2>
+<p>A CDJ-3000 is about $2,400, and you need two. What makes it a CDJ and not a media player is a jog wheel, a screen layout every DJ can read from across the booth, and a network protocol that keeps the decks in time and lets them share one USB stick. The protocol has been picked apart for years by the people at <a href="https://djl-analysis.deepsymmetry.org/djl-analysis/">Deep Symmetry</a>, who wrote the analysis and the Beat Link library everybody uses. A Raspberry Pi 5 is $80.</p>
+<p>Two years ago I bought an XDJ-1000MK2 and wrote <a href="/blog/posts/thoughts-on-the-pioneer-xdj-1000.html">a post about it</a> that ended with wanting custom firmware, so I could do things with a deck that the deck won't do. You can't get custom firmware onto one. You can build the deck. So the one on my desk became the target: same screen, same buttons, same behaviour, same network. Not "inspired by". If you know the real one, you shouldn't have to learn anything. The strange ideas come after it's right.</p>
+<p>It started in March as one long day of Rust: decode a file, draw a scrolling waveform on the GPU, run Rubber Band for key lock, drive it from a Traktor S2 over raw HID. Then it sat until late August. Nearly all of the 268 commits are from the four weeks after that.</p>
+<h2>The screen</h2>
+<p><img src="/images/2026-10-04_cloning-an-xdj-1000_real-unit.jpg" alt="The reference: my XDJ-1000MK2 as player 4, synced to a master" loading="lazy"></p>
+<p>The screen was laid out from photographs of the unit. The real panel is 7 inches at 1024×600, and every region in mine is a fraction of that, so it scales to whatever it's drawn on. There is one rule: the screen matches the real one. If something is a physical button on the deck, it doesn't get to appear on the screen. It goes on the faceplate around it.</p>
+<p>The hard part was getting the waveform to scroll without judder. The audio thread hands out blocks, so the position it reports moves in steps, and a waveform drawn from that position stutters. The fix is a small phase lock: the drawn playhead free-runs at the true playback rate and gets pulled gently toward the position you are actually hearing. My first version pulled toward a smoothed copy of that position. It looked great and ran a third of a second behind the audio, which is most of a beat at 128 BPM. The velocity comes from the model, the correction goes toward the fresh reading, and you never filter the reference.</p>
+<h2>Getting a real deck to listen</h2>
+<p>For the first few days my deck and my test sender agreed with each other perfectly. Then I plugged in the XDJ and my deck heard nothing. I was listening on port 50002. Beats are on 50001. And my parser read the player number at byte 0x10 and the tempo at 0x24, when they're really at 0x21 and 0x5a. The test sender had the same wrong idea, so the two of them were very happy together. After that, everything Link got tested against the unit and its captured packets, not against my own simulator.</p>
+<p>Following a master's tempo was easy from there. Taking master was not. There's a handshake: you ask the current master for the role, it answers, then it names you in a field of its status packets, and only then do you say you're the master. It keeps its own flag up until it sees yours. I got that wrong three different ways. I claimed master the moment I asked. I claimed it on the answer, before I was named. And when the XDJ bumped its sync counter on the way out, which it is supposed to do, my deck took that as a reason to give master back.</p>
+<p>With all three fixed, the XDJ would start the handoff and then change its mind.</p>
+<p>So I ran the real Beat Link library against the XDJ. It took master and the XDJ jumped to 140 BPM. Then I compared bytes: the XDJ's own status packet, Beat Link's, and mine.</p>
+<pre><code>             0x1f  0x20  len
+XDJ (real)   0x01  0x05  256
+Beat Link    0x01  0x04  248   accepted as master
+mine         0x00  0x05  256   rejected</code></pre>
+<p>One byte. And I put it there. My status packet is built from a template captured off the XDJ, and before committing it I blanked out the device name. The name is 20 bytes. I zeroed 21. The name was "XDJ-1000MK2", which was hardly a secret, and the code overwrites it at runtime anyway. With 0x1f back at 0x01, the XDJ's MASTER button went dark and its display followed my tempo. Before I found it I had half convinced myself it was a timing problem and added a 175 ms delay that seemed to help. It was removed.</p>
+<h2>One stick, every deck</h2>
+<p>On a real setup you put a USB stick in one deck and browse it from the others. The way that works is wonderfully old: each player runs an NFS version 2 server over UDP and exports its USB stick. File names are UTF-16, and it only answers requests from a privileged source port. The stick carries a rekordbox database, so "browse the linked player" is: mount the deck over NFS, pull <code>export.pdb</code>, parse it, show the playlists. My desk XDJ gave up 226 tracks that way without the stick ever leaving it, and loading one brings rekordbox's beat grid and cue points with it.</p>
+<p>A rekordbox laptop does the same thing, except its portmapper is on UDP 50111 where nothing would think to look, and the menus come over a separate database protocol. That works too. And it goes the other way: OpenDeck serves its own folder of tracks to other decks, with metadata, grid, waveforms and art, so a tablet can be the USB stick. That is proven between two OpenDecks. Whether a real XDJ accepts my waveforms is the next test at the desk.</p>
+<h2>On a Raspberry Pi</h2>
+<p>The Pi 5 is the reference machine. The renderer needs Vulkan, and the Pi 5 has real hardware Vulkan, so the same GPU code runs there unchanged. It holds 60 frames a second with a frame-to-frame jitter of 0.12 ms, which is tighter than my desktop with an RTX card manages. Playing a track with key lock on takes a bit under 0.6 of one of its four cores and 250 MB of memory. Loading a five minute MP3, including the waveform and the BPM analysis, takes 0.7 seconds. It builds on the Pi itself in under seven minutes.</p>
+<p>It does run hot. I saw 78 °C under a light load with no fan, so it wants the active cooler.</p>
+<p>A Pi 4 runs it too, with much less to spare. The timestretcher alone takes about 72% of a core there. I blamed the renderer for a day because <code>top -H</code> said so. The per-thread numbers in <code>/proc</code> added up to the process total and top's didn't.</p>
+<h2>Onto an iPad</h2>
+<p>The plan was a Pi in a box. The iPad was a one-day spike to see if the Rust code would even run, and it did, including Link. I had expected Apple's multicast entitlement to be a wall. It isn't needed. The early failure was mine, a socket bound to the wrong interface.</p>
+<p>An app needs the rest of the deck, though, not just the screen. The first faceplate was a photo of the unit with the buttons cut out and composited. It looked uncanny, three light directions in one image, and it was a photograph of somebody else's product. Now every control is a height field shaded by one shared light rig and baked into a sprite the first time it's drawn. No photo in the app at all.</p>
+<p><img src="/images/2026-10-04_cloning-an-xdj-1000_iphone-controls.png" alt="iPhone, the CONTROLS page" loading="lazy"></p>
+<p>The phone doesn't have room for a deck, so it gets two landscape pages: the screen, and the jog wheel with the transport.</p>
+<p>I build on Linux. iOS builds happen on a GitHub Actions macOS runner when I push a tag, and the listing, the screenshots and the submission go through the App Store Connect API. The screenshots are the app's own renderer at device resolution. Apple rejected one thing along the way, the words "for iPad" in the subtitle.</p>
+<h2>The part you feel</h2>
+<p>CUE on a CDJ is a held button. Paused at the cue point, you hold it and the track plays. Let go and it snaps back and stops. DJs tap it in time with the other deck to find the beat, so it has to start when the finger lands, not a moment later.</p>
+<p>Mine didn't. The UI toolkit was deciding whether each press was a click or a drag, and for a finger that stays still it waits most of a second to make up its mind. Then the audio thread was parked while paused and took up to 50 ms to notice a play. Then a seek issued while paused didn't happen until the next play, so the release left the display stuck off the cue. Each of those was its own bug with its own fix.</p>
+<p>Then the two-finger case. Hold CUE and press PLAY, and playback keeps going after you let go of CUE. On glass the second finger isn't the pointer, it's a raw touch the toolkit ignores, so PLAY never saw it. And it has to carry on from where the preview is, not restart from the cue.</p>
+<p>The rules for all of this now live in a small state machine with no audio or UI in it, checked against written specs of what the real deck does. Stopping fades out over 3 ms so the release doesn't click. Starting has no fade at all.</p>
+<h2>Wi-Fi is not a cable</h2>
+<p>On ethernet the beat meter for the other deck was smooth. On Wi-Fi it scrolled, froze, and jumped. An access point holds broadcast packets for a sleeping phone and delivers them in a clump, and beats are broadcast. An app can't turn that off. So the other deck's row doesn't draw packets any more. It free-runs at the peer's tempo and each packet nudges its phase. OpenDecks also send beats to each other directly, which the access point doesn't hold.</p>
+<p>The iPad got hot and vanished from the network after sitting in the background for a day. iOS takes the sockets away from a suspended app. When it came back, three listener threads were failing instantly in a loop, a core each. They back off and reopen now.</p>
+<p>And the phone ran warm for a duller reason. I spent two days sure it was the timestretcher. Measuring it took an hour: about a tenth of one phone core. The real cause was a redraw loop that kept itself going at full rate with nothing on screen moving. Paused, it idles at 10 frames a second now.</p>
+<h2>What it isn't</h2>
+<ul><li>It speaks the XDJ-1000MK2 generation of the protocol. The CDJ-3000 moves files differently and I haven't touched it.</li><li>Four players on a network, like the real thing.</li><li>The Pi version works with a screen, a mouse and a MIDI controller. The control surface with a real jog wheel is CAD and plans so far.</li><li>One deliberate departure: you can drag the big waveform with a finger to move through the track. The real deck doesn't do that. On a phone it's too useful to leave out.</li></ul>
+<h2>Names</h2>
+<p>XDJ, CDJ, rekordbox and Pro DJ Link are AlphaTheta's names. I'm not affiliated with them, and nothing of theirs is in the app. It talks to their players because the protocol on the wire is what it is.</p>
+<h2>Get it</h2>
+<p>OpenDeck DJ is free on the <a href="https://apps.apple.com/app/id6807472453">App Store</a> for iPad and iPhone, and has its own page <a href="/opendeck">here</a>. The source, GPL, with the Pi and Linux build and all the protocol notes, is at <a href="https://github.com/audiodestrukt/freedj-3000">audiodestrukt/freedj-3000</a>. If you try it next to real decks, I'd like to hear how it goes.</p>
+    </div>
+    <div class="post-nav">
+      <div></div>
+      <div><a href="/blog/posts/ir-harness.html">A bench that says where the model is wrong &rarr;</a></div>
+    </div>
+  </div>
+  <footer>
+    <span>audio<span style="color:var(--accent)">destrukt</span></span>
+    <span>&copy; 2025 AudioDestrukt</span>
+  </footer>
+<!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "f393b960e25f42828910e441d26fa18c"}'></script><!-- End Cloudflare Web Analytics -->
+</body>
+</html>

@@ -5,9 +5,15 @@
     <link>https://audiodestrukt.com</link>
     <description>A poke in the ear with a sharp stick.</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 29 Sep 2026 22:21:11 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 04 Oct 2026 15:11:42 +0000</lastBuildDate>
     <atom:link href="https://audiodestrukt.com/blog/feed.xml" rel="self" type="application/rss+xml"/>
     <item>
+      <title>I cloned an XDJ-1000 and it runs on a Raspberry Pi</title>
+      <link>https://audiodestrukt.com/blog/posts/cloning-an-xdj-1000.html</link>
+      <guid isPermaLink="true">https://audiodestrukt.com/blog/posts/cloning-an-xdj-1000.html</guid>
+      <pubDate>Sun, 04 Oct 2026 10:00:00 +0000</pubDate>
+      <description>I cloned an XDJ-1000 and it runs on a Raspberry Pi I built a DJ deck that looks and behaves like an XDJ-1000MK2 and joins a Pro DJ Link network as one more player. Put it on the same network as real decks and it takes a player number and follows the master tempo, or it takes master itself and…</description>
+    </item>    <item>
       <title>A bench that says where the model is wrong</title>
       <link>https://audiodestrukt.com/blog/posts/ir-harness.html</link>
       <guid isPermaLink="true">https://audiodestrukt.com/blog/posts/ir-harness.html</guid>
@@ -124,12 +130,6 @@ The School for Poetic Computation – a place for learning and unlearning. So gr
       <guid isPermaLink="true">https://audiodestrukt.com/blog/posts/octatrack-midi-multi.html</guid>
       <pubDate>Fri, 22 Nov 2024 00:32:04 +0000</pubDate>
       <description>Octatrack MIDI multi I’m still jamming on my Octatrack today. I hooked up my Waldorf Blofeld to the mix. Same kind of setup where I have MIDI going out of the OT and into the Blofeld. I chose the Blofeld for this experiment because it’s 16 part multitimbral and I can trigger a few different sounds at once from different…</description>
-    </item>    <item>
-      <title>Octatrack as an arpeggiator</title>
-      <link>https://audiodestrukt.com/blog/posts/octatrack-as-an-arpeggiator.html</link>
-      <guid isPermaLink="true">https://audiodestrukt.com/blog/posts/octatrack-as-an-arpeggiator.html</guid>
-      <pubDate>Thu, 21 Nov 2024 19:12:52 +0000</pubDate>
-      <description>Octatrack as an arpeggiator I was digging through Octatrack settings and realized that the “plays free” feature is pretty useful as an arpeggiator. I never used this feature much and thought it was more for people who did ambient music to just fire off something that plays for like a half hour. There are some things that make it pretty…</description>
     </item>
   </channel>
 </rss>
