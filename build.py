@@ -183,6 +183,7 @@ def parse_post(path):
         'slug': slug,
         'body_html': body_html,
         'excerpt': excerpt(body_html),
+        'image': meta.get('image', ''),   # optional: social preview image (path under the site root)
         'path': f'posts/{slug}.html',
     }
 
@@ -472,7 +473,7 @@ def footer_html():
 ANALYTICS = '''<!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "f393b960e25f42828910e441d26fa18c"}'></script><!-- End Cloudflare Web Analytics -->'''
 
 
-def page_shell(title, body, depth=''):
+def page_shell(title, body, depth='', head_extra=''):
     return f"""<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -480,7 +481,7 @@ def page_shell(title, body, depth=''):
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>{title} — AudioDestrukt</title>
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
-  <link rel="alternate" type="application/rss+xml" title="AudioDestrukt Blog" href="{SITE_URL}/blog/feed.xml">
+{head_extra}  <link rel="alternate" type="application/rss+xml" title="AudioDestrukt Blog" href="{SITE_URL}/blog/feed.xml">
   <style>{CSS}</style>
 </head>
 <body>
@@ -538,6 +539,29 @@ def build_index_page(posts, page_num, total_pages):
     return page_shell(f'Blog — Page {page_num}', body, depth='')
 
 
+def social_meta(post):
+    """Open Graph / Twitter card tags for a post that names an `image:` in its frontmatter."""
+    if not post['image']:
+        return ''
+    esc = lambda s: s.replace('&', '&amp;').replace('"', '&quot;').replace('<', '&lt;')
+    # Description: the opening words of the body, without the repeated H1
+    desc = excerpt(re.sub(r'<h1>.*?</h1>', '', post['body_html'], count=1, flags=re.DOTALL), words=40)
+    image = f"{SITE_URL}/{post['image'].lstrip('/')}"
+    url = f"{SITE_URL}/blog/posts/{post['slug']}.html"
+    tags = [
+        ('property', 'og:type', 'article'),
+        ('property', 'og:site_name', 'AudioDestrukt'),
+        ('property', 'og:title', post['title']),
+        ('property', 'og:description', desc),
+        ('property', 'og:url', url),
+        ('property', 'og:image', image),
+        ('name', 'twitter:card', 'summary_large_image'),
+        ('name', 'twitter:image', image),
+        ('name', 'description', desc),
+    ]
+    return ''.join(f'  <meta {k}="{n}" content="{esc(v)}">\n' for k, n, v in tags)
+
+
 def build_post_page(post, prev_post, next_post):
     prev_link = ''
     next_link = ''
@@ -566,7 +590,7 @@ def build_post_page(post, prev_post, next_post):
 {post_nav}
   </div>"""
 
-    return page_shell(post['title'], body, depth='posts/')
+    return page_shell(post['title'], body, depth='posts/', head_extra=social_meta(post))
 
 
 # ---------------------------------------------------------------------------
