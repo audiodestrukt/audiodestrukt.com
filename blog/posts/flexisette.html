@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The board is the cassette — AudioDestrukt</title>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="AudioDestrukt">
+  <meta property="og:title" content="The board is the cassette">
+  <meta property="og:description" content="There's exactly one place on a compact cassette where you expect to see motion: the little window in the middle, where the reels turn and the tape crawls from one hub to the other. Everything else is a static shell.…">
+  <meta property="og:url" content="https://audiodestrukt.com/blog/posts/flexisette.html">
+  <meta property="og:image" content="https://audiodestrukt.com/images/2026-10-05_flexisette_assembly.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://audiodestrukt.com/images/2026-10-05_flexisette_assembly.png">
+  <meta name="description" content="There's exactly one place on a compact cassette where you expect to see motion: the little window in the middle, where the reels turn and the tape crawls from one hub to the other. Everything else is a static shell.…">
+  <link rel="alternate" type="application/rss+xml" title="AudioDestrukt Blog" href="https://audiodestrukt.com/blog/feed.xml">
+  <style>
+    :root {
+      --bg: #0d0d0d;
+      --surface: #161616;
+      --surface2: #1e1e1e;
+      --border: #2a2a2a;
+      --accent: #c8ff00;
+      --accent2: #ff3c00;
+      --text: #e8e8e8;
+      --muted: #777;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Courier New', Courier, monospace;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+    }
+
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 2rem;
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      background: rgba(13,13,13,0.95);
+      backdrop-filter: blur(8px);
+      z-index: 100;
+    }
+
+    .logo {
+      font-size: 1.3rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      color: var(--text);
+      text-decoration: none;
+    }
+
+    .logo span { color: var(--accent); }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 2rem;
+    }
+
+    nav ul li a {
+      color: var(--muted);
+      font-size: 0.85rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    nav ul li a:hover { color: var(--text); text-decoration: none; }
+    nav ul li a.active { color: var(--accent); }
+
+    .container {
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 4rem 2rem;
+    }
+
+    .page-title {
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 3rem;
+    }
+
+    /* POST LIST */
+    .post-list { list-style: none; }
+
+    .post-item {
+      border-bottom: 1px solid var(--border);
+      padding: 2rem 0;
+    }
+
+    .post-item:first-child { padding-top: 0; }
+
+    .post-meta {
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      text-transform: uppercase;
+      margin-bottom: 0.5rem;
+    }
+
+    .post-title {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 0.75rem;
+      line-height: 1.2;
+    }
+
+    .post-title a { color: #fff; }
+    .post-title a:hover { color: var(--accent); text-decoration: none; }
+
+    .post-excerpt {
+      font-size: 0.85rem;
+      color: var(--text);
+      margin-bottom: 0.75rem;
+    }
+
+    .post-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+    }
+
+    .tag {
+      font-size: 0.6rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 0.15rem 0.45rem;
+      border: 1px solid var(--border);
+      color: var(--muted);
+    }
+
+    /* PAGINATION */
+    .pagination {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 3rem;
+      font-size: 0.8rem;
+    }
+
+    .pagination a {
+      border: 1px solid var(--border);
+      padding: 0.5rem 1rem;
+      color: var(--text);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-size: 0.75rem;
+    }
+
+    .pagination a:hover { border-color: var(--text); text-decoration: none; }
+    .pagination .page-info { color: var(--muted); font-size: 0.7rem; letter-spacing: 0.1em; }
+    .pagination .spacer { flex: 1; }
+
+    /* SINGLE POST */
+    .post-header { margin-bottom: 3rem; }
+
+    .post-header h1 {
+      font-size: 2rem;
+      font-weight: 700;
+      color: #fff;
+      line-height: 1.2;
+      margin-bottom: 0.75rem;
+    }
+
+    .post-body { font-size: 0.92rem; }
+
+    .post-body h1, .post-body h2, .post-body h3 {
+      color: #fff;
+      font-weight: 700;
+      margin: 2rem 0 0.75rem;
+    }
+
+    .post-body h1 { font-size: 1.4rem; }
+    .post-body h2 { font-size: 1.2rem; }
+    .post-body h3 { font-size: 1rem; }
+
+    .post-body p {
+      color: var(--text);
+      margin-bottom: 1.25rem;
+      line-height: 1.8;
+    }
+
+    .post-body a { color: var(--accent); }
+
+    .post-body strong { color: var(--text); }
+
+    .post-body pre {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      padding: 1rem;
+      overflow-x: auto;
+      margin: 1.25rem 0;
+      font-size: 0.8rem;
+      line-height: 1.6;
+    }
+
+    .post-body code {
+      font-family: 'Courier New', Courier, monospace;
+      color: var(--accent);
+    }
+
+    .post-body pre code {
+      color: var(--text);
+    }
+
+    .post-body ul, .post-body ol {
+      margin: 0 0 1.25rem 1.5rem;
+      line-height: 1.8;
+    }
+
+    .post-body li { margin-bottom: 0.4rem; }
+
+    .post-body img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+      margin: 1.5rem 0;
+      border: 1px solid var(--border);
+    }
+
+    .post-nav {
+      display: flex;
+      justify-content: space-between;
+      padding-top: 3rem;
+      margin-top: 3rem;
+      border-top: 1px solid var(--border);
+      font-size: 0.75rem;
+      gap: 1rem;
+    }
+
+    .post-nav a {
+      color: var(--muted);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .post-nav a:hover { color: var(--text); text-decoration: none; }
+
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      max-width: 780px;
+      margin: 0 auto;
+      font-size: 0.75rem;
+      color: var(--muted);
+    }
+
+    @media (max-width: 600px) {
+      nav ul { display: none; }
+      .post-header h1 { font-size: 1.5rem; }
+    }
+</style>
+</head>
+<body>
+  <nav>
+    <a href="/index.html" class="logo">audio<span>destrukt</span></a>
+    <ul>
+      <li><a href="/index.html#plugin">Plugin</a></li>
+      <li><a href="/index.html#features">Features</a></li>
+      <li><a href="/index.html#download">Download</a></li>
+      <li><a href="/index.html#about">About</a></li>
+      <li><a href="/blog/index.html" class="active">Blog</a></li>
+    </ul>
+  </nav>
+  <div class="container">
+    <div class="post-header">
+      <div class="post-meta"><a href="/blog/index.html">Blog</a> &mdash; October 5, 2026</div>
+      <h1>The board is the cassette</h1>
+      <div class="post-tags" style="margin-top:0.75rem"><span class="tag">flexisette</span><span class="tag">cassette</span><span class="tag">flex pcb</span><span class="tag">esp32</span><span class="tag">tscircuit</span><span class="tag">build123d</span><span class="tag">hardware</span></div>
+    </div>
+    <div class="post-body">
+<h1>The board is the cassette</h1>
+<p>There's exactly one place on a compact cassette where you expect to see motion: the little window in the middle, where the reels turn and the tape crawls from one hub to the other. Everything else is a static shell. I kept coming back to that window. Put a screen there and animate it, and the most inert object in my parts bin becomes something that looks alive again.</p>
+<p>So that's what flexisette is. It's the size and shape of a cassette, a 0.96″ OLED sits exactly where the tape window would be and loops a tape-winding animation, and an ESP32-S3 plays its own baked-in audio out a small speaker. It charges over USB-C and runs off a LiPo. It is not a prop that looks like a cassette; it's a self-contained little music object that happens to be shaped like one.</p>
+<p><img src="/images/2026-10-05_flexisette_assembly.png" alt="The exploded stack: the cassette-face panel on top, the routed board under it, the printed spacer frame between them, and the head insert standing up through the middle" loading="lazy"></p>
+<p>The other reason it exists is a working method I wanted to prove out. Everything here regenerates from source — the circuit, the board placement, the enclosure parts, the fab outputs, even these renders are produced by code and data in one repo. I think of versions as <em>drops</em>: shipping a different one is editing data, not redrawing a design. Nothing in this post was placed by hand on a canvas.</p>
+<h2>The outline is the only shape that matters</h2>
+<p>The board edge isn't styled to look cassette-ish. It <em>is</em> the cassette face, pulled from the same profile as the 3D-printed shell, down to the stepped notch along the bottom where a real deck's head and pinch roller would reach in. The two reel hubs are holes. The four corner screws are holes. The OLED's active area lands in the tape window. Once you accept that, the board stops being a rectangle you decorate and becomes a set of hard constraints you route around.</p>
+<p><img src="/images/2026-10-05_flexisette_board-outline.png" alt="The board edge (black) with the OLED cutout and its 21.7×10.9 mm active area dropped into the tape window, the four corner mounting holes, and the two reel openings as dashed keep-outs" loading="lazy"></p>
+<p>That reframes placement. A normal board, you put parts down and then worry about the mechanical openings. Here the openings came first and the parts had to find room between them. The ESP32 module, the USB-C/charger/LDO power chain, the I²S amp, and four tactile switches all have to live in the margins around two big round holes in the middle of the board.</p>
+<p><img src="/images/2026-10-05_flexisette_floorplan.png" alt="Floorplan: everything packed into the margins around the two reel keep-outs — MCU block at left, power chain across the top, audio at right, switches along the bottom edge" loading="lazy"></p>
+<p>The electronics themselves are deliberately boring, because boring is what gets assembled turnkey. ESP32-S3-WROOM-1 with native USB for the brain. SSD1306 OLED on I²C for the window. A MAX98357A I²S class-D amp into the speaker. USB-C into a TP4056 charger, a LiPo, and an ME6211 LDO for 3V3. Every part is JLCPCB/LCSC stocked. The board is generated module by module in tscircuit — React components for each subcircuit, composed into one design, placed deterministically, poured with ground, and finished in KiCad.</p>
+<p><img src="/images/2026-10-05_flexisette_board.png" alt="The routed board in tscircuit: ESP32 (U1) and the four switches at left, the USB-C / charger / LDO chain across the top, the SSD1306 footprint filling the center, and the I²S amp feeding the speaker header at right" loading="lazy"></p>
+<h2>The window earns its keep</h2>
+<p>The whole conceit falls apart if the screen in the window is boring, so the firmware's first job — and honestly most of what runs today — is the tape animation. Two reels wind at 128×64, one paying out while the other takes up, with the tape path drawn between them. It's the one frame of this project that has to sell the illusion, and at OLED resolution the chunky hubs read exactly like the real thing through the shell's window.</p>
+<p><img src="/images/2026-10-05_flexisette_tape.png" alt="The 128×64 tape-winding animation: two hubs with wound tape and the tape path slung between them, drawn for the SSD1306" loading="lazy"></p>
+<h2>The seam, where most of the risk lives</h2>
+<p>A board and the enclosure it lives in are really one design, and the place projects die is the seam between them — a connector that doesn't reach its slot, a screw that misses its boss, a display behind the wrong part of the window. Parameters lie about this; a <code>SHELL_W</code> constant won't stop you drawing a board 2 mm too wide. So the fit-check brings the actual routed board <em>into</em> the actual printed-part assembly, co-registers them on a shared datum, and renders them together. Alignment becomes a gate on where parts are allowed to go, not something you eyeball at the end.</p>
+<p><img src="/images/2026-10-05_flexisette_fit.png" alt="Fit-check: the routed board (green) co-registered inside the printed shell — top frame, spacer, and the head insert standing proud through the middle — on a shared datum so cutouts and holes have to line up" loading="lazy"></p>
+<p>The printed parts aren't drawn from scratch either. They're carved parametrically out of a real vendor cassette shell (a Minecraft-cassette remix off Printables), so the frame, panel, and insert inherit the genuine cassette geometry instead of my guess at it.</p>
+<h2>The speaker is where I had to be honest</h2>
+<p>I wanted bass. The cassette interior had other ideas. The only sealed volume I could carve is the head-insert bar — a 16×70×9 mm sliver — and it has to share even that with a slot I'm reserving for a future tape head. The driver, a PUI AS01808AO, lies flat against a broad face and fires out through a grille; everything behind it is the sealed back-volume.</p>
+<p><img src="/images/2026-10-05_flexisette_speaker.png" alt="The carved speaker: grille slots and driver aperture on the sealed bar (left), and the hollowed chamber in cutaway (right)" loading="lazy"></p>
+<p>So I modeled it properly before believing anything — a Thiele-Small lumped acoustic circuit in ngspice, cross-checked against a closed-form solve (they agree to 0.00%). The verdict was unambiguous and not what I wanted. At the ~3.6 cm³ I can actually carve, with the driver's real 420 Hz resonance, the system knee lands around 874 Hz with a peaky Qtc near 2.1. A sealed box can only push that knee <em>up</em> from the driver's own Fs, never down. And it's excursion-limited well before it's power-limited: about 590 mW of clean output, roughly 79 dB at a meter.</p>
+<p><img src="/images/2026-10-05_flexisette_speaker-sim.png" alt="The sealed-box sim: SPL vs back-volume (top left), cone excursion against the 0.35 mm Xmax limit (top right), how Fc and Qtc fall as you add volume you don't have (bottom left), and the impedance hump (bottom right)" loading="lazy"></p>
+<p>That's a midrange-presence driver, not a boombox — a clip player with some bite, which is the honest thing a cassette-sized sealed sliver can be. The sim's value wasn't a better number; it was killing the bass fantasy before I carved anything.</p>
+<h2>Where it's going</h2>
+<p>The firmware is early, and the feature I actually want is the one that justifies the whole shape: drop the flexisette into a <em>real</em> cassette deck and have it play. An encoder reads the reels as the deck's transport winds them and syncs playback rate to the hub speed — normal on play, garbled on fast-forward, stopped on pause. A small tape head in the insert emits flux into the deck's own playback head, so the deck plays the flexisette's audio through its own electronics. It's the Bluetooth-cassette-adapter trick run backwards: emit instead of receive. That's what the reserved slot in the speaker bar is for.</p>
+<p>None of that is built yet. But the board is fabbable, the shell fits it, the window animates, and the whole thing rebuilds from a <code>make</code>. The rest is firmware and one small magnetic part.</p>
+<p>Source is on GitHub as <a href="https://github.com/punkfab/flexisette">flexisette</a>.</p>
+    </div>
+    <div class="post-nav">
+      <div></div>
+      <div><a href="/blog/posts/cloning-an-xdj-1000.html">I cloned an XDJ-1000 and it runs on a Raspberry Pi &rarr;</a></div>
+    </div>
+  </div>
+  <footer>
+    <span>audio<span style="color:var(--accent)">destrukt</span></span>
+    <span>&copy; 2025 AudioDestrukt</span>
+  </footer>
+<!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "f393b960e25f42828910e441d26fa18c"}'></script><!-- End Cloudflare Web Analytics -->
+</body>
+</html>

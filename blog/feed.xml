@@ -5,9 +5,15 @@
     <link>https://audiodestrukt.com</link>
     <description>A poke in the ear with a sharp stick.</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 04 Oct 2026 15:16:54 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 05 Oct 2026 15:51:19 +0000</lastBuildDate>
     <atom:link href="https://audiodestrukt.com/blog/feed.xml" rel="self" type="application/rss+xml"/>
     <item>
+      <title>The board is the cassette</title>
+      <link>https://audiodestrukt.com/blog/posts/flexisette.html</link>
+      <guid isPermaLink="true">https://audiodestrukt.com/blog/posts/flexisette.html</guid>
+      <pubDate>Mon, 05 Oct 2026 12:00:00 +0000</pubDate>
+      <description>The board is the cassette There's exactly one place on a compact cassette where you expect to see motion: the little window in the middle, where the reels turn and the tape crawls from one hub to the other. Everything else is a static shell. I kept coming back to that window. Put a screen there and animate it, and…</description>
+    </item>    <item>
       <title>I cloned an XDJ-1000 and it runs on a Raspberry Pi</title>
       <link>https://audiodestrukt.com/blog/posts/cloning-an-xdj-1000.html</link>
       <guid isPermaLink="true">https://audiodestrukt.com/blog/posts/cloning-an-xdj-1000.html</guid>
@@ -124,12 +130,6 @@ The School for Poetic Computation – a place for learning and unlearning. So gr
       <guid isPermaLink="true">https://audiodestrukt.com/blog/posts/dsi-tetr4-synth.html</guid>
       <pubDate>Sat, 23 Nov 2024 10:22:39 +0000</pubDate>
       <description>DSI Tetr4 synth I’m digging through my analog synths right now and taking stock of stuff. I have a bunch of boxes that I bought four tabletop/live pa use. I’m getting kind of philosophical about the things that I own right now and trying to find the reasons that I should have them. I don’t generally sell anything. I usually…</description>
-    </item>    <item>
-      <title>Octatrack MIDI multi</title>
-      <link>https://audiodestrukt.com/blog/posts/octatrack-midi-multi.html</link>
-      <guid isPermaLink="true">https://audiodestrukt.com/blog/posts/octatrack-midi-multi.html</guid>
-      <pubDate>Fri, 22 Nov 2024 00:32:04 +0000</pubDate>
-      <description>Octatrack MIDI multi I’m still jamming on my Octatrack today. I hooked up my Waldorf Blofeld to the mix. Same kind of setup where I have MIDI going out of the OT and into the Blofeld. I chose the Blofeld for this experiment because it’s 16 part multitimbral and I can trigger a few different sounds at once from different…</description>
     </item>
   </channel>
 </rss>
