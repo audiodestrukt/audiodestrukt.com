@@ -61,4 +61,4 @@ The firmware is early, and the feature I actually want is the one that justifies
 
 None of that is built yet. But the board is fabbable, the shell fits it, the window animates, and the whole thing rebuilds from a `make`. The rest is firmware and one small magnetic part.
 
-Source is on GitHub as [flexisette](https://github.com/punkfab/flexisette).
+Source is on GitHub as [flexisette](https://github.com/audiodestrukt/flexisette).
