@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Is an $80 Raspberry Pi faster than an XDJ-1000? — AudioDestrukt</title>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="AudioDestrukt">
+  <meta property="og:title" content="Is an $80 Raspberry Pi faster than an XDJ-1000?">
+  <meta property="og:description" content="Last week I wrote about cloning the XDJ-1000MK2 and getting the clone to run on a Raspberry Pi 5. Since then the thing I keep noticing is not that the clone works. It is that the clone feels quicker than…">
+  <meta property="og:url" content="https://audiodestrukt.com/blog/posts/pi-vs-xdj-1000-performance.html">
+  <meta property="og:image" content="https://audiodestrukt.com/images/2026-10-14_pi-vs-xdj-1000-performance_meta.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://audiodestrukt.com/images/2026-10-14_pi-vs-xdj-1000-performance_meta.png">
+  <meta name="description" content="Last week I wrote about cloning the XDJ-1000MK2 and getting the clone to run on a Raspberry Pi 5. Since then the thing I keep noticing is not that the clone works. It is that the clone feels quicker than…">
+  <link rel="alternate" type="application/rss+xml" title="AudioDestrukt Blog" href="https://audiodestrukt.com/blog/feed.xml">
+  <style>
+    :root {
+      --bg: #0d0d0d;
+      --surface: #161616;
+      --surface2: #1e1e1e;
+      --border: #2a2a2a;
+      --accent: #c8ff00;
+      --accent2: #ff3c00;
+      --text: #e8e8e8;
+      --muted: #777;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Courier New', Courier, monospace;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+    }
+
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 2rem;
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      background: rgba(13,13,13,0.95);
+      backdrop-filter: blur(8px);
+      z-index: 100;
+    }
+
+    .logo {
+      font-size: 1.3rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      color: var(--text);
+      text-decoration: none;
+    }
+
+    .logo span { color: var(--accent); }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 2rem;
+    }
+
+    nav ul li a {
+      color: var(--muted);
+      font-size: 0.85rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    nav ul li a:hover { color: var(--text); text-decoration: none; }
+    nav ul li a.active { color: var(--accent); }
+
+    .container {
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 4rem 2rem;
+    }
+
+    .page-title {
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 3rem;
+    }
+
+    /* POST LIST */
+    .post-list { list-style: none; }
+
+    .post-item {
+      border-bottom: 1px solid var(--border);
+      padding: 2rem 0;
+    }
+
+    .post-item:first-child { padding-top: 0; }
+
+    .post-meta {
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      text-transform: uppercase;
+      margin-bottom: 0.5rem;
+    }
+
+    .post-title {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 0.75rem;
+      line-height: 1.2;
+    }
+
+    .post-title a { color: #fff; }
+    .post-title a:hover { color: var(--accent); text-decoration: none; }
+
+    .post-excerpt {
+      font-size: 0.85rem;
+      color: var(--text);
+      margin-bottom: 0.75rem;
+    }
+
+    .post-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+    }
+
+    .tag {
+      font-size: 0.6rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 0.15rem 0.45rem;
+      border: 1px solid var(--border);
+      color: var(--muted);
+    }
+
+    /* PAGINATION */
+    .pagination {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 3rem;
+      font-size: 0.8rem;
+    }
+
+    .pagination a {
+      border: 1px solid var(--border);
+      padding: 0.5rem 1rem;
+      color: var(--text);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-size: 0.75rem;
+    }
+
+    .pagination a:hover { border-color: var(--text); text-decoration: none; }
+    .pagination .page-info { color: var(--muted); font-size: 0.7rem; letter-spacing: 0.1em; }
+    .pagination .spacer { flex: 1; }
+
+    /* SINGLE POST */
+    .post-header { margin-bottom: 3rem; }
+
+    .post-header h1 {
+      font-size: 2rem;
+      font-weight: 700;
+      color: #fff;
+      line-height: 1.2;
+      margin-bottom: 0.75rem;
+    }
+
+    .post-body { font-size: 0.92rem; }
+
+    .post-body h1, .post-body h2, .post-body h3 {
+      color: #fff;
+      font-weight: 700;
+      margin: 2rem 0 0.75rem;
+    }
+
+    .post-body h1 { font-size: 1.4rem; }
+    .post-body h2 { font-size: 1.2rem; }
+    .post-body h3 { font-size: 1rem; }
+
+    .post-body p {
+      color: var(--text);
+      margin-bottom: 1.25rem;
+      line-height: 1.8;
+    }
+
+    .post-body a { color: var(--accent); }
+
+    .post-body strong { color: var(--text); }
+
+    .post-body pre {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      padding: 1rem;
+      overflow-x: auto;
+      margin: 1.25rem 0;
+      font-size: 0.8rem;
+      line-height: 1.6;
+    }
+
+    .post-body code {
+      font-family: 'Courier New', Courier, monospace;
+      color: var(--accent);
+    }
+
+    .post-body pre code {
+      color: var(--text);
+    }
+
+    .post-body .table-wrap { overflow-x: auto; margin: 1.25rem 0; }
+    .post-body table {
+      border-collapse: collapse;
+      width: 100%;
+      font-size: 0.85rem;
+      line-height: 1.5;
+      font-variant-numeric: tabular-nums;
+    }
+    .post-body th, .post-body td {
+      border: 1px solid var(--border);
+      padding: 0.45rem 0.6rem;
+      text-align: left;
+      vertical-align: top;
+    }
+    .post-body th { background: var(--surface2); color: var(--text); font-weight: 600; }
+
+    .post-body ul, .post-body ol {
+      margin: 0 0 1.25rem 1.5rem;
+      line-height: 1.8;
+    }
+
+    .post-body li { margin-bottom: 0.4rem; }
+
+    .post-body img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+      margin: 1.5rem 0;
+      border: 1px solid var(--border);
+    }
+
+    .post-nav {
+      display: flex;
+      justify-content: space-between;
+      padding-top: 3rem;
+      margin-top: 3rem;
+      border-top: 1px solid var(--border);
+      font-size: 0.75rem;
+      gap: 1rem;
+    }
+
+    .post-nav a {
+      color: var(--muted);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .post-nav a:hover { color: var(--text); text-decoration: none; }
+
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      max-width: 780px;
+      margin: 0 auto;
+      font-size: 0.75rem;
+      color: var(--muted);
+    }
+
+    @media (max-width: 600px) {
+      nav ul { display: none; }
+      .post-header h1 { font-size: 1.5rem; }
+    }
+</style>
+</head>
+<body>
+  <nav>
+    <a href="/index.html" class="logo">audio<span>destrukt</span></a>
+    <ul>
+      <li><a href="/index.html#plugin">Plugin</a></li>
+      <li><a href="/index.html#features">Features</a></li>
+      <li><a href="/index.html#download">Download</a></li>
+      <li><a href="/index.html#about">About</a></li>
+      <li><a href="/blog/index.html" class="active">Blog</a></li>
+    </ul>
+  </nav>
+  <div class="container">
+    <div class="post-header">
+      <div class="post-meta"><a href="/blog/index.html">Blog</a> &mdash; October 14, 2026</div>
+      <h1>Is an $80 Raspberry Pi faster than an XDJ-1000?</h1>
+      <div class="post-tags" style="margin-top:0.75rem"><span class="tag">opendeck</span><span class="tag">dj</span><span class="tag">pro dj link</span><span class="tag">rust</span><span class="tag">raspberry pi</span><span class="tag">benchmarks</span></div>
+    </div>
+    <div class="post-body">
+<p>Last week I wrote about <a href="/blog/posts/cloning-an-xdj-1000.html">cloning the XDJ-1000MK2</a> and getting the clone to run on a Raspberry Pi 5. Since then the thing I keep noticing is not that the clone works. It is that the clone feels quicker than the deck it copies. The waveform is steadier, tracks come up faster, and CUE lands where my finger lands.</p>
+<p>My first explanation was the lazy one: it's written in Rust, Rust is fast. That is partly true and mostly not the reason, and "feels quicker" is not a number. So this post is the scorecard. Some rows are measured on both machines. Some are measured on mine and still open on the XDJ, with the procedure I am going to use written down so the numbers come out comparable. I will fill the open cells in as I get them and update this page.</p>
+<p><img src="/images/2026-10-14_pi-vs-xdj-1000-performance_meta.png" alt="The XDJ-1000MK2 screen next to OpenDeck's, same track, same layout" loading="lazy"></p>
+<h2>The scorecard</h2>
+<p>Both machines play the same 5:13 MP3 at 44.1 kHz, pitch at 0 %. "OpenDeck" is the Pi 5 unless the cell says otherwise. The full table with methods lives in the repo as <a href="https://github.com/audiodestrukt/freedj-3000/blob/main/docs/reference/hardware-comparison.md">hardware-comparison.md</a>.</p>
+<div class="table-wrap"><table><thead><tr><th>What</th><th>XDJ-1000MK2</th><th>OpenDeck</th></tr></thead><tbody><tr><td>Beat packet timing (jitter at one receiver)</td><td>1.33 ms</td><td>1.23 ms (desktop build)</td></tr><tr><td>Waveform scroll</td><td>Visible flicker while playing</td><td>60 fps, 0.12 ms frame jitter, no dropped frames</td></tr><tr><td>Track load to PLAY ready</td><td><strong>[XDJ: measure]</strong></td><td>0.7 s on the Pi 5, from scratch; 0.5 s on the desktop</td></tr><tr><td>Power on to ready</td><td><strong>[XDJ: measure]</strong></td><td>0.9 s app start to first frame (desktop); OS boot not counted</td></tr><tr><td>CUE press to sound</td><td><strong>[XDJ: measure]</strong></td><td>A few ms to the seek; end-to-end at the jack <strong>[measure]</strong></td></tr><tr><td>CPU while playing</td><td>Not visible from outside</td><td>About 0.6 of one core, three cores idle</td></tr><tr><td>Price</td><td><a href="https://djworx.com/pioneer-dj-xdj-1000mk2/">€1,299 at launch, 2016</a></td><td>$80 board plus a screen</td></tr></tbody></table></div>
+<p>The honest summary: on the one row measured head to head it is a tie. On the screen it is a clear win for the clone and I have not yet put a number on the XDJ's side. Everything else is mine to measure.</p>
+<h2>The tie: beat timing</h2>
+<p>Pro DJ Link players broadcast a packet on every beat. Another deck syncing to you follows those packets, so how evenly they arrive is the one performance number that other people's gear can see. In August I captured both players' beat packets at the same receiver in the same run, with both decks playing at 0 %, and took the standard deviation of the interval between beats.</p>
+<p>The XDJ came out at 1.33 ms, mine at 1.23 ms. That is not a win, that is the same number with noise on it. The XDJ has been doing this for a decade and does it well. Mine gets there by free-running a phase-locked clock off the audio position and sleeping to a deadline for the last 1.5 ms before each send. The desktop produced that number; the Pi's is still to come.</p>
+<h2>The win: the screen</h2>
+<p>Put the two screens side by side with the same track and the XDJ's waveform flickers slightly as it scrolls. Not broken, just a little unsteady, the way a display looks when the thing drawing it can't quite keep up with the thing it is drawing. I am not the only one who sees it. A <a href="https://forum.djtechtools.com/showthread.php?t=95424">2018 review on the DJ TechTools forum</a> put it as "Low refresh frequency display makes for laggy interface/waveform."</p>
+<p>The Pi's waveform does not do that, and the reason is where the work happens. The whole track's waveform lives in a GPU storage buffer. Scrolling it is one number, the playhead position, handed to the shader once a frame. Nothing is re-uploaded, nothing is re-analysed, nothing is blitted. The playhead itself is phase-locked to the display: it advances by whole display periods read from the monitor, and the frame is drawn from the compositor's own callback, so a frame is never early or late with respect to the thing that will show it. On the Pi 5 that measures as 60 frames a second with a frame-to-frame jitter of 0.12 ms and no stalls in the sample. The Pi's display stack came out tighter than my NVIDIA desktop, which surprised me.</p>
+<p>What I have not done is measure the XDJ's screen in frames per second. The procedure is simple and I will do it: film both screens at 240 fps with a phone, step through one second of frames, count how many distinct waveform positions appear. Until then the XDJ cell says "flicker" and not a number.</p>
+<h2>Loading, with an asterisk</h2>
+<p>This one needs the asterisk up front. When the XDJ loads a track from a USB stick it reads an analysis rekordbox already did on a laptop: the beat grid, the waveform, the cues. It does not analyse anything. OpenDeck decodes the file and analyses it from scratch on load, waveform and BPM included, unless it has seen the track before. So "load time" means different work on each machine.</p>
+<p>Even so, the number DJs feel is the same on both: press LOAD, wait for PLAY to be ready. On the Pi 5 the whole thing for a 5:13 MP3 is 0.7 s, decode included. On the desktop it is 0.5 s cold and 0.4 s with the grid cached. That is measured from the log, and it is the lower bound; the procedure for the XDJ, filming the screen from the press to the drawn waveform, will give both machines the same stopwatch.</p>
+<p>For context, when Pioneer launched the CDJ-3000 <a href="https://www.attackmagazine.com/news/pioneer-dj-introduces-the-mpu-powered-cdj-3000/">the headline was its new processor</a>, and the thing they said it bought was faster track and cue loading, replacing what the trade press called the DSP-based design of the previous generation. Loading on the older decks was slow enough that fixing it was the pitch for a $2,400 player. I do not know what is inside the XDJ-1000MK2 and I have not opened it. I only know what the screen does.</p>
+<h2>CUE</h2>
+<p>The thing that made me want to write this at all. On a deck, CUE is the button you hit on the beat, so the gap between your finger and the sound is the whole instrument. In the clone every press goes through a small state machine with written specs, the seek is applied while the deck is paused so the next press finds the cursor already at the cue, and the processor waits for the output to drain before it pushes the first block after a seek, so the transient you cued is heard and not thrown away. There is a 3 ms fade on stop to kill the click and deliberately no fade on start. From the press to the seek being applied is a few milliseconds; the rest is the audio device's buffer.</p>
+<p>I do not have the XDJ's number. Getting it is a two-channel recording: a small mic taped next to the CUE button, so the tact switch's click is the time reference, and the line out on the other channel, a cue set on a kick, ten presses, measure click to kick in a DAW. Same rig on the Pi with the DJ2Go's pad, and on the iPad with a stylus. I expect the device buffer to dominate on both and I expect them to be close. That is the honest expectation; the point of measuring is that I might be wrong.</p>
+<h2>Is it Rust?</h2>
+<p>A bit. Rust gives this project no garbage collector, no runtime pauses, and threads I can split without fear: the audio thread, the loader, the Link listeners and the renderer are all separate and none of them can corrupt the others' data. The audio callback never allocates. That is real and it is why the engine was easy to make glitch-free.</p>
+<p>But the board is seven years newer than the deck. The Pi 5 is four Cortex-A76 cores and a GPU with a real Vulkan driver, and the architecture leans on that GPU for the one thing a deck screen does all day. If I had written the same design in C it would be about as fast. If I had written the XDJ's design in Rust on the XDJ's hardware it would not be. Rust made the right architecture cheap to build on a $80 board; it did not make the board.</p>
+<h2>Where the XDJ wins</h2>
+<p>A real jog wheel on a real bearing, with a capacitive top and a sensor that reports exactly where your hand is. Real buttons, each a tact switch with a click you feel. Boot into a known state every time. Ten years of firmware decisions about what a deck should do when you do something strange. rekordbox and the stick in your pocket that works in every booth in the world. None of that is on the scorecard because none of it is a number, and the clone does not have it. The Pi needs a screen, a mouse or a MIDI controller, and an active cooler, and it is a deck in the sense that it does what a deck does, not in the sense that you would carry it to a gig.</p>
+<h2>What's next on the table</h2>
+<p>In order: film both screens and put a frames-per-second number in the waveform row; film both loads; do the two-channel CUE recording; and run the beat-timing capture again with the Pi sending instead of the desktop. Each one replaces a bold cell above. If any of them goes the XDJ's way, the row will say so.</p>
+<p>The clone is on the App Store as <a href="https://apps.apple.com/app/id6807472453">OpenDeck DJ</a>, the source is at <a href="https://github.com/audiodestrukt/freedj-3000">github.com/audiodestrukt/freedj-3000</a> under the GPL, and the Pi build instructions are in the repo. XDJ, CDJ, rekordbox and Pro DJ Link are AlphaTheta's names; this project is not affiliated with them.</p>
+    </div>
+    <div class="post-nav">
+      <div></div>
+      <div><a href="/blog/posts/flexisette.html">The board is the cassette &rarr;</a></div>
+    </div>
+  </div>
+  <footer>
+    <span>audio<span style="color:var(--accent)">destrukt</span></span>
+    <span>&copy; 2025 AudioDestrukt</span>
+  </footer>
+<!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "f393b960e25f42828910e441d26fa18c"}'></script><!-- End Cloudflare Web Analytics -->
+</body>
+</html>

@@ -8,6 +8,12 @@
     <lastBuildDate>Wed, 14 Oct 2026 16:10:49 +0000</lastBuildDate>
     <atom:link href="https://audiodestrukt.com/blog/feed.xml" rel="self" type="application/rss+xml"/>
     <item>
+      <title>Is an $80 Raspberry Pi faster than an XDJ-1000?</title>
+      <link>https://audiodestrukt.com/blog/posts/pi-vs-xdj-1000-performance.html</link>
+      <guid isPermaLink="true">https://audiodestrukt.com/blog/posts/pi-vs-xdj-1000-performance.html</guid>
+      <pubDate>Wed, 14 Oct 2026 10:00:00 +0000</pubDate>
+      <description>Last week I wrote about cloning the XDJ-1000MK2 and getting the clone to run on a Raspberry Pi 5. Since then the thing I keep noticing is not that the clone works. It is that the clone feels quicker than the deck it copies. The waveform is steadier, tracks come up faster, and CUE lands where my finger lands. My…</description>
+    </item>    <item>
       <title>The board is the cassette</title>
       <link>https://audiodestrukt.com/blog/posts/flexisette.html</link>
       <guid isPermaLink="true">https://audiodestrukt.com/blog/posts/flexisette.html</guid>
@@ -124,12 +130,6 @@ The School for Poetic Computation – a place for learning and unlearning. So gr
       <guid isPermaLink="true">https://audiodestrukt.com/blog/posts/moog-slim-phatty.html</guid>
       <pubDate>Sat, 23 Nov 2024 10:52:27 +0000</pubDate>
       <description>Moog Slim Phatty I’m still digging though my analog synth collection and just writing some notes. I have owned the Slim Phatty for a few years now. I went through a period of buying synths on Craigslist for a while an this is one that I picked up here in San Francisco. I wanted a Moog synth for a while…</description>
-    </item>    <item>
-      <title>DSI Tetr4 synth</title>
-      <link>https://audiodestrukt.com/blog/posts/dsi-tetr4-synth.html</link>
-      <guid isPermaLink="true">https://audiodestrukt.com/blog/posts/dsi-tetr4-synth.html</guid>
-      <pubDate>Sat, 23 Nov 2024 10:22:39 +0000</pubDate>
-      <description>DSI Tetr4 synth I’m digging through my analog synths right now and taking stock of stuff. I have a bunch of boxes that I bought four tabletop/live pa use. I’m getting kind of philosophical about the things that I own right now and trying to find the reasons that I should have them. I don’t generally sell anything. I usually…</description>
     </item>
   </channel>
 </rss>
