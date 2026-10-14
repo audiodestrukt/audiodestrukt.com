@@ -77,10 +77,42 @@ def md_to_html(text):
             html_blocks.append(f'<{tag}>' + ''.join(f'<li>{inline_md(it)}</li>' for it in items) + f'</{tag}>')
             continue
 
+        # Tables: a run of lines starting with '|'; the second line is the
+        # header separator (|---|:--:|). Cells take inline markdown.
+        if line.lstrip().startswith('|'):
+            rows = []
+            while i < len(lines) and lines[i].lstrip().startswith('|'):
+                rows.append(lines[i].strip().strip('|'))
+                i += 1
+            if len(rows) >= 2 and re.match(r'^[\s:\-|]+$', rows[1]):
+                aligns = []
+                for c in rows[1].split('|'):
+                    c = c.strip()
+                    aligns.append('center' if c.startswith(':') and c.endswith(':')
+                                  else 'right' if c.endswith(':') else 'left')
+                def tr(row, tag):
+                    cells = [c.strip() for c in row.split('|')]
+                    out = ''
+                    for k, c in enumerate(cells):
+                        a = aligns[k] if k < len(aligns) else 'left'
+                        style = '' if a == 'left' else f' style="text-align:{a}"'
+                        out += f'<{tag}{style}>{inline_md(c)}</{tag}>'
+                    return f'<tr>{out}</tr>'
+                body = ''.join(tr(r, 'td') for r in rows[2:])
+                html_blocks.append('<div class="table-wrap"><table><thead>'
+                                   + tr(rows[0], 'th') + '</thead><tbody>'
+                                   + body + '</tbody></table></div>')
+                continue
+            # not a table after all: fall through as a paragraph
+            para_lines = [r for r in rows]
+            html_blocks.append('<p>' + inline_md(' '.join(para_lines)) + '</p>')
+            continue
+
         # Collect paragraph lines
         para_lines = []
         while i < len(lines) and lines[i].strip() != '' and not re.match(r'^#{1,6}\s', lines[i]) and not lines[i].startswith('```') \
-                and not re.match(r'^\s*([-*]|\d+\.)\s+', lines[i]):
+                and not re.match(r'^\s*([-*]|\d+\.)\s+', lines[i]) \
+                and not lines[i].lstrip().startswith('|'):
             para_lines.append(lines[i])
             i += 1
         if para_lines:
@@ -392,6 +424,22 @@ CSS = """
     .post-body pre code {
       color: var(--text);
     }
+
+    .post-body .table-wrap { overflow-x: auto; margin: 1.25rem 0; }
+    .post-body table {
+      border-collapse: collapse;
+      width: 100%;
+      font-size: 0.85rem;
+      line-height: 1.5;
+      font-variant-numeric: tabular-nums;
+    }
+    .post-body th, .post-body td {
+      border: 1px solid var(--border);
+      padding: 0.45rem 0.6rem;
+      text-align: left;
+      vertical-align: top;
+    }
+    .post-body th { background: var(--surface2); color: var(--text); font-weight: 600; }
 
     .post-body ul, .post-body ol {
       margin: 0 0 1.25rem 1.5rem;
