@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The waveform was stealing my audio: debugging an ESP32-P4 DJ deck — AudioDestrukt</title>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="alternate" type="application/rss+xml" title="AudioDestrukt Blog" href="https://audiodestrukt.com/blog/feed.xml">
+  <style>
+    :root {
+      --bg: #0d0d0d;
+      --surface: #161616;
+      --surface2: #1e1e1e;
+      --border: #2a2a2a;
+      --accent: #c8ff00;
+      --accent2: #ff3c00;
+      --text: #e8e8e8;
+      --muted: #777;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Courier New', Courier, monospace;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+    }
+
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 2rem;
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      background: rgba(13,13,13,0.95);
+      backdrop-filter: blur(8px);
+      z-index: 100;
+    }
+
+    .logo {
+      font-size: 1.3rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      color: var(--text);
+      text-decoration: none;
+    }
+
+    .logo span { color: var(--accent); }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 2rem;
+    }
+
+    nav ul li a {
+      color: var(--muted);
+      font-size: 0.85rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    nav ul li a:hover { color: var(--text); text-decoration: none; }
+    nav ul li a.active { color: var(--accent); }
+
+    .container {
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 4rem 2rem;
+    }
+
+    .page-title {
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 3rem;
+    }
+
+    /* POST LIST */
+    .post-list { list-style: none; }
+
+    .post-item {
+      border-bottom: 1px solid var(--border);
+      padding: 2rem 0;
+    }
+
+    .post-item:first-child { padding-top: 0; }
+
+    .post-meta {
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      text-transform: uppercase;
+      margin-bottom: 0.5rem;
+    }
+
+    .post-title {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 0.75rem;
+      line-height: 1.2;
+    }
+
+    .post-title a { color: #fff; }
+    .post-title a:hover { color: var(--accent); text-decoration: none; }
+
+    .post-excerpt {
+      font-size: 0.85rem;
+      color: var(--text);
+      margin-bottom: 0.75rem;
+    }
+
+    .post-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+    }
+
+    .tag {
+      font-size: 0.6rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 0.15rem 0.45rem;
+      border: 1px solid var(--border);
+      color: var(--muted);
+    }
+
+    /* PAGINATION */
+    .pagination {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 3rem;
+      font-size: 0.8rem;
+    }
+
+    .pagination a {
+      border: 1px solid var(--border);
+      padding: 0.5rem 1rem;
+      color: var(--text);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-size: 0.75rem;
+    }
+
+    .pagination a:hover { border-color: var(--text); text-decoration: none; }
+    .pagination .page-info { color: var(--muted); font-size: 0.7rem; letter-spacing: 0.1em; }
+    .pagination .spacer { flex: 1; }
+
+    /* SINGLE POST */
+    .post-header { margin-bottom: 3rem; }
+
+    .post-header h1 {
+      font-size: 2rem;
+      font-weight: 700;
+      color: #fff;
+      line-height: 1.2;
+      margin-bottom: 0.75rem;
+    }
+
+    .post-body { font-size: 0.92rem; }
+
+    .post-body h1, .post-body h2, .post-body h3 {
+      color: #fff;
+      font-weight: 700;
+      margin: 2rem 0 0.75rem;
+    }
+
+    .post-body h1 { font-size: 1.4rem; }
+    .post-body h2 { font-size: 1.2rem; }
+    .post-body h3 { font-size: 1rem; }
+
+    .post-body p {
+      color: var(--text);
+      margin-bottom: 1.25rem;
+      line-height: 1.8;
+    }
+
+    .post-body a { color: var(--accent); }
+
+    .post-body strong { color: var(--text); }
+
+    .post-body pre {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      padding: 1rem;
+      overflow-x: auto;
+      margin: 1.25rem 0;
+      font-size: 0.8rem;
+      line-height: 1.6;
+    }
+
+    .post-body code {
+      font-family: 'Courier New', Courier, monospace;
+      color: var(--accent);
+    }
+
+    .post-body pre code {
+      color: var(--text);
+    }
+
+    .post-body .table-wrap { overflow-x: auto; margin: 1.25rem 0; }
+    .post-body table {
+      border-collapse: collapse;
+      width: 100%;
+      font-size: 0.85rem;
+      line-height: 1.5;
+      font-variant-numeric: tabular-nums;
+    }
+    .post-body th, .post-body td {
+      border: 1px solid var(--border);
+      padding: 0.45rem 0.6rem;
+      text-align: left;
+      vertical-align: top;
+    }
+    .post-body th { background: var(--surface2); color: var(--text); font-weight: 600; }
+
+    .post-body ul, .post-body ol {
+      margin: 0 0 1.25rem 1.5rem;
+      line-height: 1.8;
+    }
+
+    .post-body li { margin-bottom: 0.4rem; }
+
+    .post-body img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+      margin: 1.5rem 0;
+      border: 1px solid var(--border);
+    }
+
+    .post-nav {
+      display: flex;
+      justify-content: space-between;
+      padding-top: 3rem;
+      margin-top: 3rem;
+      border-top: 1px solid var(--border);
+      font-size: 0.75rem;
+      gap: 1rem;
+    }
+
+    .post-nav a {
+      color: var(--muted);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .post-nav a:hover { color: var(--text); text-decoration: none; }
+
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      max-width: 780px;
+      margin: 0 auto;
+      font-size: 0.75rem;
+      color: var(--muted);
+    }
+
+    @media (max-width: 600px) {
+      nav ul { display: none; }
+      .post-header h1 { font-size: 1.5rem; }
+    }
+</style>
+</head>
+<body>
+  <nav>
+    <a href="/index.html" class="logo">audio<span>destrukt</span></a>
+    <ul>
+      <li><a href="/index.html#plugin">Plugin</a></li>
+      <li><a href="/index.html#features">Features</a></li>
+      <li><a href="/index.html#download">Download</a></li>
+      <li><a href="/index.html#about">About</a></li>
+      <li><a href="/blog/index.html" class="active">Blog</a></li>
+    </ul>
+  </nav>
+  <div class="container">
+    <div class="post-header">
+      <div class="post-meta"><a href="/blog/index.html">Blog</a> &mdash; October 29, 2026</div>
+      <h1>The waveform was stealing my audio: debugging an ESP32-P4 DJ deck</h1>
+      <div class="post-tags" style="margin-top:0.75rem"><span class="tag">esp32</span><span class="tag">dj</span><span class="tag">embedded</span><span class="tag">audio</span><span class="tag">debugging</span></div>
+    </div>
+    <div class="post-body">
+<p>I've been building a small CDJ-style deck on an ESP32. This week I added a scrolling waveform, and the music immediately started playing slow and glitchy. The fix turned out to be a single line. Finding it was the interesting part, so this post is about how we tracked it down, including the two times I was confidently wrong.</p>
+<h2>The deck</h2>
+<p>This started years ago as a retrofit for a Numark mini turntable: timecode vinyl for control and a two-line LCD for picking songs. It has since turned into a little CDJ replacement on a Waveshare ESP32-P4 dev kit:</p>
+<ul><li><strong>Processor.</strong> The P4 has two RISC-V cores at 360 MHz, 32 MB of PSRAM, and four USB-A ports on a real USB host.</li><li><strong>Controls.</strong> A Numark DJ2Go plugs straight into one of those USB ports and stands in for the control panel I haven't built yet. The MIDI mapping is shared with my Rust player, <a href="/blog/posts/cloning-an-xdj-1000.html">freedj-3000</a>.</li><li><strong>Audio.</strong> It goes out through the board's ES8311 codec to a tiny speaker. Fine for development, useless for hearing clicks, which matters later.</li><li><strong>Tracks.</strong> WAV and MP3 stream from the SD card through a 12 MB window in PSRAM, about 71 seconds of audio around the playhead. Jog, cue and short seeks are instant.</li><li><strong>Screen.</strong> A 4" 480×320 SPI module with capacitive touch (ST7796S plus FT6336U), wired to the 40-pin header with jumper wires while I wait for the proper DSI screen. LVGL draws the UI.</li></ul>
+<p>The layout is simple. Audio gets core 1 to itself. Core 0 runs everything else: the SD loader, USB, and the UI.</p>
+<h2>The symptom</h2>
+<p>The waveform is the CDJ-style view: the playhead stays fixed in the middle and the track scrolls past it. The loader already decodes every sample, so I had it keep one peak byte for every 128 frames as it goes. The UI draws from that array into a canvas and never touches the audio itself. Cheap on paper.</p>
+<p>On the device, as soon as the waveform appeared the music slowed down and started to stutter. The time counter on the same screen updates constantly and never caused a problem. Only the waveform did.</p>
+<h2>Wrong turn one: "no dropouts"</h2>
+<p>Earlier that day the browse beep had been sounding like a double tick. To check for dropouts I hooked up the I2S driver's "send queue overflow" callback, which is supposed to fire when the DAC runs out of data. I scrolled through the track list 160 times and it never fired. I concluded the audio path was clean and blamed the beep's sharp edges.</p>
+<p>That counter never fired once, in any test, including the ones where the audio was plainly broken. A counter that is always zero shows you nothing about whether the audio is fine. I took the beeps out anyway (a DJ deck shouldn't make its own noises), but the conclusion was wrong.</p>
+<h2>Measuring the right thing</h2>
+<p>The speaker is too small to hear pops, so we built measurements instead:</p>
+<ol><li><strong>Real-time percentage.</strong> Count the frames handed to the DAC and compare them with the frames it must have played in the same wall-clock time. Anything under 100% means gaps of silence, however the driver feels about it.</li><li><strong>Block work time.</strong> How long the audio task takes to compute each 256-frame block, against a budget of 5.8 ms.</li><li><strong>Click detector.</strong> On the exact samples going to the DAC, track the second difference (how sharply the slope changes) and flag spikes far above its running average. On a test tone it is exact. On music, drum hits set it off.</li></ol>
+<p>The first numbers:</p>
+<div class="table-wrap"><table><thead><tr><th></th><th>Real-time</th><th>Block work</th></tr></thead><tbody><tr><td>Idle (silence)</td><td>99.9 %</td><td>~0 ms</td></tr><tr><td>Playing, waveform up</td><td><strong>78–80 %</strong></td><td>0.46 ms avg, budget 5.8 ms</td></tr></tbody></table></div>
+<p>So the deck was delivering about four fifths of the audio, which explains both the slowness and the stutter. And it wasn't a CPU problem: the audio code used under a tenth of its budget. The time was going into waiting on the DAC. Each write waited longer than the audio it handed over.</p>
+<h2>Wrong turn two: the cache</h2>
+<p>The P4's two cores share an L2 cache, and the build was still at debug optimisation. My theory was that the UI was pushing the audio code out of the shared cache. So I built with <code>-O2</code> and doubled the L2 cache to 256 KB.</p>
+<p>Nothing changed: still around 78%. A reasonable theory that the measurement ruled out in one run.</p>
+<h2>Bisecting from the serial port</h2>
+<p>At this point every experiment meant: flash, walk over, load a track, press play, wait, tell me what happened. Too slow. So I added serial keys to the firmware: digits select a track, <code>l</code> loads, <code>p</code> plays, <code>c</code> cues. There's also <code>w</code>, which steps the waveform through three test modes. A logger on the PC holds the port open and passes keys through, so the whole experiment could run without anyone touching the deck.</p>
+<p><code>w</code> was the decisive one:</p>
+<div class="table-wrap"><table><thead><tr><th>Waveform mode</th><th>Real-time</th><th>Waveform fps</th></tr></thead><tbody><tr><td>Drawn and sent to the screen</td><td>80 %</td><td>20</td></tr><tr><td>Drawn, <strong>not</strong> sent to the screen</td><td><strong>99.7 %</strong></td><td>160</td></tr><tr><td>Off</td><td>99.4 %</td><td>—</td></tr></tbody></table></div>
+<p>Drawing cost nothing: 160 fps of drawing into PSRAM and the audio didn't notice. Sending the result to the screen is what broke it. That's also why the time counter was harmless. A few changed digits is a small SPI transfer. The waveform is about 96 KB per frame, twenty times a second.</p>
+<p>While this was running, I asked whether the DAC was competing with the screen for TX/RX. On the wires, no: the screen has its own SPI pins. Inside the chip, yes. And it pointed at the real question: what do the DAC and the screen actually share?</p>
+<h2>The one line</h2>
+<p>In ESP-IDF, a driver's interrupt is allocated on the core of whatever task installs the driver. I had initialised audio from <code>app_main</code>, which runs on core 0. So the audio <em>task</em> was on core 1, but the I2S <em>interrupt</em> was on core 0, competing with LVGL and a steady stream of SPI DMA completions from the screen.</p>
+<p>The fix was to move <code>audio_out::begin()</code> into the audio task itself, so the I2S interrupt lands on core 1 with the code it serves. Startup now waits on a semaphore, because the touch chip shares the codec's I2C bus.</p>
+<div class="table-wrap"><table><thead><tr><th></th><th>Real-time</th><th>Block work</th><th>Min slack</th><th>Waveform</th></tr></thead><tbody><tr><td>Before</td><td>78–80 %</td><td>0.46 ms</td><td>0.0 ms</td><td>20 fps</td></tr><tr><td>After</td><td><strong>100.0 %</strong></td><td>0.43 ms</td><td>4.5 ms</td><td>18–19 fps</td></tr></tbody></table></div>
+<p><code>sine.wav</code>, where the click detector is exact, shows zero clicks. That's a short file, so a longer tone test is still to do.</p>
+<p>I'll be honest about one gap. I can show <em>where</em> the problem was and that moving the interrupt fixes it. I can't fully explain <em>why</em> a delayed interrupt costs a steady 20% of throughput rather than an occasional glitch. My guess is that DMA buffers are refilled late and the hardware plays them out without a gap-free hand-off. It's a guess, and I'll leave it as one until I've traced it.</p>
+<h2>One more catch from the same numbers</h2>
+<p>The block-work maximum sat at 9.5 ms, over the 5.8 ms budget, even after the fix. The culprit was my own status line: the audio task printed two log lines every two seconds over a 115200-baud UART, and that takes longer than an audio block. The DAC buffer was absorbing it, but printing from the audio loop is a bug waiting to happen. Now the audio task fills a small report struct and a low-priority task on core 0 prints it. The max dropped to 0.75 ms.</p>
+<h2>What I'm taking from it</h2>
+<ul><li><strong>Measure delivery, not driver events.</strong> "Frames sent vs frames owed" is one line of arithmetic and it can't lie the way an event counter can.</li><li><strong>Know where your interrupts live.</strong> Pinning a task to a core says nothing about where its driver's interrupt runs.</li><li><strong>Make the device drivable.</strong> The serial keys turned a walk-over-and-press-play loop into a script, and that's what made bisecting possible.</li><li><strong>Write down the wrong turns.</strong> Both of mine were plausible, and both were ruled out by a number in under a minute.</li></ul>
+<p>The code is in <a href="https://github.com/audiodestrukt/esp32-mediaplayer">audiodestrukt/esp32-mediaplayer</a> under <code>p4/deck</code>. Next up: a faster SPI clock for the waveform, deck B, and fixing keylock on 48 kHz tracks. The timecode vinyl mode still works through all of this, and I mean to keep it that way.</p>
+    </div>
+    <div class="post-nav">
+      <div></div>
+      <div><a href="/blog/posts/pi-vs-xdj-1000-performance.html">Is an $80 Raspberry Pi faster than an XDJ-1000? &rarr;</a></div>
+    </div>
+  </div>
+  <footer>
+    <span>audio<span style="color:var(--accent)">destrukt</span></span>
+    <span>&copy; 2025 AudioDestrukt</span>
+  </footer>
+<!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "f393b960e25f42828910e441d26fa18c"}'></script><!-- End Cloudflare Web Analytics -->
+</body>
+</html>

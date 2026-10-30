@@ -5,9 +5,15 @@
     <link>https://audiodestrukt.com</link>
     <description>A poke in the ear with a sharp stick.</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 14 Oct 2026 16:10:49 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 30 Oct 2026 06:52:04 +0000</lastBuildDate>
     <atom:link href="https://audiodestrukt.com/blog/feed.xml" rel="self" type="application/rss+xml"/>
     <item>
+      <title>The waveform was stealing my audio: debugging an ESP32-P4 DJ deck</title>
+      <link>https://audiodestrukt.com/blog/posts/esp32-deck-waveform-starved-the-dac.html</link>
+      <guid isPermaLink="true">https://audiodestrukt.com/blog/posts/esp32-deck-waveform-starved-the-dac.html</guid>
+      <pubDate>Thu, 29 Oct 2026 20:00:00 +0000</pubDate>
+      <description>I've been building a small CDJ-style deck on an ESP32. This week I added a scrolling waveform, and the music immediately started playing slow and glitchy. The fix turned out to be a single line. Finding it was the interesting part, so this post is about how we tracked it down, including the two times I was confidently wrong. The…</description>
+    </item>    <item>
       <title>Is an $80 Raspberry Pi faster than an XDJ-1000?</title>
       <link>https://audiodestrukt.com/blog/posts/pi-vs-xdj-1000-performance.html</link>
       <guid isPermaLink="true">https://audiodestrukt.com/blog/posts/pi-vs-xdj-1000-performance.html</guid>
@@ -124,12 +130,6 @@ The School for Poetic Computation – a place for learning and unlearning. So gr
       <guid isPermaLink="true">https://audiodestrukt.com/blog/posts/ableton-note-is-great.html</guid>
       <pubDate>Wed, 27 Nov 2024 15:49:39 +0000</pubDate>
       <description>Ableton Note is great Before I bought the Ableton Move I was looking at reviews that mentioned that it might share some code with the iOS app, Ableton Note. I was intrigued so I bought the app for $8.99. After playing around with it a while I think it’s amazing. Initially I thought it was cool but limited. It’s only…</description>
-    </item>    <item>
-      <title>Moog Slim Phatty</title>
-      <link>https://audiodestrukt.com/blog/posts/moog-slim-phatty.html</link>
-      <guid isPermaLink="true">https://audiodestrukt.com/blog/posts/moog-slim-phatty.html</guid>
-      <pubDate>Sat, 23 Nov 2024 10:52:27 +0000</pubDate>
-      <description>Moog Slim Phatty I’m still digging though my analog synth collection and just writing some notes. I have owned the Slim Phatty for a few years now. I went through a period of buying synths on Craigslist for a while an this is one that I picked up here in San Francisco. I wanted a Moog synth for a while…</description>
     </item>
   </channel>
 </rss>
