@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ESP32-P4 DJ deck: where it stands, and how much CPU is left — AudioDestrukt</title>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="alternate" type="application/rss+xml" title="AudioDestrukt Blog" href="https://audiodestrukt.com/blog/feed.xml">
+  <style>
+    :root {
+      --bg: #0d0d0d;
+      --surface: #161616;
+      --surface2: #1e1e1e;
+      --border: #2a2a2a;
+      --accent: #c8ff00;
+      --accent2: #ff3c00;
+      --text: #e8e8e8;
+      --muted: #777;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Courier New', Courier, monospace;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+    }
+
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 2rem;
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      background: rgba(13,13,13,0.95);
+      backdrop-filter: blur(8px);
+      z-index: 100;
+    }
+
+    .logo {
+      font-size: 1.3rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      color: var(--text);
+      text-decoration: none;
+    }
+
+    .logo span { color: var(--accent); }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 2rem;
+    }
+
+    nav ul li a {
+      color: var(--muted);
+      font-size: 0.85rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    nav ul li a:hover { color: var(--text); text-decoration: none; }
+    nav ul li a.active { color: var(--accent); }
+
+    .container {
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 4rem 2rem;
+    }
+
+    .page-title {
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 3rem;
+    }
+
+    /* POST LIST */
+    .post-list { list-style: none; }
+
+    .post-item {
+      border-bottom: 1px solid var(--border);
+      padding: 2rem 0;
+    }
+
+    .post-item:first-child { padding-top: 0; }
+
+    .post-meta {
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      text-transform: uppercase;
+      margin-bottom: 0.5rem;
+    }
+
+    .post-title {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 0.75rem;
+      line-height: 1.2;
+    }
+
+    .post-title a { color: #fff; }
+    .post-title a:hover { color: var(--accent); text-decoration: none; }
+
+    .post-excerpt {
+      font-size: 0.85rem;
+      color: var(--text);
+      margin-bottom: 0.75rem;
+    }
+
+    .post-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+    }
+
+    .tag {
+      font-size: 0.6rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 0.15rem 0.45rem;
+      border: 1px solid var(--border);
+      color: var(--muted);
+    }
+
+    /* PAGINATION */
+    .pagination {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 3rem;
+      font-size: 0.8rem;
+    }
+
+    .pagination a {
+      border: 1px solid var(--border);
+      padding: 0.5rem 1rem;
+      color: var(--text);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-size: 0.75rem;
+    }
+
+    .pagination a:hover { border-color: var(--text); text-decoration: none; }
+    .pagination .page-info { color: var(--muted); font-size: 0.7rem; letter-spacing: 0.1em; }
+    .pagination .spacer { flex: 1; }
+
+    /* SINGLE POST */
+    .post-header { margin-bottom: 3rem; }
+
+    .post-header h1 {
+      font-size: 2rem;
+      font-weight: 700;
+      color: #fff;
+      line-height: 1.2;
+      margin-bottom: 0.75rem;
+    }
+
+    .post-body { font-size: 0.92rem; }
+
+    .post-body h1, .post-body h2, .post-body h3 {
+      color: #fff;
+      font-weight: 700;
+      margin: 2rem 0 0.75rem;
+    }
+
+    .post-body h1 { font-size: 1.4rem; }
+    .post-body h2 { font-size: 1.2rem; }
+    .post-body h3 { font-size: 1rem; }
+
+    .post-body p {
+      color: var(--text);
+      margin-bottom: 1.25rem;
+      line-height: 1.8;
+    }
+
+    .post-body a { color: var(--accent); }
+
+    .post-body strong { color: var(--text); }
+
+    .post-body pre {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      padding: 1rem;
+      overflow-x: auto;
+      margin: 1.25rem 0;
+      font-size: 0.8rem;
+      line-height: 1.6;
+    }
+
+    .post-body code {
+      font-family: 'Courier New', Courier, monospace;
+      color: var(--accent);
+    }
+
+    .post-body pre code {
+      color: var(--text);
+    }
+
+    .post-body .table-wrap { overflow-x: auto; margin: 1.25rem 0; }
+    .post-body table {
+      border-collapse: collapse;
+      width: 100%;
+      font-size: 0.85rem;
+      line-height: 1.5;
+      font-variant-numeric: tabular-nums;
+    }
+    .post-body th, .post-body td {
+      border: 1px solid var(--border);
+      padding: 0.45rem 0.6rem;
+      text-align: left;
+      vertical-align: top;
+    }
+    .post-body th { background: var(--surface2); color: var(--text); font-weight: 600; }
+
+    .post-body ul, .post-body ol {
+      margin: 0 0 1.25rem 1.5rem;
+      line-height: 1.8;
+    }
+
+    .post-body li { margin-bottom: 0.4rem; }
+
+    .post-body img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+      margin: 1.5rem 0;
+      border: 1px solid var(--border);
+    }
+
+    .post-nav {
+      display: flex;
+      justify-content: space-between;
+      padding-top: 3rem;
+      margin-top: 3rem;
+      border-top: 1px solid var(--border);
+      font-size: 0.75rem;
+      gap: 1rem;
+    }
+
+    .post-nav a {
+      color: var(--muted);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .post-nav a:hover { color: var(--text); text-decoration: none; }
+
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      max-width: 780px;
+      margin: 0 auto;
+      font-size: 0.75rem;
+      color: var(--muted);
+    }
+
+    @media (max-width: 600px) {
+      nav ul { display: none; }
+      .post-header h1 { font-size: 1.5rem; }
+    }
+</style>
+</head>
+<body>
+  <nav>
+    <a href="/index.html" class="logo">audio<span>destrukt</span></a>
+    <ul>
+      <li><a href="/index.html#plugin">Plugin</a></li>
+      <li><a href="/index.html#features">Features</a></li>
+      <li><a href="/index.html#download">Download</a></li>
+      <li><a href="/index.html#about">About</a></li>
+      <li><a href="/blog/index.html" class="active">Blog</a></li>
+    </ul>
+  </nav>
+  <div class="container">
+    <div class="post-header">
+      <div class="post-meta"><a href="/blog/index.html">Blog</a> &mdash; October 30, 2026</div>
+      <h1>ESP32-P4 DJ deck: where it stands, and how much CPU is left</h1>
+      <div class="post-tags" style="margin-top:0.75rem"><span class="tag">esp32</span><span class="tag">dj</span><span class="tag">embedded</span><span class="tag">audio</span><span class="tag">benchmarks</span></div>
+    </div>
+    <div class="post-body">
+<p>Yesterday I wrote about <a href="/blog/posts/esp32-deck-waveform-starved-the-dac.html">the waveform stealing my audio</a>. Since then the deck has gotten faster, lighter on the CPU, and it no longer lies about loudness when keylock is on. This is the status report with numbers. The point is to know how much room is left before I add Pro DJ Link, which is the next big thing.</p>
+<h2>Where it is</h2>
+<p>The hardware is a Waveshare ESP32-P4 dev kit: two RISC-V cores at 360 MHz and 32 MB of PSRAM. A Numark DJ2Go plugs into its USB host port. A 4" 480×320 SPI touch screen sits on jumper wires as a stand-in for the DSI screen I'm waiting on. Audio goes out the board's own codec to a small speaker.</p>
+<p>What works today:</p>
+<ul><li><strong>Tracks.</strong> WAV and MP3 from the SD card, streamed through a 12 MB window in PSRAM (about 71 s around the playhead). MP3 seeks land on exact samples because the file is indexed when it loads.</li><li><strong>Pitch.</strong> Varispeed (±8 %, pitch follows speed, like a turntable) and keylock (time-stretched, pitch stays put).</li><li><strong>Controls.</strong> CDJ-style CUE (tap to return, hold to preview), jog nudge and scrub. The DJ2Go, the touch screen and serial-port keys all drive it.</li><li><strong>Screen.</strong> A scrolling waveform with the playhead in the middle, the track list, time, tempo, and a progress bar with the cue point.</li></ul>
+<p>The earlier timecode vinyl version on the ESP32-A1S still builds from the same repo, and the two share code. I'm keeping it working.</p>
+<h2>How it performs</h2>
+<p>Every number here comes from the deck itself. Every 2 s it prints a health report: real-time %, audio block timing, a click detector, and CPU per core and per task. A script on the PC drove the run over the serial port: load, play, toggle keylock, switch the waveform off, and so on. That way each phase measures the same thing.</p>
+<div class="table-wrap"><table><thead><tr><th>Playing <code>house.mp3</code> (256 kbps, 2:15)</th><th>Core 0</th><th>Core 1 (audio)</th><th>Waveform</th><th>Audio block, avg / max</th></tr></thead><tbody><tr><td>Varispeed, waveform scrolling</td><td>31 %</td><td>8 %</td><td>46 fps</td><td>0.43 / 0.88 ms</td></tr><tr><td>Keylock, waveform scrolling</td><td>31 %</td><td>30 %</td><td>46 fps</td><td>1.75 / 3.1 ms</td></tr><tr><td>Keylock, waveform off</td><td>12 %</td><td>17 %</td><td>—</td><td>0.94 / 1.8 ms</td></tr></tbody></table></div>
+<ul><li><strong>Real-time was 100.0 % in every 2-second window</strong> of the run. No dropouts, in any mode.</li><li><strong>The audio budget is 5.8 ms per block</strong> (256 frames at 44.1 kHz). The worst block in the whole run used 4.1 ms, at the moment keylock switched on. In steady state keylock peaks around 3 ms.</li><li><strong>The click detector reads zero on <code>sine.wav</code></strong> in both varispeed and keylock. That's the test where it's exact. On music it counts drum hits as well, so I don't read it there. The sine file is only 2 s long, so a longer tone test is still to do.</li><li><strong>The waveform runs at 45–47 fps.</strong> I was hoping for 30.</li></ul>
+<p>Other numbers:</p>
+<div class="table-wrap"><table><thead><tr><th></th><th></th></tr></thead><tbody><tr><td>Power on to UI ready</td><td>2.0 s</td></tr><tr><td>Load an MP3 (2:15, 256 kbps) to PLAY ready</td><td>0.65 s (0.57 s of it is the seek index)</td></tr><tr><td>Load a WAV</td><td>0.13 s</td></tr><tr><td>Free memory while playing</td><td>173 KB internal RAM, 19 MB PSRAM</td></tr><tr><td>Firmware size</td><td>1.14 MB (24 % of the app partition free)</td></tr></tbody></table></div>
+<h2>How much is left</h2>
+<p><strong>Core 1 is audio and nothing else.</strong> The worst case is keylock with the waveform up, at about 30 %, which leaves 70 %. Varispeed uses 8 %.</p>
+<p><strong>Core 0 runs everything else</strong> (UI, SD loader, USB, the reporter) and sits around 30 % with the waveform scrolling, so about 70 % is free. That's where Pro DJ Link will go. The protocol traffic itself is light: beat packets, status every 200 ms, a handful of UDP sockets. The heavy part, later, would be serving tracks to other players. If that ever gets tight, capping the waveform at 30 fps gives back another ~8 % of core 0.</p>
+<p>Two days ago it looked very different. With the waveform up, core 0 was at 98 % and core 1 at 42 %, and the audio was running at 80 % speed. Three fixes got it here:</p>
+<ol><li><strong>The DAC's interrupt was on the wrong core.</strong> That's the <a href="/blog/posts/esp32-deck-waveform-starved-the-dac.html">previous post</a>.</li><li><strong>LVGL busy-waited on every SPI transfer.</strong> Its default "is the frame sent yet?" check is <code>while (flushing);</code>, which pins a core for as long as the transfer takes, about 40 times a second. A wait callback that sleeps on a semaphore, woken by the transfer-done interrupt, cut core 0 from 98 % to 62 %.</li><li><strong>The touch interrupt was firing constantly.</strong> The per-task breakdown showed the FreeRTOS timer task using about 25 % of a core, but only while the waveform scrolled. On jumper wires, the 40 MHz SPI clock couples into the touch controller's interrupt wire. Every false edge woke the UI through an event group, and ESP-IDF handles those from an interrupt via the timer task. The UI already polls touch every 30 ms, so I turned the interrupt off. Core 0 went to 30 % and core 1 to 8 %. Touch still works.</li></ol>
+<p>None of these fixes made anything faster. They stopped the chip doing work that didn't need doing. And none of them would have been found without the per-task numbers.</p>
+<h2>One thing the numbers show that I didn't expect</h2>
+<p>Keylock costs about twice as much CPU while the waveform scrolls: 1.75 ms per block with it on, 0.94 ms with it off. The keylock code doesn't change between those two runs, and it runs alone on core 1. What changes is core 0 pushing a 96 KB frame through PSRAM 46 times a second. The two cores share the PSRAM bus and the L2 cache, so core 1 waits longer for its data. There's plenty of headroom, so it doesn't matter yet. It's worth knowing before the network stack shows up on core 0.</p>
+<h2>Why keylock sounded louder and brighter</h2>
+<p>While testing, I noticed that switching keylock on made the music brighter and louder. A time-stretcher should change speed and nothing else, so that's a bug.</p>
+<p>The keylock is WSOLA (waveform-similarity overlap-add). It slices the audio into 1024-sample windows, picks each next slice where it lines up best with the last one, fades each slice with a Hann window, and overlaps them at a 256-sample hop. That's 75 % overlap, so every output sample is the sum of four faded slices. Four Hann windows at 75 % overlap add up to <strong>2.0</strong>, not 1.0. The code never divided that out.</p>
+<p>I measured it on the PC, since the same WSOLA code builds there, by putting a loud house track through it at 1.0×:</p>
+<div class="table-wrap"><table><thead><tr><th></th><th>Level</th><th>Clipped samples</th></tr></thead><tbody><tr><td>Input</td><td>—</td><td>92</td></tr><tr><td>Keylock, before</td><td><strong>+5.5 dB</strong></td><td><strong>790,825</strong> (~13 % of all samples)</td></tr><tr><td>Keylock, fixed</td><td><strong>0.0 dB</strong></td><td>8</td></tr></tbody></table></div>
+<p>So keylock played the track about 6 dB hot. On a mastered track that is already near full scale, that pushed about one sample in eight into the 16-bit ceiling. Hard clipping adds harmonics, which is exactly "brighter". The fix scales each window by ½. It also switches to the "periodic" form of the Hann window, which overlaps to an exactly flat 1.0 at 75 %.</p>
+<p>The bug has been in the A1S firmware the whole time too, since they share this file. On the A1S, keylock is the default mode for timecode vinyl, and I had already capped the DAC volume there to fight crosstalk from the output back into the timecode input. I suspect those 6 extra dB were part of why that cap was needed. That one needs testing on the A1S with real vinyl before I believe it.</p>
+<h2>What's next</h2>
+<ul><li><strong>Pro DJ Link</strong> over the board's Ethernet, on core 0.</li><li><strong>Deck B and a crossfader.</strong></li><li><strong>An overview waveform,</strong> with the analysis cached on the SD card so each track is only analysed once.</li><li><strong>A real stereo DAC</strong> (PCM5102A) and a line-in ADC (PCM1808) for timecode on this board.</li><li><strong>The DSI screen.</strong> It has proper vsync. The SPI stand-in has none: the ST7796S controller has a tearing-effect pin, but the module doesn't bring it out.</li></ul>
+<p>The code is in <a href="https://github.com/audiodestrukt/esp32-mediaplayer">audiodestrukt/esp32-mediaplayer</a> under <code>p4/deck</code>. The README there has the wiring, the task layout, and what each number in the health report means.</p>
+    </div>
+    <div class="post-nav">
+      <div></div>
+      <div><a href="/blog/posts/esp32-deck-waveform-starved-the-dac.html">The waveform was stealing my audio: debugging an ESP32-P4 DJ deck &rarr;</a></div>
+    </div>
+  </div>
+  <footer>
+    <span>audio<span style="color:var(--accent)">destrukt</span></span>
+    <span>&copy; 2025 AudioDestrukt</span>
+  </footer>
+<!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "f393b960e25f42828910e441d26fa18c"}'></script><!-- End Cloudflare Web Analytics -->
+</body>
+</html>

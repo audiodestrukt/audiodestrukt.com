@@ -5,9 +5,15 @@
     <link>https://audiodestrukt.com</link>
     <description>A poke in the ear with a sharp stick.</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 30 Oct 2026 06:52:04 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 30 Oct 2026 07:17:32 +0000</lastBuildDate>
     <atom:link href="https://audiodestrukt.com/blog/feed.xml" rel="self" type="application/rss+xml"/>
     <item>
+      <title>ESP32-P4 DJ deck: where it stands, and how much CPU is left</title>
+      <link>https://audiodestrukt.com/blog/posts/esp32-p4-deck-status.html</link>
+      <guid isPermaLink="true">https://audiodestrukt.com/blog/posts/esp32-p4-deck-status.html</guid>
+      <pubDate>Fri, 30 Oct 2026 12:00:00 +0000</pubDate>
+      <description>Yesterday I wrote about the waveform stealing my audio. Since then the deck has gotten faster, lighter on the CPU, and it no longer lies about loudness when keylock is on. This is the status report with numbers. The point is to know how much room is left before I add Pro DJ Link, which is the next big thing.…</description>
+    </item>    <item>
       <title>The waveform was stealing my audio: debugging an ESP32-P4 DJ deck</title>
       <link>https://audiodestrukt.com/blog/posts/esp32-deck-waveform-starved-the-dac.html</link>
       <guid isPermaLink="true">https://audiodestrukt.com/blog/posts/esp32-deck-waveform-starved-the-dac.html</guid>
@@ -124,12 +130,6 @@ The School for Poetic Computation – a place for learning and unlearning. So gr
       <guid isPermaLink="true">https://audiodestrukt.com/blog/posts/little-sound-dj.html</guid>
       <pubDate>Sat, 30 Nov 2024 16:59:38 +0000</pubDate>
       <description>Little Sound DJ I was pretty intrigued by this a few years ago and then again when Trash80 released the Dirtywave M8. I have a Nintendo DS that I have had forever to play Mario Kart on with my wife while sitting on the couch (we each have one). In order to load ROMs on the NDS I have a…</description>
-    </item>    <item>
-      <title>Ableton Note is great</title>
-      <link>https://audiodestrukt.com/blog/posts/ableton-note-is-great.html</link>
-      <guid isPermaLink="true">https://audiodestrukt.com/blog/posts/ableton-note-is-great.html</guid>
-      <pubDate>Wed, 27 Nov 2024 15:49:39 +0000</pubDate>
-      <description>Ableton Note is great Before I bought the Ableton Move I was looking at reviews that mentioned that it might share some code with the iOS app, Ableton Note. I was intrigued so I bought the app for $8.99. After playing around with it a while I think it’s amazing. Initially I thought it was cool but limited. It’s only…</description>
     </item>
   </channel>
 </rss>
