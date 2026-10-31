@@ -5,9 +5,15 @@
     <link>https://audiodestrukt.com</link>
     <description>A poke in the ear with a sharp stick.</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 31 Oct 2026 09:25:19 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 31 Oct 2026 10:03:57 +0000</lastBuildDate>
     <atom:link href="https://audiodestrukt.com/blog/feed.xml" rel="self" type="application/rss+xml"/>
     <item>
+      <title>ESP32-P4 DJ deck: cues, loops, slip, and becoming the tempo master</title>
+      <link>https://audiodestrukt.com/blog/posts/esp32-p4-deck-cues-loops-master.html</link>
+      <guid isPermaLink="true">https://audiodestrukt.com/blog/posts/esp32-p4-deck-cues-loops-master.html</guid>
+      <pubDate>Sat, 31 Oct 2026 23:30:00 +0000</pubDate>
+      <description>After the screen and USB work, I listed what the deck still needs for XDJ-1000 parity and put it in order. First on the list was the performance basics: cues, loops, beat jump, quantize, slip, reverse. Second was being a full Pro DJ Link player, which means sending beats and being able to take tempo master. This post covers both.…</description>
+    </item>    <item>
       <title>ESP32-P4 DJ deck: an XDJ-style screen, a lying frame counter, and four USB ports that were really three</title>
       <link>https://audiodestrukt.com/blog/posts/esp32-p4-deck-xdj-screen-usb.html</link>
       <guid isPermaLink="true">https://audiodestrukt.com/blog/posts/esp32-p4-deck-xdj-screen-usb.html</guid>
@@ -124,12 +130,6 @@ The School for Poetic Computation – a place for learning and unlearning. So gr
       <guid isPermaLink="true">https://audiodestrukt.com/blog/posts/algorithmic-composition.html</guid>
       <pubDate>Sat, 07 Dec 2024 15:53:02 +0000</pubDate>
       <description>Algorithmic composition I was thinking back to my days of using PD for random glitchy synth things. I was using Markov chains for doing some random scales. I looked around for some other people doing this and lo did I find this guy http://www.algorithmiccomposer.com/2010/05/algorithmic-composition-tutorial-markov.html Algorithmic Composer has not posted in a while but I will be looking at his back…</description>
-    </item>    <item>
-      <title>Trackers</title>
-      <link>https://audiodestrukt.com/blog/posts/trackers.html</link>
-      <guid isPermaLink="true">https://audiodestrukt.com/blog/posts/trackers.html</guid>
-      <pubDate>Sat, 07 Dec 2024 10:04:42 +0000</pubDate>
-      <description>Trackers I’m a fan of trackers. Mostly out of nostalgia now. I never did get much music written back in the day using trackers but I still liked dabbling. FastTracker 2 was a revelation seeing those oscilloscope displays dancing away. There was something I found called GoatStudio that was a simple curses-based tracker. I have been digging into a few…</description>
     </item>
   </channel>
 </rss>

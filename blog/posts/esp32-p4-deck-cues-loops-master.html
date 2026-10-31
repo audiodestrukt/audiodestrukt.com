@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ESP32-P4 DJ deck: cues, loops, slip, and becoming the tempo master — AudioDestrukt</title>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="alternate" type="application/rss+xml" title="AudioDestrukt Blog" href="https://audiodestrukt.com/blog/feed.xml">
+  <style>
+    :root {
+      --bg: #0d0d0d;
+      --surface: #161616;
+      --surface2: #1e1e1e;
+      --border: #2a2a2a;
+      --accent: #c8ff00;
+      --accent2: #ff3c00;
+      --text: #e8e8e8;
+      --muted: #777;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Courier New', Courier, monospace;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+    }
+
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 2rem;
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      background: rgba(13,13,13,0.95);
+      backdrop-filter: blur(8px);
+      z-index: 100;
+    }
+
+    .logo {
+      font-size: 1.3rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      color: var(--text);
+      text-decoration: none;
+    }
+
+    .logo span { color: var(--accent); }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 2rem;
+    }
+
+    nav ul li a {
+      color: var(--muted);
+      font-size: 0.85rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    nav ul li a:hover { color: var(--text); text-decoration: none; }
+    nav ul li a.active { color: var(--accent); }
+
+    .container {
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 4rem 2rem;
+    }
+
+    .page-title {
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 3rem;
+    }
+
+    /* POST LIST */
+    .post-list { list-style: none; }
+
+    .post-item {
+      border-bottom: 1px solid var(--border);
+      padding: 2rem 0;
+    }
+
+    .post-item:first-child { padding-top: 0; }
+
+    .post-meta {
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      text-transform: uppercase;
+      margin-bottom: 0.5rem;
+    }
+
+    .post-title {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 0.75rem;
+      line-height: 1.2;
+    }
+
+    .post-title a { color: #fff; }
+    .post-title a:hover { color: var(--accent); text-decoration: none; }
+
+    .post-excerpt {
+      font-size: 0.85rem;
+      color: var(--text);
+      margin-bottom: 0.75rem;
+    }
+
+    .post-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+    }
+
+    .tag {
+      font-size: 0.6rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 0.15rem 0.45rem;
+      border: 1px solid var(--border);
+      color: var(--muted);
+    }
+
+    /* PAGINATION */
+    .pagination {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 3rem;
+      font-size: 0.8rem;
+    }
+
+    .pagination a {
+      border: 1px solid var(--border);
+      padding: 0.5rem 1rem;
+      color: var(--text);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-size: 0.75rem;
+    }
+
+    .pagination a:hover { border-color: var(--text); text-decoration: none; }
+    .pagination .page-info { color: var(--muted); font-size: 0.7rem; letter-spacing: 0.1em; }
+    .pagination .spacer { flex: 1; }
+
+    /* SINGLE POST */
+    .post-header { margin-bottom: 3rem; }
+
+    .post-header h1 {
+      font-size: 2rem;
+      font-weight: 700;
+      color: #fff;
+      line-height: 1.2;
+      margin-bottom: 0.75rem;
+    }
+
+    .post-body { font-size: 0.92rem; }
+
+    .post-body h1, .post-body h2, .post-body h3 {
+      color: #fff;
+      font-weight: 700;
+      margin: 2rem 0 0.75rem;
+    }
+
+    .post-body h1 { font-size: 1.4rem; }
+    .post-body h2 { font-size: 1.2rem; }
+    .post-body h3 { font-size: 1rem; }
+
+    .post-body p {
+      color: var(--text);
+      margin-bottom: 1.25rem;
+      line-height: 1.8;
+    }
+
+    .post-body a { color: var(--accent); }
+
+    .post-body strong { color: var(--text); }
+
+    .post-body pre {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      padding: 1rem;
+      overflow-x: auto;
+      margin: 1.25rem 0;
+      font-size: 0.8rem;
+      line-height: 1.6;
+    }
+
+    .post-body code {
+      font-family: 'Courier New', Courier, monospace;
+      color: var(--accent);
+    }
+
+    .post-body pre code {
+      color: var(--text);
+    }
+
+    .post-body .table-wrap { overflow-x: auto; margin: 1.25rem 0; }
+    .post-body table {
+      border-collapse: collapse;
+      width: 100%;
+      font-size: 0.85rem;
+      line-height: 1.5;
+      font-variant-numeric: tabular-nums;
+    }
+    .post-body th, .post-body td {
+      border: 1px solid var(--border);
+      padding: 0.45rem 0.6rem;
+      text-align: left;
+      vertical-align: top;
+    }
+    .post-body th { background: var(--surface2); color: var(--text); font-weight: 600; }
+
+    .post-body ul, .post-body ol {
+      margin: 0 0 1.25rem 1.5rem;
+      line-height: 1.8;
+    }
+
+    .post-body li { margin-bottom: 0.4rem; }
+
+    .post-body img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+      margin: 1.5rem 0;
+      border: 1px solid var(--border);
+    }
+
+    .post-nav {
+      display: flex;
+      justify-content: space-between;
+      padding-top: 3rem;
+      margin-top: 3rem;
+      border-top: 1px solid var(--border);
+      font-size: 0.75rem;
+      gap: 1rem;
+    }
+
+    .post-nav a {
+      color: var(--muted);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .post-nav a:hover { color: var(--text); text-decoration: none; }
+
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      max-width: 780px;
+      margin: 0 auto;
+      font-size: 0.75rem;
+      color: var(--muted);
+    }
+
+    @media (max-width: 600px) {
+      nav ul { display: none; }
+      .post-header h1 { font-size: 1.5rem; }
+    }
+</style>
+</head>
+<body>
+  <nav>
+    <a href="/index.html" class="logo">audio<span>destrukt</span></a>
+    <ul>
+      <li><a href="/index.html#plugin">Plugin</a></li>
+      <li><a href="/index.html#features">Features</a></li>
+      <li><a href="/index.html#download">Download</a></li>
+      <li><a href="/index.html#about">About</a></li>
+      <li><a href="/blog/index.html" class="active">Blog</a></li>
+    </ul>
+  </nav>
+  <div class="container">
+    <div class="post-header">
+      <div class="post-meta"><a href="/blog/index.html">Blog</a> &mdash; October 31, 2026</div>
+      <h1>ESP32-P4 DJ deck: cues, loops, slip, and becoming the tempo master</h1>
+      <div class="post-tags" style="margin-top:0.75rem"><span class="tag">esp32</span><span class="tag">dj</span><span class="tag">pro dj link</span><span class="tag">rekordbox</span><span class="tag">embedded</span><span class="tag">audio</span></div>
+    </div>
+    <div class="post-body">
+<p>After <a href="/blog/posts/esp32-p4-deck-xdj-screen-usb.html">the screen and USB work</a>, I listed what the deck still needs for XDJ-1000 parity and put it in order. First on the list was the performance basics: cues, loops, beat jump, quantize, slip, reverse. Second was being a full Pro DJ Link player, which means sending beats and being able to take tempo master. This post covers both. Most of it turned out to be logic, not per-sample DSP, which is why it fit in a day.</p>
+<h2>One idea under all of it: whole beats</h2>
+<p>Nearly every feature here comes down to moving the playhead without upsetting the beat. The deck already had the pieces:</p>
+<ul><li>rekordbox's <strong>beat grid</strong>, which converts between track time and beats</li><li>the <strong>sync controller</strong>, which measures our phase against the master's every 5.8 ms audio block</li></ul>
+<p>The rule that ties it together is <strong>quantize</strong>, on by default as on the XDJ:</p>
+<ul><li>Cue, hot cue and loop points snap to the nearest beat.</li><li>Every jump lands at the <em>same point within the beat</em> as where you left.</li></ul>
+<p>So a hot cue pressed 30 % of the way through a beat lands 30 % of the way through the target beat. The music never stumbles, and when the deck is synced the master never sees a phase slip. I used the sync phase error as the test: it stayed at <strong>1.4 ms average</strong> through every loop, halve, double, exit, hot cue jump, beat jump and manual loop.</p>
+<h2>Cues and loops</h2>
+<p><strong>Hot cues and memory cues come from rekordbox.</strong> They live in the same per-track analysis files as the beat grid, in two formats: the classic cue list in the <code>.DAT</code> file, and an extended one with colours and comments in the <code>.EXT</code> file next to it. Newer rekordbox versions often fill only the extended one, so the deck reads that first. As on a CDJ, a track loads at its first memory cue.</p>
+<p>None of my test tracks had cues, so I checked the parser against a synthetic <code>.EXT</code> built by hand from rekordcrate's layout before trusting it.</p>
+<p><strong>Loops:</strong></p>
+<ul><li>beat loops of 1–16 beats</li><li>manual in/out, on the DJ2Go's small LOOP IN / LOOP OUT buttons</li><li>reloop/exit, halve/double</li><li>beat jump ±4, which moves an active loop along with it, as on the XDJ</li></ul>
+<p>The emergency loop from the last post, which kicks in when the stick is pulled mid-track, now uses the same loop engine.</p>
+<p><strong>Slip</strong> keeps a shadow playhead running at normal speed during a loop, reverse or held hot cue. When you let go, playback picks up where the track would have been, and a grey line on the waveform shows where that is. Slip through a 6-second loop resumed exactly 6 seconds further on, still in phase with the master.</p>
+<p><strong>Reverse</strong> always plays without keylock. The time-stretcher (WSOLA) only runs forwards, and at normal tempo you can't hear the difference.</p>
+<p><strong>Tempo range</strong> follows the XDJ: ±6, ±10 (the default now), ±16 and WIDE (±100 %), with tempo reset.</p>
+<p>All of it is on a PADS panel on the touch screen, standing in for the XDJ's PERFORM screen:</p>
+<ul><li>all eight hot cues</li><li>CALL ◀ ▶ through the memory cues, MEM / DEL</li><li>loop /2 and x2, RELOOP, SLIP</li><li>beat loops 1–16, beat jump, REV</li></ul>
+<p>The "Bars" countdowns next to the phase meter finally show something. They count bars and beats to the next memory cue and the next hot cue, as on the XDJ.</p>
+<h2>Being the master</h2>
+<p>Until now the deck could only <em>follow</em>. A Pro DJ Link player also has to talk.</p>
+<p><strong>Beat packets.</strong> Every playing player broadcasts a packet on each beat. Ours goes out when the beat is <em>heard</em>: the audio task already knows the heard position (the playhead minus about 35 ms of DMA queue), so it predicts when the next beat will reach the speaker, and the network task sends right then.</p>
+<p>The first version sent only every other beat. The audio task updates "next beat" every 23 ms, and if the network task woke a moment after the audio had already moved on to the following beat, the due beat was skipped. Now the network task holds on to the beat it's waiting for until it's sent.</p>
+<p>Over 33 beats at 126 BPM, the average interval was 0.4762 s, exactly right, with 5.3 ms of jitter as received on the PC. The beat-in-bar count stays correct through loops too.</p>
+<p><strong>Taking master</strong> follows the handshake <a href="/blog/posts/cloning-an-xdj-1000.html">freedj-3000</a> worked out against a real XDJ-1000MK2:</p>
+<ol><li>Ask the current master for the role (packet 0x26).</li><li>It agrees to yield (0x27).</li><li>Wait until its status <em>names you</em> as its successor, then claim.</li></ol>
+<p>Claiming on step 2 alone made the XDJ abort the handoff, so the wait matters. The deck handles the other direction too: it yields when asked, and lets go once the new master claims. Another player can also switch our SYNC on or off remotely.</p>
+<p>To test it, I ran prolink-cpp's virtual CDJ on the PC in <code>--follow-master</code> mode at 120 BPM. The deck took master, the virtual CDJ reported itself synced, moved to our 126 BPM, and put its beats within about ±15 ms of ours.</p>
+<p><strong>Mixer integration</strong> is in, but untested: the on-air flag and fader start from a Pioneer DJM, from Deep Symmetry's protocol notes. I don't have a DJM, so it's marked untested in the docs.</p>
+<h2>Two testing traps</h2>
+<p><strong>The listener that ate the reply.</strong> For a while the virtual CDJ ignored our master requests completely. The deck was fine: a hand-built packet from the PC got through. The problem was my test rig. I had prolink-cpp's packet listener running on the PC too, sharing port 50001 with the virtual CDJ. For a unicast packet, Linux picks <em>one</em> of the sockets sharing a port, so our requests were going to the listener. With the listener stopped, the handoff worked first time.</p>
+<p><strong>Two copies of every beat.</strong> The PC is on the same network over both Ethernet and Wi-Fi, so it receives each broadcast twice, a few tens of milliseconds apart. It looked like the deck was double-sending until I checked the interfaces.</p>
+<h2>Where the budget stands</h2>
+<p>All of this is logic, so the audio core barely noticed:</p>
+<div class="table-wrap"><table><thead><tr><th>Playing a stick track, synced, loop + hot cue, waveform up</th><th></th></tr></thead><tbody><tr><td>Core 1 (audio)</td><td>12 % (varispeed)</td></tr><tr><td>Core 0 (screen, loader, network)</td><td>~48 % steady, ~60 % while the buffer refills</td></tr><tr><td>Link task</td><td>2–4 % of core 0</td></tr><tr><td>Internal RAM</td><td>79 KB at its lowest</td></tr><tr><td>Sync</td><td>1.4 ms average</td></tr></tbody></table></div>
+<h2>What's next</h2>
+<ul><li><strong>The real test:</strong> the XDJ-1000MK2. Sync both ways, master handoff both ways, and trimming the phase by ear.</li><li><strong>The rest of Link:</strong> loading tracks from another player's stick, and letting it load from ours. That's the heavy part, a network file server plus rekordbox's database, and it gets its own session.</li><li><strong>rekordbox's track database</strong>, for proper browsing by playlist, artist and key.</li><li><strong>Colour waveforms.</strong></li></ul>
+<p>The code and the changelog, with the resource budget at every step, are in <a href="https://github.com/audiodestrukt/esp32-mediaplayer">audiodestrukt/esp32-mediaplayer</a> under <code>p4/deck</code>.</p>
+    </div>
+    <div class="post-nav">
+      <div></div>
+      <div><a href="/blog/posts/esp32-p4-deck-xdj-screen-usb.html">ESP32-P4 DJ deck: an XDJ-style screen, a lying frame counter, and four USB ports that were really three &rarr;</a></div>
+    </div>
+  </div>
+  <footer>
+    <span>audio<span style="color:var(--accent)">destrukt</span></span>
+    <span>&copy; 2025 AudioDestrukt</span>
+  </footer>
+<!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "f393b960e25f42828910e441d26fa18c"}'></script><!-- End Cloudflare Web Analytics -->
+</body>
+</html>
