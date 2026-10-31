@@ -5,9 +5,15 @@
     <link>https://audiodestrukt.com</link>
     <description>A poke in the ear with a sharp stick.</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 31 Oct 2026 08:03:01 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 31 Oct 2026 09:25:19 +0000</lastBuildDate>
     <atom:link href="https://audiodestrukt.com/blog/feed.xml" rel="self" type="application/rss+xml"/>
     <item>
+      <title>ESP32-P4 DJ deck: an XDJ-style screen, a lying frame counter, and four USB ports that were really three</title>
+      <link>https://audiodestrukt.com/blog/posts/esp32-p4-deck-xdj-screen-usb.html</link>
+      <guid isPermaLink="true">https://audiodestrukt.com/blog/posts/esp32-p4-deck-xdj-screen-usb.html</guid>
+      <pubDate>Sat, 31 Oct 2026 22:00:00 +0000</pubDate>
+      <description>This morning the deck could beat-sync to other players over Pro DJ Link. The rest of the day went into making it look and behave more like an XDJ-1000, and finding out how much of the ESP32-P4 that leaves free. The goal is to get as close to an XDJ as this chip allows, so every feature now comes with…</description>
+    </item>    <item>
       <title>ESP32-P4 DJ deck: beat sync over Pro DJ Link, with rekordbox's beat grids</title>
       <link>https://audiodestrukt.com/blog/posts/esp32-p4-deck-beat-sync.html</link>
       <guid isPermaLink="true">https://audiodestrukt.com/blog/posts/esp32-p4-deck-beat-sync.html</guid>
@@ -124,12 +130,6 @@ The School for Poetic Computation – a place for learning and unlearning. So gr
       <guid isPermaLink="true">https://audiodestrukt.com/blog/posts/trackers.html</guid>
       <pubDate>Sat, 07 Dec 2024 10:04:42 +0000</pubDate>
       <description>Trackers I’m a fan of trackers. Mostly out of nostalgia now. I never did get much music written back in the day using trackers but I still liked dabbling. FastTracker 2 was a revelation seeing those oscilloscope displays dancing away. There was something I found called GoatStudio that was a simple curses-based tracker. I have been digging into a few…</description>
-    </item>    <item>
-      <title>Some thoughts on the Ableton Move</title>
-      <link>https://audiodestrukt.com/blog/posts/some-thoughts-on-the-ableton-move.html</link>
-      <guid isPermaLink="true">https://audiodestrukt.com/blog/posts/some-thoughts-on-the-ableton-move.html</guid>
-      <pubDate>Sun, 01 Dec 2024 21:08:57 +0000</pubDate>
-      <description>Some thoughts on the Ableton Move I’ve been using the Move in various situations over the last week. I have traveled with it and used it in my studio. Battery: this thing charges a little bit slowly for my taste. I can’t imagine that the battery is really all that big. I’m using a 60w charger so I know it’s…</description>
     </item>
   </channel>
 </rss>

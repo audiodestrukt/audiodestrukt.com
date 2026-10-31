@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ESP32-P4 DJ deck: an XDJ-style screen, a lying frame counter, and four USB ports that were really three — AudioDestrukt</title>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="alternate" type="application/rss+xml" title="AudioDestrukt Blog" href="https://audiodestrukt.com/blog/feed.xml">
+  <style>
+    :root {
+      --bg: #0d0d0d;
+      --surface: #161616;
+      --surface2: #1e1e1e;
+      --border: #2a2a2a;
+      --accent: #c8ff00;
+      --accent2: #ff3c00;
+      --text: #e8e8e8;
+      --muted: #777;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Courier New', Courier, monospace;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+    }
+
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 2rem;
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      background: rgba(13,13,13,0.95);
+      backdrop-filter: blur(8px);
+      z-index: 100;
+    }
+
+    .logo {
+      font-size: 1.3rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      color: var(--text);
+      text-decoration: none;
+    }
+
+    .logo span { color: var(--accent); }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 2rem;
+    }
+
+    nav ul li a {
+      color: var(--muted);
+      font-size: 0.85rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    nav ul li a:hover { color: var(--text); text-decoration: none; }
+    nav ul li a.active { color: var(--accent); }
+
+    .container {
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 4rem 2rem;
+    }
+
+    .page-title {
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 3rem;
+    }
+
+    /* POST LIST */
+    .post-list { list-style: none; }
+
+    .post-item {
+      border-bottom: 1px solid var(--border);
+      padding: 2rem 0;
+    }
+
+    .post-item:first-child { padding-top: 0; }
+
+    .post-meta {
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      text-transform: uppercase;
+      margin-bottom: 0.5rem;
+    }
+
+    .post-title {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 0.75rem;
+      line-height: 1.2;
+    }
+
+    .post-title a { color: #fff; }
+    .post-title a:hover { color: var(--accent); text-decoration: none; }
+
+    .post-excerpt {
+      font-size: 0.85rem;
+      color: var(--text);
+      margin-bottom: 0.75rem;
+    }
+
+    .post-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+    }
+
+    .tag {
+      font-size: 0.6rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 0.15rem 0.45rem;
+      border: 1px solid var(--border);
+      color: var(--muted);
+    }
+
+    /* PAGINATION */
+    .pagination {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 3rem;
+      font-size: 0.8rem;
+    }
+
+    .pagination a {
+      border: 1px solid var(--border);
+      padding: 0.5rem 1rem;
+      color: var(--text);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-size: 0.75rem;
+    }
+
+    .pagination a:hover { border-color: var(--text); text-decoration: none; }
+    .pagination .page-info { color: var(--muted); font-size: 0.7rem; letter-spacing: 0.1em; }
+    .pagination .spacer { flex: 1; }
+
+    /* SINGLE POST */
+    .post-header { margin-bottom: 3rem; }
+
+    .post-header h1 {
+      font-size: 2rem;
+      font-weight: 700;
+      color: #fff;
+      line-height: 1.2;
+      margin-bottom: 0.75rem;
+    }
+
+    .post-body { font-size: 0.92rem; }
+
+    .post-body h1, .post-body h2, .post-body h3 {
+      color: #fff;
+      font-weight: 700;
+      margin: 2rem 0 0.75rem;
+    }
+
+    .post-body h1 { font-size: 1.4rem; }
+    .post-body h2 { font-size: 1.2rem; }
+    .post-body h3 { font-size: 1rem; }
+
+    .post-body p {
+      color: var(--text);
+      margin-bottom: 1.25rem;
+      line-height: 1.8;
+    }
+
+    .post-body a { color: var(--accent); }
+
+    .post-body strong { color: var(--text); }
+
+    .post-body pre {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      padding: 1rem;
+      overflow-x: auto;
+      margin: 1.25rem 0;
+      font-size: 0.8rem;
+      line-height: 1.6;
+    }
+
+    .post-body code {
+      font-family: 'Courier New', Courier, monospace;
+      color: var(--accent);
+    }
+
+    .post-body pre code {
+      color: var(--text);
+    }
+
+    .post-body .table-wrap { overflow-x: auto; margin: 1.25rem 0; }
+    .post-body table {
+      border-collapse: collapse;
+      width: 100%;
+      font-size: 0.85rem;
+      line-height: 1.5;
+      font-variant-numeric: tabular-nums;
+    }
+    .post-body th, .post-body td {
+      border: 1px solid var(--border);
+      padding: 0.45rem 0.6rem;
+      text-align: left;
+      vertical-align: top;
+    }
+    .post-body th { background: var(--surface2); color: var(--text); font-weight: 600; }
+
+    .post-body ul, .post-body ol {
+      margin: 0 0 1.25rem 1.5rem;
+      line-height: 1.8;
+    }
+
+    .post-body li { margin-bottom: 0.4rem; }
+
+    .post-body img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+      margin: 1.5rem 0;
+      border: 1px solid var(--border);
+    }
+
+    .post-nav {
+      display: flex;
+      justify-content: space-between;
+      padding-top: 3rem;
+      margin-top: 3rem;
+      border-top: 1px solid var(--border);
+      font-size: 0.75rem;
+      gap: 1rem;
+    }
+
+    .post-nav a {
+      color: var(--muted);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .post-nav a:hover { color: var(--text); text-decoration: none; }
+
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      max-width: 780px;
+      margin: 0 auto;
+      font-size: 0.75rem;
+      color: var(--muted);
+    }
+
+    @media (max-width: 600px) {
+      nav ul { display: none; }
+      .post-header h1 { font-size: 1.5rem; }
+    }
+</style>
+</head>
+<body>
+  <nav>
+    <a href="/index.html" class="logo">audio<span>destrukt</span></a>
+    <ul>
+      <li><a href="/index.html#plugin">Plugin</a></li>
+      <li><a href="/index.html#features">Features</a></li>
+      <li><a href="/index.html#download">Download</a></li>
+      <li><a href="/index.html#about">About</a></li>
+      <li><a href="/blog/index.html" class="active">Blog</a></li>
+    </ul>
+  </nav>
+  <div class="container">
+    <div class="post-header">
+      <div class="post-meta"><a href="/blog/index.html">Blog</a> &mdash; October 31, 2026</div>
+      <h1>ESP32-P4 DJ deck: an XDJ-style screen, a lying frame counter, and four USB ports that were really three</h1>
+      <div class="post-tags" style="margin-top:0.75rem"><span class="tag">esp32</span><span class="tag">dj</span><span class="tag">rekordbox</span><span class="tag">pro dj link</span><span class="tag">embedded</span><span class="tag">usb</span><span class="tag">debugging</span></div>
+    </div>
+    <div class="post-body">
+<p>This morning the deck could <a href="/blog/posts/esp32-p4-deck-beat-sync.html">beat-sync to other players over Pro DJ Link</a>. The rest of the day went into making it look and behave more like an XDJ-1000, and finding out how much of the ESP32-P4 that leaves free. The goal is to get as close to an XDJ as this chip allows, so every feature now comes with a measurement.</p>
+<p>Here's what got built, the bugs it turned up, and the USB hardware puzzle that took most of the afternoon.</p>
+<h2>Looking like an XDJ</h2>
+<p><strong>Phase meter.</strong> The XDJ has a strip above the waveform with two views, and you switch between them by touching it. My Rust XDJ clone, <a href="/blog/posts/cloning-an-xdj-1000.html">freedj-3000</a>, had already worked both out from photos of the real unit:</p>
+<ul><li><strong>Beat display:</strong> two rows of four boxes. The top row lights the bar within the 4-bar phrase, the bottom row the beat within the bar.</li><li><strong>Alignment view:</strong> the master's beats on one row and ours on another, scrolling under a fixed playhead. If the decks drift, you see the rows slide apart.</li></ul>
+<p>Both rows come from data we already had: the master's beat packets from Pro DJ Link, and our own beat grid.</p>
+<p><strong>Beat grid on the waveform.</strong> It shows a short tick per beat, and a longer red one on each bar's first beat. It's cheap, because the ticks are drawn into the waveform canvas that's redrawn every frame anyway. It's also useful even when rekordbox's grid is right: it's how you see that two tracks line up, and how you spot the one track rekordbox got wrong.</p>
+<p><strong>Track overview with needle search.</strong> The thin progress bar became an overview of the whole track. Touch or drag it to jump there. The deck doesn't analyse anything for this. rekordbox stores a 400-column preview waveform in each track's analysis file, next to the beat grid, so the deck reads it at load and draws it once. After that it redraws only when the playhead moves a pixel, so it costs nothing measurable.</p>
+<h2>The frame counter was lying</h2>
+<p>I'd been quoting the waveform at 46 fps for days. When I added the phase meter, the alignment view seemed to be running at 90 fps, which made no sense over a 40 MHz SPI link.</p>
+<p>The counter was counting how often the waveform got <em>redrawn</em>, not how often a frame actually reached the screen. LVGL merges several redraws into one frame when it can, so the counter read high. The fix was to count LVGL's "frame rendered and sent" event instead. The real number with everything on screen is about <strong>38–42 fps</strong>.</p>
+<p>That also changed the story I'd been telling about a frame-rate "drop" from 46 to 34. It was at least partly the counter. Since then, every change that moves the numbers goes into a changelog with the measured budget: per-core CPU, the worst audio block, real fps and internal RAM. That way I can see what each feature cost.</p>
+<p>Where the budget stands now, playing a rekordbox track from the stick, synced, with everything on screen:</p>
+<div class="table-wrap"><table><thead><tr><th></th><th></th></tr></thead><tbody><tr><td>Core 0 (screen, loader, USB, network)</td><td>~48 %</td></tr><tr><td>Core 1 (audio only)</td><td>11 % (varispeed), ~28 % (keylock)</td></tr><tr><td>Screen</td><td>38 fps</td></tr><tr><td>Internal RAM</td><td>102 KB free, 80 KB at its lowest</td></tr></tbody></table></div>
+<p>Internal RAM is the tightest resource, and two of today's bugs were about it.</p>
+<h2>Two crashes, both from running out of the wrong RAM</h2>
+<p><strong>224 tracks, 2 KB free.</strong> The first time the list held a whole rekordbox stick, the board had 2 KB of internal RAM left and couldn't load anything. Every list row is an LVGL button and a label, and every small allocation lands in internal RAM by default.</p>
+<p>Moving all of LVGL's memory to PSRAM freed the RAM, but it cost about a quarter of the frame rate and slowed the audio core as well. LVGL also allocates small blocks for every frame it draws, and putting those in PSRAM meant more PSRAM traffic, the same contention that <a href="/blog/posts/esp32-p4-deck-status.html">slows keylock when the waveform scrolls</a>. In the end only the list rows go to PSRAM, and later the list's strings too.</p>
+<p><strong>Loading a track reset the board.</strong> A heap assert, "block already marked as free". The backtrace went through the USB stick driver. While minimp3 builds its seek index, FAT reads a big run of the file, and the driver grows its DMA buffer to about 32 KB for it. The largest free block of internal RAM was 31 KB, so the allocation failed. The driver had already freed the old buffer, and on the error path it freed it again. The fix was an ESP-IDF option that puts USB transfer buffers in PSRAM, which the P4's USB DMA can reach.</p>
+<h2>Needle search found a hidden half-second</h2>
+<p>The first needle jump into a track left 0.53 s of silence. I timed the steps: the MP3 seek itself took 530 ms, and during that "seek" minimp3 <strong>read 5.3 MB of the file</strong>.</p>
+<p>The rekordbox-exported MP3s carry a VBR info tag. When minimp3 sees one, it takes the length from the tag and puts off building its seek index until the first seek away from the start. So the index got built mid-performance, on the first jump. Tracks without the tag had always been indexed at load, which is why I hadn't seen it.</p>
+<p>Building the index at load fixed it. The jump gap is now 46 ms, and sync re-snaps onto the master's beat once audio is there.</p>
+<p>Two smaller fixes came out of the same test:</p>
+<ul><li><strong>Loader pacing.</strong> After a jump, the loader refilled all 70 s of its window at full speed and held core 0 at 100 % (the screen dropped to 9 fps). Now it decodes at full speed only until 8 s are buffered, then paces the rest.</li><li><strong>Sync after a stall.</strong> The deck now waits until audio exists at the new spot before snapping to the master, and re-snaps after any stall. Before, the master kept going while we sat in the gap, and the tempo bend took four seconds to catch up.</li></ul>
+<h2>Four USB ports, three of which work</h2>
+<p>The board has four USB-A sockets. For most of the day, only one worked, and the DJ2Go was in it.</p>
+<p><strong>The jumper.</strong> The schematic shows a jumper driving a USB switch chip. The switch connects the P4's one USB port either to a socket wired straight to the chip, or to a CH334F 4-port hub. The hub's fourth port goes to two test pads, not a socket. So it's three hub sockets <em>or</em> the direct socket, never all four. The labels on the jumper are also the wrong way round: the hub is on the side marked DEVICE.</p>
+<p><strong>The hub, and the missing translator.</strong> With the hub on, the stick worked, but the DJ2Go didn't:</p>
+<pre><code>E HUB: Connected device is FS, transaction translator (TT) is not supported</code></pre>
+<p>The DJ2Go is a full-speed (USB 1.1) device. Behind a high-speed hub, the hub has to translate, and ESP-IDF's USB host doesn't implement that. Espressif's answer in their <a href="https://github.com/espressif/esp-idf/issues/17245">issue tracker</a>, from July, is that it isn't a priority and there's no timeline.</p>
+<p>The workaround, which I found in <a href="https://components.espressif.com/components/espp/usb</em>host">espp's usb<em>host component</a>, is to limit the P4's root port to full speed. Setting one bit in the USB controller's config register makes the hub itself run at full speed, and then every device behind it is reached directly. The bit has to be set again periodically, because the controller clears it whenever it recovers the port.</p>
+<p>It works. The DJ2Go and the stick now run side by side. The cost is that the stick runs at 12 Mbit/s too:</p>
+<ul><li><strong>Playback</strong> doesn't care.</li><li><strong>The boot scan</strong> of 218 analysis files went from 7 to 13 s.</li><li><strong>An MP3 load</strong> went from 0.5 s to 5 s, because building the seek index reads the whole file.</li></ul>
+<h2>Not waiting for USB, and pulling the stick mid-track</h2>
+<p>A 13-second scan at boot wasn't acceptable, so the deck no longer waits for it. The screen comes up at <strong>3.8 s</strong> with the SD tracks. The stick is read in the background with a "Reading USB stick…" notice, and its tracks join the list when the read is done.</p>
+<p>That needed a track list that can change while the deck runs, which also made <strong>hot-swapping sticks</strong> possible:</p>
+<ul><li><strong>The list</strong> is an immutable snapshot that gets replaced whole, so the audio task, the loader and the screen never see one half-built.</li><li><strong>Load requests</strong> carry the file path instead of a list position that might have moved.</li><li><strong>The selection</strong> follows its track across list changes.</li><li><strong>Pulling the stick</strong> cancels the scan, drops its tracks, and closes the open file before the stick is unmounted.</li></ul>
+<p>Moving the list's strings to PSRAM also took internal RAM at boot from 68 to 112 KB free.</p>
+<p>And since about 70 seconds of the current track are already decoded in PSRAM: <strong>if you pull the stick while its track is playing, the deck goes into an emergency loop</strong>, as a CDJ does. It loops 4 beats from the beat grid out of memory, shows E.LOOP, and reports the CDJ's emergency-loop play state to the other players. Because the loop is a whole number of beats, sync holds: 1.4 ms through the loop in the test.</p>
+<h2>What's next</h2>
+<ul><li><strong>Loads are about 5 s from the stick</strong> at the slower USB speed. The fix is to build the MP3 index in the background once the track is ready to play.</li><li><strong>The track list could be cached on the stick</strong>, so it doesn't have to be re-read every time.</li><li><strong>Cues and loops from rekordbox's analysis files.</strong> That brings the XDJ's "Bars" countdown to life too.</li><li><strong>The real XDJ-1000MK2 test</strong>, by ear.</li></ul>
+<p>The code is in <a href="https://github.com/audiodestrukt/esp32-mediaplayer">audiodestrukt/esp32-mediaplayer</a> under <code>p4/deck</code>. The changelog there now has the resource budget at every step.</p>
+    </div>
+    <div class="post-nav">
+      <div></div>
+      <div><a href="/blog/posts/esp32-p4-deck-beat-sync.html">ESP32-P4 DJ deck: beat sync over Pro DJ Link, with rekordbox's beat grids &rarr;</a></div>
+    </div>
+  </div>
+  <footer>
+    <span>audio<span style="color:var(--accent)">destrukt</span></span>
+    <span>&copy; 2025 AudioDestrukt</span>
+  </footer>
+<!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "f393b960e25f42828910e441d26fa18c"}'></script><!-- End Cloudflare Web Analytics -->
+</body>
+</html>
