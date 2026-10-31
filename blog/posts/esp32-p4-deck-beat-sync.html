@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ESP32-P4 DJ deck: beat sync over Pro DJ Link, with rekordbox's beat grids — AudioDestrukt</title>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="alternate" type="application/rss+xml" title="AudioDestrukt Blog" href="https://audiodestrukt.com/blog/feed.xml">
+  <style>
+    :root {
+      --bg: #0d0d0d;
+      --surface: #161616;
+      --surface2: #1e1e1e;
+      --border: #2a2a2a;
+      --accent: #c8ff00;
+      --accent2: #ff3c00;
+      --text: #e8e8e8;
+      --muted: #777;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Courier New', Courier, monospace;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+    }
+
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 2rem;
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      background: rgba(13,13,13,0.95);
+      backdrop-filter: blur(8px);
+      z-index: 100;
+    }
+
+    .logo {
+      font-size: 1.3rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      color: var(--text);
+      text-decoration: none;
+    }
+
+    .logo span { color: var(--accent); }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 2rem;
+    }
+
+    nav ul li a {
+      color: var(--muted);
+      font-size: 0.85rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    nav ul li a:hover { color: var(--text); text-decoration: none; }
+    nav ul li a.active { color: var(--accent); }
+
+    .container {
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 4rem 2rem;
+    }
+
+    .page-title {
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 3rem;
+    }
+
+    /* POST LIST */
+    .post-list { list-style: none; }
+
+    .post-item {
+      border-bottom: 1px solid var(--border);
+      padding: 2rem 0;
+    }
+
+    .post-item:first-child { padding-top: 0; }
+
+    .post-meta {
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      text-transform: uppercase;
+      margin-bottom: 0.5rem;
+    }
+
+    .post-title {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 0.75rem;
+      line-height: 1.2;
+    }
+
+    .post-title a { color: #fff; }
+    .post-title a:hover { color: var(--accent); text-decoration: none; }
+
+    .post-excerpt {
+      font-size: 0.85rem;
+      color: var(--text);
+      margin-bottom: 0.75rem;
+    }
+
+    .post-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+    }
+
+    .tag {
+      font-size: 0.6rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 0.15rem 0.45rem;
+      border: 1px solid var(--border);
+      color: var(--muted);
+    }
+
+    /* PAGINATION */
+    .pagination {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 3rem;
+      font-size: 0.8rem;
+    }
+
+    .pagination a {
+      border: 1px solid var(--border);
+      padding: 0.5rem 1rem;
+      color: var(--text);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-size: 0.75rem;
+    }
+
+    .pagination a:hover { border-color: var(--text); text-decoration: none; }
+    .pagination .page-info { color: var(--muted); font-size: 0.7rem; letter-spacing: 0.1em; }
+    .pagination .spacer { flex: 1; }
+
+    /* SINGLE POST */
+    .post-header { margin-bottom: 3rem; }
+
+    .post-header h1 {
+      font-size: 2rem;
+      font-weight: 700;
+      color: #fff;
+      line-height: 1.2;
+      margin-bottom: 0.75rem;
+    }
+
+    .post-body { font-size: 0.92rem; }
+
+    .post-body h1, .post-body h2, .post-body h3 {
+      color: #fff;
+      font-weight: 700;
+      margin: 2rem 0 0.75rem;
+    }
+
+    .post-body h1 { font-size: 1.4rem; }
+    .post-body h2 { font-size: 1.2rem; }
+    .post-body h3 { font-size: 1rem; }
+
+    .post-body p {
+      color: var(--text);
+      margin-bottom: 1.25rem;
+      line-height: 1.8;
+    }
+
+    .post-body a { color: var(--accent); }
+
+    .post-body strong { color: var(--text); }
+
+    .post-body pre {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      padding: 1rem;
+      overflow-x: auto;
+      margin: 1.25rem 0;
+      font-size: 0.8rem;
+      line-height: 1.6;
+    }
+
+    .post-body code {
+      font-family: 'Courier New', Courier, monospace;
+      color: var(--accent);
+    }
+
+    .post-body pre code {
+      color: var(--text);
+    }
+
+    .post-body .table-wrap { overflow-x: auto; margin: 1.25rem 0; }
+    .post-body table {
+      border-collapse: collapse;
+      width: 100%;
+      font-size: 0.85rem;
+      line-height: 1.5;
+      font-variant-numeric: tabular-nums;
+    }
+    .post-body th, .post-body td {
+      border: 1px solid var(--border);
+      padding: 0.45rem 0.6rem;
+      text-align: left;
+      vertical-align: top;
+    }
+    .post-body th { background: var(--surface2); color: var(--text); font-weight: 600; }
+
+    .post-body ul, .post-body ol {
+      margin: 0 0 1.25rem 1.5rem;
+      line-height: 1.8;
+    }
+
+    .post-body li { margin-bottom: 0.4rem; }
+
+    .post-body img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+      margin: 1.5rem 0;
+      border: 1px solid var(--border);
+    }
+
+    .post-nav {
+      display: flex;
+      justify-content: space-between;
+      padding-top: 3rem;
+      margin-top: 3rem;
+      border-top: 1px solid var(--border);
+      font-size: 0.75rem;
+      gap: 1rem;
+    }
+
+    .post-nav a {
+      color: var(--muted);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .post-nav a:hover { color: var(--text); text-decoration: none; }
+
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      max-width: 780px;
+      margin: 0 auto;
+      font-size: 0.75rem;
+      color: var(--muted);
+    }
+
+    @media (max-width: 600px) {
+      nav ul { display: none; }
+      .post-header h1 { font-size: 1.5rem; }
+    }
+</style>
+</head>
+<body>
+  <nav>
+    <a href="/index.html" class="logo">audio<span>destrukt</span></a>
+    <ul>
+      <li><a href="/index.html#plugin">Plugin</a></li>
+      <li><a href="/index.html#features">Features</a></li>
+      <li><a href="/index.html#download">Download</a></li>
+      <li><a href="/index.html#about">About</a></li>
+      <li><a href="/blog/index.html" class="active">Blog</a></li>
+    </ul>
+  </nav>
+  <div class="container">
+    <div class="post-header">
+      <div class="post-meta"><a href="/blog/index.html">Blog</a> &mdash; October 31, 2026</div>
+      <h1>ESP32-P4 DJ deck: beat sync over Pro DJ Link, with rekordbox's beat grids</h1>
+      <div class="post-tags" style="margin-top:0.75rem"><span class="tag">esp32</span><span class="tag">dj</span><span class="tag">pro dj link</span><span class="tag">rekordbox</span><span class="tag">embedded</span><span class="tag">audio</span></div>
+    </div>
+    <div class="post-body">
+<p>Two days ago I <a href="/blog/posts/esp32-p4-deck-status.html">measured how much CPU the ESP32-P4 deck had left</a>, so I'd know whether Pro DJ Link would fit. Today it went in. The deck joins the network as a player, finds the tempo master, and with SYNC on it locks to the master's beat. It uses the beat grid rekordbox already worked out for the track, so the deck doesn't analyse anything itself. In steady state it holds the beat to within about 1.4 ms of the master.</p>
+<p>This post covers how it's built, the numbers, and the detours. There were a lot of detours.</p>
+<h2>What "beat sync" needs</h2>
+<p>To play in time with another player, a deck needs three things:</p>
+<ol><li><strong>The master's tempo and beat timing.</strong> Pioneer players broadcast both on Pro DJ Link. Each playing deck sends a beat packet on every beat, and a status packet about five times a second that says, among other things, whether it's the tempo master.</li><li><strong>Where the beats are in our own track.</strong> That's the beat grid.</li><li><strong>A way to steer playback</strong> so our beats land on the master's.</li></ol>
+<h2>Reusing the packet layer from freedj-3000</h2>
+<p><a href="/blog/posts/cloning-an-xdj-1000.html">freedj-3000</a>, my XDJ-1000 clone in Rust, already speaks Pro DJ Link. Its packet layouts were checked byte by byte against a real XDJ-1000MK2 and against prolink-cpp's virtual CDJ, and both captures are pinned as tests. I ported that layer to C++ for the P4.</p>
+<p>That includes the status packet. Rather than build one from scratch, freedj copies a status packet captured from the XDJ and overwrites only the fields it understands. Every byte nobody has documented is therefore exactly what Pioneer firmware sends. freedj found the hard way that this matters: one wrong byte made the XDJ refuse to hand over tempo master. The P4 uses the same template.</p>
+<p>On the deck it's one small task on core 0, next to the UI. It announces itself as player 2 every 1.5 s and sends its status to every other player five times a second. It listens for everyone else's beats and status. That costs 2–4 % of core 0.</p>
+<h2>Reading rekordbox's beat grid without its database</h2>
+<p>A rekordbox USB stick has two kinds of analysis data. One is <code>export.pdb</code>, the database of tracks and playlists, in a page-based format that takes real work to parse. The other is a folder of per-track analysis files, <code>PIONEER/USBANLZ/…/ANLZ0000.DAT</code>, one per track.</p>
+<p>The shortcut: each <code>ANLZ</code> file holds the path of its own audio file (a <code>PPTH</code> section) as well as the beat grid (a <code>PQTZ</code> section). So the deck can list every analysed track and find its grid by walking the analysis folder, without touching the database. The grid itself is simple: for every beat, its time in milliseconds, the tempo, and its position in the bar (1–4).</p>
+<p>The reader is about 150 lines of plain C++. I tested it on the PC first, against the demo export that ships with the <code>rekordcrate</code> library. It gave 128 BPM, beats 469 ms apart, and correct bar positions. On my own stick it found 218 analysed tracks.</p>
+<h2>Steering the deck onto the beat</h2>
+<p>SYNC does three things:</p>
+<ul><li><strong>Match the tempo.</strong> Our speed is the master's BPM divided by our track's BPM at the playhead. If half or double time is closer, it uses that, so a 70 BPM track plays at 1× against a 140 BPM master.</li><li><strong>Snap on PLAY.</strong> When you press play with SYNC on, the deck first jumps so its first beat lands on the master's. Nothing is audible yet, so the jump is silent.</li><li><strong>Hold the phase.</strong> On every 5.8 ms audio block, the deck compares where it is in its beat with where the master is in its beat, and bends the tempo by up to 3 % to close the gap. A CDJ nudges the same way when you touch the jog wheel.</li></ul>
+<p>"Where it is in its beat" has to mean what's coming out of the speaker <em>now</em>, not where the playhead is. About 35 ms of audio is queued between the audio task and the DAC. In keylock, the time-stretcher holds some audio of its own too. The deck subtracts both.</p>
+<h2>The numbers</h2>
+<p>These were measured against prolink-cpp's virtual CDJ running on my PC as master at 128 BPM:</p>
+<div class="table-wrap"><table><thead><tr><th></th><th>Phase error vs master, avg / worst</th></tr></thead><tbody><tr><td>A rekordbox track, from the first 2 s after PLAY</td><td>1.4 / 3.3 ms</td></tr><tr><td>Same, keylock on, after a few seconds</td><td>2.6–3.7 / 9–11 ms</td></tr><tr><td>SYNC switched on mid-track</td><td>snaps, then 1.4 / 3 ms</td></tr></tbody></table></div>
+<p>Audio stayed at 100 % real time throughout.</p>
+<p>One caveat: those numbers compare the deck against its own timing model, not against what you'd hear. The model assumes a beat packet arrives at the moment that beat is heard on the master, and the keylock delay is an estimate. Both need checking by ear against a real XDJ. There's a serial key to trim the offset 2 ms at a time for that.</p>
+<h2>Bugs along the way</h2>
+<p><strong>A crash on the first packet.</strong> The deck rebooted as soon as the virtual CDJ appeared. I had written a "new player" log line inside a spinlock. ESP-IDF's logging takes a lock of its own, and that isn't allowed with interrupts off. The fix was to note the new player inside the lock and print it after.</p>
+<p><strong>A six-second catch-up at the start of a track.</strong> The snap on PLAY often wanted to jump to a point slightly <em>before</em> 0:00, so it got clamped to the start. The deck then started up to half a beat off and needed six seconds of tempo bending to recover. Now it jumps to the next beat instead.</p>
+<p><strong>Keylock chasing a sawtooth.</strong> In keylock, the error sat around 6 ms and wouldn't settle. The time-stretcher is fed in 512-frame chunks, so my estimate of how much audio it was holding jumped up and down in steps. The controller was correcting noise it had made itself. Smoothing the estimate over about 0.3 s brought it down to roughly 3 ms.</p>
+<p><strong>224 tracks, 2 KB of RAM.</strong> With the stick's tracks in the list, the board had 2 KB of internal RAM left and couldn't load anything. Every list row is an LVGL button and a label, and every small allocation was landing in internal RAM. I moved LVGL's allocations to PSRAM, and that freed the memory. It also dropped the waveform from 46 to 34 fps and slowed the audio core, because LVGL also allocates small blocks for every frame it draws. Now only the track list goes to PSRAM, built once at boot, and the board has 80 KB free.</p>
+<h2>Hardware detours</h2>
+<p><strong>Ethernet.</strong> The link came up at 100 Mbit and dropped again 2–4 s later, over and over. My setup matched Waveshare's own Ethernet example exactly, so I asked for a different cable. The new cable fixed it.</p>
+<p><strong>The USB ports.</strong> The board has four USB-A ports, but only one worked. The schematic explains why. A jumper, H3, drives a USB switch that connects either a 4-port hub or one port wired straight to the chip. My board was in the single-port setting, and the DJ2Go was in that port. Swapping the stick into that port got it working. Moving the jumper didn't help: in both positions only that one port works, and the hub never shows up. So for now it's either the DJ2Go or the stick, not both. I haven't found the cause yet.</p>
+<h2>What isn't right yet</h2>
+<ul><li><strong>The waveform is slower than before.</strong> It used to run at 46 fps. It's now 34–41 fps while playing a track from the stick, with core 0 at 42–48 % instead of about 30 %. It isn't the allocator. It could be the USB stick: its interrupts land on core 0, where the SD card's didn't. It could be the longer list. I haven't pinned it down.</li><li><strong>One keylock block took 5.1 ms of its 5.8 ms budget</strong> while a track was still loading. Nothing dropped out, but that's too close, and it's the first thing to look at next.</li><li><strong>Boot takes longer:</strong> reading 218 analysis files adds 6.9 s. Caching the list on the stick would fix that.</li><li><strong>Not tested with a real XDJ yet.</strong> That will also show whether other players see the deck properly.</li></ul>
+<h2>Next</h2>
+<ul><li>Test against the XDJ-1000MK2, and tune the timing by ear.</li><li>Find where the frame rate went, and get keylock's worst block back down.</li><li>Send beat packets too, so the deck can be tempo master and other players can sync to it.</li><li>Find out why the hub never appears, so the DJ2Go and the stick can both be plugged in.</li></ul>
+<p>The code is in <a href="https://github.com/audiodestrukt/esp32-mediaplayer">audiodestrukt/esp32-mediaplayer</a> under <code>p4/deck</code>.</p>
+    </div>
+    <div class="post-nav">
+      <div></div>
+      <div><a href="/blog/posts/esp32-p4-deck-status.html">ESP32-P4 DJ deck: where it stands, and how much CPU is left &rarr;</a></div>
+    </div>
+  </div>
+  <footer>
+    <span>audio<span style="color:var(--accent)">destrukt</span></span>
+    <span>&copy; 2025 AudioDestrukt</span>
+  </footer>
+<!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "f393b960e25f42828910e441d26fa18c"}'></script><!-- End Cloudflare Web Analytics -->
+</body>
+</html>

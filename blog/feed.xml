@@ -5,9 +5,15 @@
     <link>https://audiodestrukt.com</link>
     <description>A poke in the ear with a sharp stick.</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 30 Oct 2026 07:17:32 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 31 Oct 2026 08:03:01 +0000</lastBuildDate>
     <atom:link href="https://audiodestrukt.com/blog/feed.xml" rel="self" type="application/rss+xml"/>
     <item>
+      <title>ESP32-P4 DJ deck: beat sync over Pro DJ Link, with rekordbox's beat grids</title>
+      <link>https://audiodestrukt.com/blog/posts/esp32-p4-deck-beat-sync.html</link>
+      <guid isPermaLink="true">https://audiodestrukt.com/blog/posts/esp32-p4-deck-beat-sync.html</guid>
+      <pubDate>Sat, 31 Oct 2026 12:00:00 +0000</pubDate>
+      <description>Two days ago I measured how much CPU the ESP32-P4 deck had left, so I'd know whether Pro DJ Link would fit. Today it went in. The deck joins the network as a player, finds the tempo master, and with SYNC on it locks to the master's beat. It uses the beat grid rekordbox already worked out for the track,…</description>
+    </item>    <item>
       <title>ESP32-P4 DJ deck: where it stands, and how much CPU is left</title>
       <link>https://audiodestrukt.com/blog/posts/esp32-p4-deck-status.html</link>
       <guid isPermaLink="true">https://audiodestrukt.com/blog/posts/esp32-p4-deck-status.html</guid>
@@ -124,12 +130,6 @@ The School for Poetic Computation – a place for learning and unlearning. So gr
       <guid isPermaLink="true">https://audiodestrukt.com/blog/posts/some-thoughts-on-the-ableton-move.html</guid>
       <pubDate>Sun, 01 Dec 2024 21:08:57 +0000</pubDate>
       <description>Some thoughts on the Ableton Move I’ve been using the Move in various situations over the last week. I have traveled with it and used it in my studio. Battery: this thing charges a little bit slowly for my taste. I can’t imagine that the battery is really all that big. I’m using a 60w charger so I know it’s…</description>
-    </item>    <item>
-      <title>Little Sound DJ</title>
-      <link>https://audiodestrukt.com/blog/posts/little-sound-dj.html</link>
-      <guid isPermaLink="true">https://audiodestrukt.com/blog/posts/little-sound-dj.html</guid>
-      <pubDate>Sat, 30 Nov 2024 16:59:38 +0000</pubDate>
-      <description>Little Sound DJ I was pretty intrigued by this a few years ago and then again when Trash80 released the Dirtywave M8. I have a Nintendo DS that I have had forever to play Mario Kart on with my wife while sitting on the couch (we each have one). In order to load ROMs on the NDS I have a…</description>
     </item>
   </channel>
 </rss>
