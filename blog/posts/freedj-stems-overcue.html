@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>freedj plays stems now, from a USB format someone else was kind enough to publish — AudioDestrukt</title>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="AudioDestrukt">
+  <meta property="og:title" content="freedj plays stems now, from a USB format someone else was kind enough to publish">
+  <meta property="og:description" content="OverCue is a free, unofficial mod for the CDJ-3000, made by three DJs. Its headline feature is stems: you run your rekordbox stick through their desktop app, it splits each track into drums, vocal and harmonics (everything else), and the…">
+  <meta property="og:url" content="https://audiodestrukt.com/blog/posts/freedj-stems-overcue.html">
+  <meta property="og:image" content="https://audiodestrukt.com/images/2026-11-10_freedj-stems_cdj-volume.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://audiodestrukt.com/images/2026-11-10_freedj-stems_cdj-volume.png">
+  <meta name="description" content="OverCue is a free, unofficial mod for the CDJ-3000, made by three DJs. Its headline feature is stems: you run your rekordbox stick through their desktop app, it splits each track into drums, vocal and harmonics (everything else), and the…">
+  <link rel="alternate" type="application/rss+xml" title="AudioDestrukt Blog" href="https://audiodestrukt.com/blog/feed.xml">
+  <style>
+    :root {
+      --bg: #0d0d0d;
+      --surface: #161616;
+      --surface2: #1e1e1e;
+      --border: #2a2a2a;
+      --accent: #c8ff00;
+      --accent2: #ff3c00;
+      --text: #e8e8e8;
+      --muted: #777;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Courier New', Courier, monospace;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+    }
+
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 2rem;
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      background: rgba(13,13,13,0.95);
+      backdrop-filter: blur(8px);
+      z-index: 100;
+    }
+
+    .logo {
+      font-size: 1.3rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      color: var(--text);
+      text-decoration: none;
+    }
+
+    .logo span { color: var(--accent); }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 2rem;
+    }
+
+    nav ul li a {
+      color: var(--muted);
+      font-size: 0.85rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    nav ul li a:hover { color: var(--text); text-decoration: none; }
+    nav ul li a.active { color: var(--accent); }
+
+    .container {
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 4rem 2rem;
+    }
+
+    .page-title {
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 3rem;
+    }
+
+    /* POST LIST */
+    .post-list { list-style: none; }
+
+    .post-item {
+      border-bottom: 1px solid var(--border);
+      padding: 2rem 0;
+    }
+
+    .post-item:first-child { padding-top: 0; }
+
+    .post-meta {
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      text-transform: uppercase;
+      margin-bottom: 0.5rem;
+    }
+
+    .post-title {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 0.75rem;
+      line-height: 1.2;
+    }
+
+    .post-title a { color: #fff; }
+    .post-title a:hover { color: var(--accent); text-decoration: none; }
+
+    .post-excerpt {
+      font-size: 0.85rem;
+      color: var(--text);
+      margin-bottom: 0.75rem;
+    }
+
+    .post-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+    }
+
+    .tag {
+      font-size: 0.6rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 0.15rem 0.45rem;
+      border: 1px solid var(--border);
+      color: var(--muted);
+    }
+
+    /* PAGINATION */
+    .pagination {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 3rem;
+      font-size: 0.8rem;
+    }
+
+    .pagination a {
+      border: 1px solid var(--border);
+      padding: 0.5rem 1rem;
+      color: var(--text);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-size: 0.75rem;
+    }
+
+    .pagination a:hover { border-color: var(--text); text-decoration: none; }
+    .pagination .page-info { color: var(--muted); font-size: 0.7rem; letter-spacing: 0.1em; }
+    .pagination .spacer { flex: 1; }
+
+    /* SINGLE POST */
+    .post-header { margin-bottom: 3rem; }
+
+    .post-header h1 {
+      font-size: 2rem;
+      font-weight: 700;
+      color: #fff;
+      line-height: 1.2;
+      margin-bottom: 0.75rem;
+    }
+
+    .post-body { font-size: 0.92rem; }
+
+    .post-body h1, .post-body h2, .post-body h3 {
+      color: #fff;
+      font-weight: 700;
+      margin: 2rem 0 0.75rem;
+    }
+
+    .post-body h1 { font-size: 1.4rem; }
+    .post-body h2 { font-size: 1.2rem; }
+    .post-body h3 { font-size: 1rem; }
+
+    .post-body p {
+      color: var(--text);
+      margin-bottom: 1.25rem;
+      line-height: 1.8;
+    }
+
+    .post-body a { color: var(--accent); }
+
+    .post-body strong { color: var(--text); }
+
+    .post-body pre {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      padding: 1rem;
+      overflow-x: auto;
+      margin: 1.25rem 0;
+      font-size: 0.8rem;
+      line-height: 1.6;
+    }
+
+    .post-body code {
+      font-family: 'Courier New', Courier, monospace;
+      color: var(--accent);
+    }
+
+    .post-body pre code {
+      color: var(--text);
+    }
+
+    .post-body .table-wrap { overflow-x: auto; margin: 1.25rem 0; }
+    .post-body table {
+      border-collapse: collapse;
+      width: 100%;
+      font-size: 0.85rem;
+      line-height: 1.5;
+      font-variant-numeric: tabular-nums;
+    }
+    .post-body th, .post-body td {
+      border: 1px solid var(--border);
+      padding: 0.45rem 0.6rem;
+      text-align: left;
+      vertical-align: top;
+    }
+    .post-body th { background: var(--surface2); color: var(--text); font-weight: 600; }
+
+    .post-body ul, .post-body ol {
+      margin: 0 0 1.25rem 1.5rem;
+      line-height: 1.8;
+    }
+
+    .post-body li { margin-bottom: 0.4rem; }
+
+    .post-body img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+      margin: 1.5rem 0;
+      border: 1px solid var(--border);
+    }
+
+    .post-nav {
+      display: flex;
+      justify-content: space-between;
+      padding-top: 3rem;
+      margin-top: 3rem;
+      border-top: 1px solid var(--border);
+      font-size: 0.75rem;
+      gap: 1rem;
+    }
+
+    .post-nav a {
+      color: var(--muted);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .post-nav a:hover { color: var(--text); text-decoration: none; }
+
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      max-width: 780px;
+      margin: 0 auto;
+      font-size: 0.75rem;
+      color: var(--muted);
+    }
+
+    @media (max-width: 600px) {
+      nav ul { display: none; }
+      .post-header h1 { font-size: 1.5rem; }
+    }
+</style>
+</head>
+<body>
+  <nav>
+    <a href="/index.html" class="logo">audio<span>destrukt</span></a>
+    <ul>
+      <li><a href="/index.html#plugin">Plugin</a></li>
+      <li><a href="/index.html#features">Features</a></li>
+      <li><a href="/index.html#download">Download</a></li>
+      <li><a href="/index.html#about">About</a></li>
+      <li><a href="/blog/index.html" class="active">Blog</a></li>
+    </ul>
+  </nav>
+  <div class="container">
+    <div class="post-header">
+      <div class="post-meta"><a href="/blog/index.html">Blog</a> &mdash; November 10, 2026</div>
+      <h1>freedj plays stems now, from a USB format someone else was kind enough to publish</h1>
+      <div class="post-tags" style="margin-top:0.75rem"><span class="tag">opendeck</span><span class="tag">dj</span><span class="tag">rust</span><span class="tag">stems</span><span class="tag">audio</span><span class="tag">testing</span></div>
+    </div>
+    <div class="post-body">
+<p><a href="https://overcue.gg/">OverCue</a> is a free, unofficial mod for the CDJ-3000, made by three DJs. Its headline feature is stems: you run your rekordbox stick through their desktop app, it splits each track into <strong>drums</strong>, <strong>vocal</strong> and <strong>harmonics</strong> (everything else), and the modded player lets you mute or blend them live.</p>
+<p>The part that got my attention is that they published the stick format. The stems live in a <code>CDJMODS</code> folder beside the rekordbox export, and the layout is written up as an <a href="https://github.com/OverCue-gg/overcue-stems-format">open, MIT-licensed spec</a>, along with a small validator. The README says outright that another player can read the same files and use its own controls and audio path.</p>
+<p>So <a href="https://github.com/audiodestrukt/freedj-3000">freedj</a> does that now. Put in a stick prepared by OverCue Desktop, turn stems on, and the tracks on it play with their stems.</p>
+<p><img src="/images/2026-11-10_freedj-stems_cdj-volume.png" alt="freedj's CDJ-3000 screen with the STEMS panel open in VOLUME mode: drums at 60 %, vocal 35 %, harmonics 75 %" loading="lazy"></p>
+<h2>Off unless you turn it on</h2>
+<p>A stock XDJ-1000MK2 or CDJ-3000 has no stems, and I want freedj's screens to stay what the real units are. So stems are a row in MENU / UTILITY, <strong>STEMS</strong>, off by default. Off, nothing changes anywhere: no extra keys, no stems loaded.</p>
+<p><img src="/images/2026-11-10_freedj-stems_menu.png" alt="The UTILITY list with the new STEMS row switched on" loading="lazy"></p>
+<p>Turned on, each skin gets its controls:</p>
+<ul><li><strong>CDJ-3000 screen:</strong> a STEMS key next to BEAT LOOP. It opens a panel in the same row the BEAT LOOP and BEAT JUMP panels use, laid out the way OverCue's manual describes its own: FULL MIX, a TOGGLE / VOLUME switch, then the three stems. In TOGGLE a tap mutes a stem. In VOLUME each stem becomes a fader you drag, and a drag moves the level from where it already is, so touching it never makes it jump. The key greys out while stems load or when a track has none, and gets a blue underline while the mix is changed and the panel is closed.</li></ul>
+<p><img src="/images/2026-11-10_freedj-stems_cdj-toggle.png" alt="TOGGLE mode with the drums muted" loading="lazy"></p>
+<ul><li><strong>XDJ screen:</strong> the XDJ has no spare spot on its playback screen, but freedj already has a PERFORM page of its own, with pads for hot cues and beat jumps. STEMS adds a third pad mode there: DRUMS, VOCAL, HARMONICS and FULL MIX. Tap a pad to mute it, drag up or down to set its level.</li></ul>
+<p><img src="/images/2026-11-10_freedj-stems_xdj-perform.png" alt="The XDJ skin's PERFORM page in STEMS mode" loading="lazy"></p>
+<h2>One stretcher, not three</h2>
+<p>The obvious way to play three stems is three of everything, including three time-stretchers for Master Tempo. That's the expensive part of a deck, and on a Raspberry Pi it's already most of the CPU.</p>
+<p>freedj doesn't do that. It adds the stems together, at their levels, <em>before</em> the time-stretcher, so there's still exactly one. Mixing costs three multiply-adds per sample. And when every stem is at full, the deck plays the original track untouched, not the three stems added back up. FULL MIX gives you the real master, with none of the small artefacts that splitting a track always leaves.</p>
+<p>The cost of that choice is latency: a mute only reaches your ears after it has gone through the stretcher and the output buffer. With the default stretcher I measured 70 to 120 ms from the tap to the change in the audio. That's fine for muting a vocal over a phrase, but not for chopping drums on the beat. I want to measure the other stretchers before deciding whether it needs work.</p>
+<h2>Lining them up: measure, don't trust</h2>
+<p>Stems are only useful if they line up with the track to the sample. Otherwise turning one off and on smears the transients. OverCue's spec is careful about this. Its app pads the stems so they match how a CDJ-3000 decodes the original, and it warns that other players have to check alignment against their own decoder.</p>
+<p>So freedj doesn't trust the padding. When a track loads, it cross-correlates OverCue's copy of the full mix with its own decode at three points in the track:</p>
+<ul><li>All three have to agree within one sample, and correlate strongly, or the stems are refused and the original just keeps playing.</li><li>The same happens if the music file no longer matches the hash OverCue recorded, say after a re-export from rekordbox.</li></ul>
+<p>On my first real run, the three measurements agreed on an offset of <strong>1152 samples</strong>. That's exactly one MP3 frame, the same metadata frame that the spec's own changelog spends a paragraph on, because different decoders keep or drop it. Trusting the padding would have played the stems 26 ms late.</p>
+<h2>Testing it without a prepared stick</h2>
+<p>I don't have a stick prepared by OverCue yet. Their desktop app is Mac and Windows only, and I tried running the Windows build under Wine. It installs. Its window is a web view, and it came up black: the bundled Microsoft WebView2 crashes under Wine. With an older WebView2 from Microsoft's update catalog the window got further, then the app crashed inside Wine's drag-and-drop code. That's a Wine bug, not theirs. The Mac will have to do it.</p>
+<p>In the meantime the tests build their own sticks. freedj's stems crate has a small writer for the format, used only in tests, and I checked its output with OverCue's own validator in every variant: FLAC pages, the older zlib pages, the 44.1 kHz profiles, and the compact per-track index. All accepted. So the reader is tested against files the reference tool calls valid, and every hash and offset in the spec is checked before any audio plays.</p>
+<p>For the end-to-end run I used one of my own tracks and made stand-in stems: split into three frequency bands that add back up exactly, with "drums" as everything under 200 Hz. Then freedj ran with no window or speakers, recording its own output while a script muted drums, restored the full mix, and soloed drums:</p>
+<p><img src="/images/2026-11-10_freedj-stems_spectrogram.png" alt="A spectrogram of freedj's output: the low band vanishes when drums are muted, returns with the full mix, and plays alone at the end" loading="lazy"></p>
+<p>The low band vanishes on the first line, comes back unchanged with FULL MIX, and plays alone at the end. You can also see the delay: each change lands a little after its line.</p>
+<h2>What's next</h2>
+<ul><li><strong>A real prepared stick.</strong> Everything so far has used stand-in stems, so real separated stems from OverCue Desktop are the first thing to try.</li><li><strong>The waveform.</strong> OverCue redraws the big waveform from the stems you're playing. freedj's still shows the full mix.</li><li><strong>Stems over Pro DJ Link.</strong> Loading a track from another player's stick and streaming its stems over the network, page by page, ahead of the playhead.</li><li><strong>Hardware controls.</strong> Stem actions for MIDI controllers and the hardware deck.</li></ul>
+<p>The plan and the measurements are in <a href="https://github.com/audiodestrukt/freedj-3000/blob/main/docs/design/stems-overcue.md">stems-overcue.md</a>, and the reader is the <code>stems</code> crate in <a href="https://github.com/audiodestrukt/freedj-3000">audiodestrukt/freedj-3000</a>. Thanks to the OverCue folks for writing the format down. It's the reason this took days and not months.</p>
+<p><em>freedj-3000 and OpenDeck are independent projects, not affiliated with or endorsed by AlphaTheta, Pioneer DJ or OverCue. CDJ-3000, XDJ-1000MK2 and rekordbox are AlphaTheta's trademarks, and OverCue is its authors', named here to describe compatibility.</em></p>
+    </div>
+    <div class="post-nav">
+      <div></div>
+      <div><a href="/blog/posts/freedj-cdj-3000-skin.html">My XDJ clone grew a CDJ-3000 screen, and the two grid keys that don't light when you'd think &rarr;</a></div>
+    </div>
+  </div>
+  <footer>
+    <span>audio<span style="color:var(--accent)">destrukt</span></span>
+    <span>&copy; 2025 AudioDestrukt</span>
+  </footer>
+<!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "f393b960e25f42828910e441d26fa18c"}'></script><!-- End Cloudflare Web Analytics -->
+</body>
+</html>

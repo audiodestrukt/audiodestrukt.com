@@ -5,9 +5,15 @@
     <link>https://audiodestrukt.com</link>
     <description>A poke in the ear with a sharp stick.</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 09 Nov 2026 08:50:23 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 10 Nov 2026 10:26:21 +0000</lastBuildDate>
     <atom:link href="https://audiodestrukt.com/blog/feed.xml" rel="self" type="application/rss+xml"/>
     <item>
+      <title>freedj plays stems now, from a USB format someone else was kind enough to publish</title>
+      <link>https://audiodestrukt.com/blog/posts/freedj-stems-overcue.html</link>
+      <guid isPermaLink="true">https://audiodestrukt.com/blog/posts/freedj-stems-overcue.html</guid>
+      <pubDate>Tue, 10 Nov 2026 12:00:00 +0000</pubDate>
+      <description>OverCue is a free, unofficial mod for the CDJ-3000, made by three DJs. Its headline feature is stems: you run your rekordbox stick through their desktop app, it splits each track into drums, vocal and harmonics (everything else), and the modded player lets you mute or blend them live. The part that got my attention is that they published the…</description>
+    </item>    <item>
       <title>My XDJ clone grew a CDJ-3000 screen, and the two grid keys that don't light when you'd think</title>
       <link>https://audiodestrukt.com/blog/posts/freedj-cdj-3000-skin.html</link>
       <guid isPermaLink="true">https://audiodestrukt.com/blog/posts/freedj-cdj-3000-skin.html</guid>
@@ -121,15 +127,6 @@
       <guid isPermaLink="true">https://audiodestrukt.com/blog/posts/recording-rig.html</guid>
       <pubDate>Fri, 24 Jan 2025 03:13:06 +0000</pubDate>
       <description>Recording rig I have been setting up a new recording rack in my studio. It has been a long time since I did any serious recording so I’m kind of re-learning things like patchbay configuration. I have an old M-Audio ProFire 2626 set up on a SFF PC in this old Grundorf rack case. I’m setting up two mic pres…</description>
-    </item>    <item>
-      <title>Alternative education</title>
-      <link>https://audiodestrukt.com/blog/posts/alternative-education.html</link>
-      <guid isPermaLink="true">https://audiodestrukt.com/blog/posts/alternative-education.html</guid>
-      <pubDate>Thu, 19 Dec 2024 18:42:08 +0000</pubDate>
-      <description>Alternative education
-I’m always looking around for new art and many times I come across fringe art schools or interdisciplinary programs at colleges. When I was in Engineering school there really wasn’t this cross-pollination that there is today. 
-Here is one I just found https://sfpc.study/
-The School for Poetic Computation – a place for learning and unlearning. So great.</description>
     </item>
   </channel>
 </rss>
